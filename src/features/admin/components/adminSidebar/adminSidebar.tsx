@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { 
   LayoutDashboard, Wallet, Users, Image as MediaIcon, 
-  Newspaper, Gift, Bell, Settings 
+   Bell, Settings 
 } from "lucide-react";
 
 const menuItems = [
@@ -12,10 +12,8 @@ const menuItems = [
   { name: "আর্থিক ব্যবস্থাপনা", icon: Wallet, href: "/dashboard/finance" },
   { name: "সদস্য ডাটাবেজ", icon: Users, href: "/dashboard/members" },
   { name: "মিডিয়া সেন্টার", icon: MediaIcon, href: "/dashboard/media" },
-  { name: "খবর ও ব্লগ", icon: Newspaper, href: "/dashboard/news" },
-  { name: "অনুদান ট্র্যাকার", icon: Gift, href: "/dashboard/donations" },
-  { name: "সার্ভিস", icon: Bell, href: "/dashboard/services" },
-  { name: "সেটিংস", icon: Settings, href: "/dashboard/settings" },
+ { name: "নোটিফিকেশন", icon: Bell, href: "/dashboard/notifications" },
+  { name: "সেটিংস", icon: Settings, href: "/dashboard/#" },
 ];
 
 export default function AdminSidebar({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (v: boolean) => void }) {
@@ -57,9 +55,8 @@ export default function AdminSidebar({ isOpen, setIsOpen }: { isOpen: boolean, s
           </nav>
         </div>
 
-        {/* Add Project Button */}
         <button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl font-bold transition-all shadow-lg shadow-emerald-900/20">
-          + নতুন প্রকল্প যোগ করুন
+          Login
         </button>
       </aside>
 

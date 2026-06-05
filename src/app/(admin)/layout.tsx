@@ -3,11 +3,13 @@
 import { useState } from "react";
 import AdminNavbar from "@/features/admin/components/adminNavbar/adminNavbar";
 import AdminSidebar from "@/features/admin/components/adminSidebar/adminSidebar";
+import ProtectedRoute from "@/features/admin/context/AuthProvider/AuthProvider";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
+    <ProtectedRoute>
     <div className="flex h-screen bg-[#121417]">
       {/* Sidebar: স্টেট পাঠানো হয়েছে */}
       <AdminSidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
@@ -29,7 +31,9 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         </main>
       </div>
     </div>
+    </ProtectedRoute>
   );
+  
 };
 
 export default AdminLayout;

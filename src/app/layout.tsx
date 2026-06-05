@@ -4,6 +4,7 @@ import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ScrollToTop from "@/features/components/ScrollToTop";
+import { AuthProvider } from "@/features/admin/context/AuthContext/AuthContext";
 
 export const metadata: Metadata = {
   title: "মোল্লাপাড়া সমাজ কল্যাণ সংস্থা | Mollapara Social Welfare Association",
@@ -35,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="bn" className="scroll-smooth">
       <body className="font-bengali antialiased parchment-bg min-h-screen">
-       
+       <AuthProvider>
           {children}
           <ToastContainer
             position="top-right"
@@ -51,6 +52,7 @@ export default function RootLayout({
             style={{ fontFamily: "'Noto Serif Bengali', serif" }}
           />
         <ScrollToTop />
+        </AuthProvider>
       </body>
         
     </html>
