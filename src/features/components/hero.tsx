@@ -12,12 +12,12 @@ export default function CombinedHeroSection() {
         <div className="absolute inset-0 z-0">
           <div
             className="absolute inset-0 w-full h-full"
-            style={{ 
+            style={{
               backgroundImage: `url('/assets/bg-image.png')`,
-              backgroundSize: 'contain',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              backgroundColor: '#000' // ইমেজটি ডার্ক দেখাতে কালো ব্যাকগ্রাউন্ড
+              backgroundSize: "contain",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              backgroundColor: "#000", // ইমেজটি ডার্ক দেখাতে কালো ব্যাকগ্রাউন্ড
             }}
           />
           {/* *** মডিফিকেশন: এখানে অপাসিটি ০.৮০ (৮০%) করা হয়েছে যাতে ইমেজটি অনেক বেশি ডার্ক হয় *** */}
@@ -49,7 +49,7 @@ export default function CombinedHeroSection() {
             transition={{ delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center w-full sm:w-auto"
           >
-            <Link href="/join" className="w-full sm:w-auto">
+            <Link href="/members" className="w-full sm:w-auto">
               <button className="w-full sm:w-auto px-8 py-3 rounded-md font-semibold font-bengali bg-emerald-700 hover:bg-emerald-800 text-white transition-all">
                 যোগ দিন
               </button>

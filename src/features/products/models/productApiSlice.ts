@@ -1,4 +1,4 @@
-import { baseApi } from "@/core/api/baseApi";
+import { baseApi } from "@/Redux/store/baseApi";
 
 const productApiSlice = baseApi.injectEndpoints({
   endpoints: (builder) => ({

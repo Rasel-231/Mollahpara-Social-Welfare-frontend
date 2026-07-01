@@ -5,7 +5,7 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import relief from "../../../public/assets/relief.webp"
+import relief from "../../../public/assets/relief.webp";
 export default function LoanRehabSection() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
@@ -28,7 +28,6 @@ export default function LoanRehabSection() {
               className="object-cover"
               sizes="(max-width: 768px) 100vw, 45vw"
             />
-            
           </div>
 
           {/* Content Part */}
@@ -46,18 +45,20 @@ export default function LoanRehabSection() {
 
               {/* Description */}
               <p className=" text-sm md:text-base leading-relaxed mb-8 font-bengali">
-                মোল্লাপাড়া সমাজ কল্যাণ সংস্থা, এলাকার দরিদ্র জনগোষ্ঠীর পাশে। দুর্যোগের সময় ক্ষতিগ্রস্তদের ত্রাণ ও পুনর্বাসন সহায়তা প্রদানের মাধ্যমে আমরা মানুষের মুখে হাসি ফোটাতে সর্বদা কাজ করে যাচ্ছি।
+                মোল্লাপাড়া সমাজ কল্যাণ সংস্থা, এলাকার দরিদ্র জনগোষ্ঠীর পাশে।
+                দুর্যোগের সময় ক্ষতিগ্রস্তদের ত্রাণ ও পুনর্বাসন সহায়তা প্রদানের
+                মাধ্যমে আমরা মানুষের মুখে হাসি ফোটাতে সর্বদা কাজ করে যাচ্ছি।
               </p>
             </div>
 
             {/* Button and bottom icon */}
             <div className="flex items-center justify-between">
-              <Link href="/programs">
+              <Link href="/donate">
                 <button className="px-6 py-3 rounded-lg font-bold font-bengali bg-emerald-800 hover:bg-emerald-700 text-white transition-all shadow-lg border border-emerald-600">
                   সাহায্য করুন
                 </button>
               </Link>
-              
+
               {/* ডান কোণায় নিচের আইকন */}
               <div className="text-6xl -mb-4 -mr-2">💰</div>
             </div>

@@ -4,10 +4,11 @@ import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ScrollToTop from "@/features/components/ScrollToTop";
-import { AuthProvider } from "@/features/admin/context/AuthContext/AuthContext";
+import Providers from "./lib/Provider";
 
 export const metadata: Metadata = {
-  title: "মোল্লাপাড়া সমাজ কল্যাণ সংস্থা | Mollapara Social Welfare Association",
+  title:
+    "মোল্লাপাড়া সমাজ কল্যাণ সংস্থা | Mollapara Social Welfare Association",
   description:
     "মোল্লাপাড়া সমাজ কল্যাণ সংস্থা — এলাকার উন্নয়ন আমাদের প্রতিশ্রুতি। রক্তদান, ঋণ ও পুনর্বাসন, শিক্ষা সহায়তা এবং সামাজিক কল্যাণমূলক কার্যক্রম।",
   keywords: [
@@ -36,25 +37,22 @@ export default function RootLayout({
   return (
     <html lang="bn" className="scroll-smooth">
       <body className="font-bengali antialiased parchment-bg min-h-screen">
-       <AuthProvider>
-          {children}
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="colored"
-            style={{ fontFamily: "'Noto Serif Bengali', serif" }}
-          />
+        <Providers>{children}</Providers>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+          style={{ fontFamily: "'Noto Serif Bengali', serif" }}
+        />
         <ScrollToTop />
-        </AuthProvider>
       </body>
-        
     </html>
   );
 }

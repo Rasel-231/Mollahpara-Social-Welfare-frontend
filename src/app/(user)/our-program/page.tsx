@@ -1,4 +1,3 @@
-
 import ProgramsPageView from "@/features/components/programPageViews";
 import type { Metadata } from "next";
 
@@ -11,11 +10,7 @@ export const metadata: Metadata = {
 export default function ProgramsPage() {
   return (
     <>
-   
-   
-        <ProgramsPageView />
-      
-     
+      <ProgramsPageView />
     </>
   );
 }
