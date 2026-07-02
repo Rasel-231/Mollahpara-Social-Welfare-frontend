@@ -183,6 +183,7 @@ import { useState } from "react";
 import { Search, Edit2, Trash2, Settings } from "lucide-react";
 import Image from "next/image";
 import AddMemberModal from "@/components/shared/Modal/addMemberModal";
+import EditMemberModal from "@/components/shared/Modal/editMemberModal";
 import {
   useGetAllUsersQuery,
   useDeleteUserMutation,
@@ -193,16 +194,24 @@ import { IUser } from "@/Redux/types/types";
 export default function MemberTable() {
   const { data: userResponse, isLoading } = useGetAllUsersQuery();
   const [deleteUser] = useDeleteUserMutation();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedMember, setSelectedMember] = useState<IUser | null>(null);
+
   const users = userResponse?.data || [];
 
   const handleDelete = async (id: string) => {
     try {
       await deleteUser(id).unwrap();
-      toast.success("Sodossho muche fela hoyeche");
+      toast.success("সদস্য সফলভাবে মুছে ফেলা হয়েছে");
     } catch {
-      toast.error("Muche felte bortho");
+      toast.error("সদস্য মোছা যায়নি");
     }
+  };
+  const handleEditClick = (member: IUser) => {
+    setSelectedMember(member);
+    setIsEditModalOpen(true);
   };
 
   if (isLoading) return <div>Loading.......</div>;
@@ -219,7 +228,7 @@ export default function MemberTable() {
           />
         </div>
         <button
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => setIsAddModalOpen(true)}
           className="bg-emerald-600 hover:bg-emerald-700 px-6 rounded-lg font-bold text-sm"
         >
           + নতুন সদস্য
@@ -234,7 +243,7 @@ export default function MemberTable() {
               <th className="pb-4 font-normal">ভূমিকা</th>
               <th className="pb-4 font-normal">ফোন</th>
               <th className="pb-4 font-normal">রক্ত</th>
-              <th className="pb-4 font-normal">অবস্থা</th>
+              <th className="pb-4 font-normal">ইমেইল</th>
               <th className="pb-4 font-normal text-right">অ্যাকশন</th>
             </tr>
           </thead>
@@ -264,7 +273,10 @@ export default function MemberTable() {
                   <button className="p-2 bg-gray-800 rounded-lg text-emerald-500">
                     <Settings size={16} />
                   </button>
-                  <button className="p-2 bg-gray-800 rounded-lg text-emerald-500">
+                  <button
+                    onClick={() => handleEditClick(m)}
+                    className="p-2 bg-gray-800 rounded-lg text-emerald-500"
+                  >
                     <Edit2 size={16} />
                   </button>
                   <button
@@ -281,8 +293,17 @@ export default function MemberTable() {
       </div>
 
       <AddMemberModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+      />
+
+      <EditMemberModal
+        isOpen={isEditModalOpen}
+        onClose={() => {
+          setIsEditModalOpen(false);
+          setSelectedMember(null);
+        }}
+        member={selectedMember}
       />
     </div>
   );

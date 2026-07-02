@@ -32,11 +32,12 @@ export const userApi = baseApi.injectEndpoints({
             providesTags: [tagtypes.user],
         }),
 
-        updateUser: build.mutation<IResponse<IUser>, { id: string; data: Partial<IUser> }>({
-            query: ({ id, data }) => ({
-                url: `users/update/${id}`,
+
+        updateUser: build.mutation<IResponse<IUser>, { id: string; formData: FormData }>({
+            query: ({ id, formData }) => ({
+                url: `users/${id}`,
                 method: "PATCH",
-                data: data,
+                data: formData,
                 withCredentials: true,
             }),
             invalidatesTags: [tagtypes.user],
@@ -44,7 +45,7 @@ export const userApi = baseApi.injectEndpoints({
 
         deleteUser: build.mutation<IResponse<void>, string>({
             query: (id) => ({
-                url: `users/delete/${id}`,
+                url: `users/${id}`,
                 method: "DELETE",
                 withCredentials: true,
             }),

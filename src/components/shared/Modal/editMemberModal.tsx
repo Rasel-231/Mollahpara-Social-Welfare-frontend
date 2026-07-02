@@ -2,38 +2,54 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Upload, X } from "lucide-react";
 import Image from "next/image";
-import { useCreateUserMutation } from "@/Redux/api/userApi";
+import { useUpdateUserMutation } from "@/Redux/api/userApi";
 import { toast } from "react-toastify";
+import { IUser } from "@/Redux/types/types";
 
-interface MemberFormData {
+interface EditMemberFormData {
   name: string;
   phone: string;
   email: string;
   designation: string;
-  password: string;
   village: string;
   bloodGroup: string;
   role: string;
-  image: FileList;
+  password?: string; // optional — only sent if the user actually types a new one
+  image?: FileList; // optional — only sent if the admin picks a new file
 }
 
-export default function AddMemberModal({
+export default function EditMemberModal({
   isOpen,
   onClose,
+  member,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  member: IUser | null;
 }) {
-  const { register, handleSubmit, reset } = useForm<MemberFormData>({
-    defaultValues: {
-      password: "Member@123",
-    },
-  });
-  const [preview, setPreview] = useState<string | null>(null);
-  const [createUser, { isLoading }] = useCreateUserMutation();
+  const { register, handleSubmit, reset } = useForm<EditMemberFormData>();
+  const [filePreview, setFilePreview] = useState<string | null>(null);
+  const [updateUser, { isLoading }] = useUpdateUserMutation();
+
+  useEffect(() => {
+    if (member) {
+      reset({
+        name: member.name ?? "",
+        phone: member.phone ?? "",
+        email: member.email ?? "",
+        designation: member.designation ?? "",
+        village: member.village ?? "",
+        bloodGroup: member.bloodGroup ?? "",
+        role: member.role ?? "MEMBER",
+        password: "",
+      });
+    }
+  }, [member, reset]);
+
+  const preview = filePreview ?? member?.image ?? null;
 
   const { onChange: registerImageOnChange, ...imageRegisterRest } =
     register("image");
@@ -41,40 +57,41 @@ export default function AddMemberModal({
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     registerImageOnChange(e);
     const file = e.target.files?.[0];
-    if (file) setPreview(URL.createObjectURL(file));
+    if (file) setFilePreview(URL.createObjectURL(file));
   };
 
-  const onSubmit: SubmitHandler<MemberFormData> = async (data) => {
+  const onSubmit: SubmitHandler<EditMemberFormData> = async (formValues) => {
+    if (!member) return;
+
     try {
-      const formData = new FormData();
-
-      const payload = {
-        name: data.name,
-        phone: data.phone,
-        email: data.email,
-        password: data.password,
-        designation: data.designation,
-        village: data.village,
-        bloodGroup: data.bloodGroup,
-        role: data.role,
-      };
-      formData.append("data", JSON.stringify(payload));
-
-      if (data.image?.[0]) {
-        formData.append("file", data.image[0]);
+      // Only send a password if the admin actually typed a new one —
+      // an empty string would otherwise overwrite the existing password.
+      const { password, image, ...rest } = formValues;
+      const payload: Record<string, unknown> = { ...rest };
+      if (password && password.trim().length > 0) {
+        payload.password = password;
       }
 
-      await createUser(formData).unwrap();
-      toast.success("সদস্য যোগ করা হয়েছে");
-      reset();
-      setPreview(null);
+      // Same request shape as AddMemberModal: JSON fields under "data",
+      // optional file under "file" — required because the backend's
+      // PATCH route parses req.body.data via multer + JSON.parse.
+      const formData = new FormData();
+      formData.append("data", JSON.stringify(payload));
+      if (image?.[0]) {
+        formData.append("file", image[0]);
+      }
+
+      await updateUser({ id: member.id, formData }).unwrap();
+      toast.success("সদস্যের তথ্য আপডেট হয়েছে");
       onClose();
     } catch (error: unknown) {
       const err = error as { data?: { message?: string } };
       console.error("Error:", error);
-      toast.error(err?.data?.message || "সদস্য যোগ করা যায়নি");
+      toast.error(err?.data?.message || "তথ্য আপডেট করা যায়নি");
     }
   };
+
+  if (!member) return null;
 
   return (
     <AnimatePresence>
@@ -96,7 +113,7 @@ export default function AddMemberModal({
           >
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold text-white">
-                নতুন সদস্য যোগ করুন
+                সদস্যের তথ্য সম্পাদনা করুন
               </h2>
               <button
                 onClick={onClose}
@@ -147,10 +164,11 @@ export default function AddMemberModal({
                 placeholder="ইমেইল (ঐচ্ছিক)"
                 className="w-full p-3 bg-[#121417] rounded-xl border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
+
               <input
-                {...register("password", { required: true, minLength: 6 })}
+                {...register("password", { minLength: 6 })}
                 type="password"
-                placeholder="পাসওয়ার্ড * (ন্যূনতম ৬ অক্ষর)"
+                placeholder="নতুন পাসওয়ার্ড (ঐচ্ছিক — পরিবর্তন করতে চাইলে দিন)"
                 className="w-full p-3 bg-[#121417] rounded-xl border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
 
@@ -199,10 +217,10 @@ export default function AddMemberModal({
                 {isLoading ? (
                   <span className="flex items-center justify-center gap-2">
                     <span className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-                    যোগ করা হচ্ছে...
+                    আপডেট হচ্ছে...
                   </span>
                 ) : (
-                  "জমা দিন"
+                  "আপডেট করুন"
                 )}
               </button>
             </form>
