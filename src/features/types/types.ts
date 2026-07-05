@@ -68,9 +68,10 @@ export type CreateNewsInput = z.infer<typeof CreateNewsSchema>;
 
 export const MemberSchema = z.object({
     id: z.string(),
-    nameBn: z.string(),
+    name: z.string(),
     nameEn: z.string().optional(),
     role: z.string(),
+    village: z.string().optional(),
     roleBn: z.string(),
     avatar: z.string(),
     bloodGroup: z.enum(["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]),
@@ -82,15 +83,19 @@ export const MemberSchema = z.object({
 });
 
 export const MemberRegistrationSchema = z.object({
-    nameBn: z.string().min(2, "নাম কমপক্ষে ২ অক্ষর হতে হবে"),
+    name: z.string().min(2, "নাম কমপক্ষে ২ অক্ষর হতে হবে"),
     nameEn: z.string().optional(),
     phone: z
         .string()
         .regex(/^01[3-9]\d{8}$/, "বৈধ বাংলাদেশী ফোন নম্বর দিন"),
     email: z.string().email("বৈধ ইমেইল ঠিকানা দিন").optional().or(z.literal("")),
+    password: z.string().min(6, "পাসওয়ার্ড কমপক্ষে ৬ অক্ষর হতে হবে"),
     bloodGroup: z.enum(["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]).describe("রক্তের গ্রুপ নির্বাচন করুন"),
+    designation: z.string().optional(),
+    memberType: z.enum(["PRESIDENT", "VICE_PRESIDENT", "SECRETARY", "JOINT_SECRETARY", "TREASURER", "ORGANIZING_SEC", "EXECUTIVE", "GENERAL", "ADVISOR", "VOLUNTEER"]).optional(),
+    nid: z.string().optional(),
     address: z.string().min(5, "ঠিকানা কমপক্ষে ৫ অক্ষর হতে হবে"),
-    nidNumber: z.string().optional(),
+    village: z.string().optional(),
     dateOfBirth: z.string().optional(),
     occupation: z.string().optional(),
 });
