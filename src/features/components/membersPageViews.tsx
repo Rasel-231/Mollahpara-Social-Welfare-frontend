@@ -244,12 +244,16 @@ export default function MembersPageView() {
                   background: "linear-gradient(135deg, #166534, #15803d)",
                 }}
               >
-                {member.memberType ? memberRoleMapping[member.memberType] || member.memberType : "সাধারণ সদস্য"}
+                {member.memberType
+                  ? memberRoleMapping[member.memberType] || member.memberType
+                  : "সাধারণ সদস্য"}
               </span>
               <div className="flex items-center gap-1 text-xs text-red-500">
                 <span>🩸</span>
                 <span className="font-bold">
-                  {member.bloodGroup ? bloodGroupMapping[member.bloodGroup] : "—"}
+                  {member.bloodGroup
+                    ? bloodGroupMapping[member.bloodGroup]
+                    : "—"}
                 </span>
               </div>
             </motion.div>
