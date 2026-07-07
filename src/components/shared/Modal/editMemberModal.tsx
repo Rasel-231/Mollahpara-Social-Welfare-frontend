@@ -17,8 +17,9 @@ interface EditMemberFormData {
   village: string;
   bloodGroup: string;
   role: string;
-  password?: string; // optional — only sent if the user actually types a new one
-  image?: FileList; // optional — only sent if the admin picks a new file
+  memberType: string;
+  password?: string;
+  image?: FileList;
 }
 
 export default function EditMemberModal({
@@ -44,10 +45,12 @@ export default function EditMemberModal({
         village: member.village ?? "",
         bloodGroup: member.bloodGroup ?? "",
         role: member.role ?? "MEMBER",
+        memberType: member.memberType ?? "GENERAL",
         password: "",
       });
+      setFilePreview(null);
     }
-  }, [member, reset]);
+  }, [member, reset, isOpen]);
 
   const preview = filePreview ?? member?.image ?? null;
 
@@ -64,17 +67,12 @@ export default function EditMemberModal({
     if (!member) return;
 
     try {
-      // Only send a password if the admin actually typed a new one —
-      // an empty string would otherwise overwrite the existing password.
       const { password, image, ...rest } = formValues;
       const payload: Record<string, unknown> = { ...rest };
       if (password && password.trim().length > 0) {
         payload.password = password;
       }
 
-      // Same request shape as AddMemberModal: JSON fields under "data",
-      // optional file under "file" — required because the backend's
-      // PATCH route parses req.body.data via multer + JSON.parse.
       const formData = new FormData();
       formData.append("data", JSON.stringify(payload));
       if (image?.[0]) {
@@ -168,7 +166,7 @@ export default function EditMemberModal({
               <input
                 {...register("password", { minLength: 6 })}
                 type="password"
-                placeholder="নতুন পাসওয়ার্ড (ঐচ্ছিক — পরিবর্তন করতে চাইলে দিন)"
+                placeholder="নতুন পাসওয়ার্ড (ঐচ্ছিক)"
                 className="w-full p-3 bg-[#121417] rounded-xl border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
 
@@ -188,40 +186,49 @@ export default function EditMemberModal({
               <div className="grid grid-cols-2 gap-4">
                 <select
                   {...register("bloodGroup")}
-                  className="p-3 bg-[#121417] rounded-xl border border-gray-700 text-white w-full focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  className="p-3 bg-[#121417] rounded-xl border border-gray-700 text-white w-full"
                 >
                   <option value="">রক্তের গ্রুপ</option>
                   <option value="A_POSITIVE">A+</option>
-                  <option value="A_NEGATIVE">A−</option>
+                  <option value="A_NEGATIVE">A-</option>
                   <option value="B_POSITIVE">B+</option>
-                  <option value="B_NEGATIVE">B−</option>
+                  <option value="B_NEGATIVE">B-</option>
                   <option value="AB_POSITIVE">AB+</option>
-                  <option value="AB_NEGATIVE">AB−</option>
+                  <option value="AB_NEGATIVE">AB-</option>
                   <option value="O_POSITIVE">O+</option>
-                  <option value="O_NEGATIVE">O−</option>
+                  <option value="O_NEGATIVE">O-</option>
                 </select>
                 <select
                   {...register("role")}
-                  className="p-3 bg-[#121417] rounded-xl border border-gray-700 text-white w-full focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  className="p-3 bg-[#121417] rounded-xl border border-gray-700 text-white w-full"
                 >
-                  <option value="MEMBER">সদস্য</option>
-                  <option value="ADMIN">এডমিন</option>
+                  <option value="MEMBER">সদস্য (MEMBER)</option>
+                  <option value="ADMIN">এডমিন (ADMIN)</option>
                 </select>
               </div>
+
+              <select
+                {...register("memberType")}
+                className="w-full p-3 bg-[#121417] rounded-xl border border-gray-700 text-white"
+              >
+                <option value="PRESIDENT">সভাপতি</option>
+                <option value="VICE_PRESIDENT">সহ-সভাপতি</option>
+                <option value="SECRETARY">সাধারণ সম্পাদক</option>
+                <option value="JOINT_SECRETARY">যুগ্ম সম্পাদক</option>
+                <option value="TREASURER">কোষাধ্যক্ষ</option>
+                <option value="ORGANIZING_SEC">সাংগঠনিক সম্পাদক</option>
+                <option value="EXECUTIVE">কার্যকরী সদস্য</option>
+                <option value="GENERAL">সাধারণ সদস্য</option>
+                <option value="ADVISOR">উপদেষ্টা</option>
+                <option value="VOLUNTEER">স্বেচ্ছাসেবক</option>
+              </select>
 
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-emerald-600 hover:bg-emerald-700 py-3 rounded-xl font-bold text-white transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                className="w-full bg-emerald-600 hover:bg-emerald-700 py-3 rounded-xl font-bold text-white transition-colors"
               >
-                {isLoading ? (
-                  <span className="flex items-center justify-center gap-2">
-                    <span className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-                    আপডেট হচ্ছে...
-                  </span>
-                ) : (
-                  "আপডেট করুন"
-                )}
+                {isLoading ? "আপডেট হচ্ছে..." : "আপডেট করুন"}
               </button>
             </form>
           </motion.div>

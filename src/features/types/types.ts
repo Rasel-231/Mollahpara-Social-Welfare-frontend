@@ -94,8 +94,8 @@ export const MemberRegistrationSchema = z.object({
     designation: z.string().optional(),
     memberType: z.enum(["PRESIDENT", "VICE_PRESIDENT", "SECRETARY", "JOINT_SECRETARY", "TREASURER", "ORGANIZING_SEC", "EXECUTIVE", "GENERAL", "ADVISOR", "VOLUNTEER"]).optional(),
     nid: z.string().optional(),
-    address: z.string().min(5, "ঠিকানা কমপক্ষে ৫ অক্ষর হতে হবে"),
-    village: z.string().optional(),
+    address: z.string().optional(),
+    village: z.string().min(5, "ঠিকানা কমপক্ষে ৫ অক্ষর হতে হবে"),
     dateOfBirth: z.string().optional(),
     occupation: z.string().optional(),
 });

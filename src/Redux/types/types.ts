@@ -72,6 +72,12 @@ export interface IUser {
     createdAt: Date;
     updatedAt: Date;
     donorId?: string | null;
+    memberType?: string | null;
+    nid?: string | null;
+    nameEn?: string | null;
+    address?: string | null;
+    dateOfBirth?: string | null;
+    occupation?: string | null;
 }
 
 export interface IMessage {

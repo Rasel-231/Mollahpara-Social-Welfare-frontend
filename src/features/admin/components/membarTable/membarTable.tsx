@@ -180,7 +180,7 @@
 "use client";
 
 import { useState } from "react";
-import { Search, Edit2, Trash2, Settings } from "lucide-react";
+import { Search, Edit2, Trash2 } from "lucide-react";
 import Image from "next/image";
 import AddMemberModal from "@/components/shared/Modal/addMemberModal";
 import EditMemberModal from "@/components/shared/Modal/editMemberModal";
@@ -270,9 +270,6 @@ export default function MemberTable() {
                 <td className="py-4">{m.email}</td>
 
                 <td className="py-4 text-right flex justify-end gap-2">
-                  <button className="p-2 bg-gray-800 rounded-lg text-emerald-500">
-                    <Settings size={16} />
-                  </button>
                   <button
                     onClick={() => handleEditClick(m)}
                     className="p-2 bg-gray-800 rounded-lg text-emerald-500"

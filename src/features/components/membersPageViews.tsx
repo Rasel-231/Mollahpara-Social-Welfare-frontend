@@ -11,6 +11,7 @@ import {
   MemberRegistrationInput,
   MemberRegistrationSchema,
 } from "../types/types";
+import { IUser } from "@/Redux/types/types";
 import {
   useCreateUserMutation,
   useGetAllUsersQuery,
@@ -57,15 +58,6 @@ const badgeGradients: Record<string, string> = {
   bronze: "from-amber-600 to-amber-800",
 };
 
-interface Member {
-  id: string;
-  name: string;
-  image: string;
-  isActive: boolean;
-  bloodGroup: string;
-  memberType: string;
-}
-
 export default function MembersPageView() {
   const [showForm, setShowForm] = useState(false);
   const [search, setSearch] = useState("");
@@ -75,7 +67,7 @@ export default function MembersPageView() {
   const fileRef = useRef<HTMLInputElement>(null);
 
   const { data: userResponse } = useGetAllUsersQuery();
-  const userData: Member[] = userResponse?.data || [];
+  const userData: IUser[] = userResponse?.data || [];
   const [createUser] = useCreateUserMutation();
 
   const {
@@ -87,7 +79,7 @@ export default function MembersPageView() {
     resolver: zodResolver(MemberRegistrationSchema),
   });
 
-  const filtered = userData.filter((m: Member) => {
+  const filtered = userData.filter((m: IUser) => {
     const matchSearch =
       search === "" || m.name.toLowerCase().includes(search.toLowerCase());
     const matchBlood = bloodFilter === "all" || m.bloodGroup === bloodFilter;
@@ -214,9 +206,9 @@ export default function MembersPageView() {
         </p>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-          {filtered.map((member: Member, i: number) => (
+          {filtered.map((member: IUser, i: number) => (
             <motion.div
-              key={member.id}
+              key={i}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: i * 0.05 }}
@@ -228,7 +220,7 @@ export default function MembersPageView() {
               />
               <div className="relative mt-2 mb-3 w-16 h-16 rounded-full overflow-hidden ring-3 ring-welfare-gold-200 shadow-md">
                 <Image
-                  src={member.image}
+                  src={member.image || "/avatar.jpg"}
                   alt={member.name}
                   fill
                   sizes="64px"
@@ -252,12 +244,12 @@ export default function MembersPageView() {
                   background: "linear-gradient(135deg, #166534, #15803d)",
                 }}
               >
-                {memberRoleMapping[member.memberType] || member.memberType}
+                {member.memberType ? memberRoleMapping[member.memberType] || member.memberType : "সাধারণ সদস্য"}
               </span>
               <div className="flex items-center gap-1 text-xs text-red-500">
                 <span>🩸</span>
                 <span className="font-bold">
-                  {bloodGroupMapping[member.bloodGroup]}
+                  {member.bloodGroup ? bloodGroupMapping[member.bloodGroup] : "—"}
                 </span>
               </div>
             </motion.div>
