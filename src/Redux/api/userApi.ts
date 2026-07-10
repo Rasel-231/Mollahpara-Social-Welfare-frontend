@@ -51,6 +51,24 @@ export const userApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: [tagtypes.user],
         }),
+
+        approveUser: build.mutation<IResponse<IUser>, string>({
+            query: (id) => ({
+                url: `users/${id}/approve`,
+                method: "PATCH",
+                withCredentials: true,
+            }),
+            invalidatesTags: [tagtypes.user],
+        }),
+
+        rejectUser: build.mutation<IResponse<IUser>, string>({
+            query: (id) => ({
+                url: `users/${id}/reject`,
+                method: "PATCH",
+                withCredentials: true,
+            }),
+            invalidatesTags: [tagtypes.user],
+        }),
     }),
     overrideExisting: true,
 });
@@ -61,4 +79,6 @@ export const {
     useGetSingleUserQuery,
     useUpdateUserMutation,
     useDeleteUserMutation,
+    useApproveUserMutation,
+    useRejectUserMutation,
 } = userApi;

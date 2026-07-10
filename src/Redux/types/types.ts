@@ -1,7 +1,39 @@
 export enum tagtypes {
     user = "user",
+    fund = "fund",
+    complain = "complain",
+    news = "news",
+    gallery = "gallery",
+    event = "event",
+    contact = "contact",
+    donor = "donor",
+    bloodRequest = "bloodRequest",
+    scholarship = "scholarship",
+    video = "video",
 }
 
+export interface IDonor {
+    id: string;
+    name: string;
+    phone: string;
+    bloodGroup: string;
+    lastDonationDate?: string | null;
+    address: string;
+    isAvailable: boolean;
+    userId?: string | null;
+    createdAt: Date;
+    user?: { id: string; name: string; email: string };
+}
+
+export interface ICreateDonor {
+    name: string;
+    phone: string;
+    bloodGroup: string;
+    lastDonationDate?: string;
+    address: string;
+    isAvailable?: boolean;
+    userId?: string;
+}
 export enum Role {
     ADMIN = "ADMIN",
     MEMBER = "MEMBER",
@@ -9,7 +41,19 @@ export enum Role {
     USER = "USER"
 }
 
-export const tagtypeList = [tagtypes.user];
+export const tagtypeList = [
+    tagtypes.user,
+    tagtypes.fund,
+    tagtypes.complain,
+    tagtypes.news,
+    tagtypes.gallery,
+    tagtypes.event,
+    tagtypes.contact,
+    tagtypes.donor,
+    tagtypes.bloodRequest,
+    tagtypes.scholarship,
+    tagtypes.video,
+];
 
 export interface IResponse<T = unknown> {
     success: boolean;
@@ -80,6 +124,35 @@ export interface IUser {
     occupation?: string | null;
 }
 
+export interface IBloodRequests {
+    id: string;
+    patientName: string;
+    bloodGroup: string;
+    hospitalName: string;
+    contactPhone: string;
+    requiredDate: Date;
+    unitsRequired: number;
+    urgency: string;
+    notes?: string | null;
+    status: string;
+    requesterId?: string | null;
+    createdAt: Date;
+    requester?: { id: string; name: string; email: string };
+}
+
+export interface ICreateBloodRequest {
+    patientName: string;
+    bloodGroup: string;
+    hospitalName: string;
+    contactPhone: string;
+    requiredDate: string;
+    unitsRequired: number;
+    urgency: string;
+    notes?: string;
+    requesterId?: string;
+}
+
+
 export interface IMessage {
     _id: string;
     user: IUser;
@@ -88,4 +161,52 @@ export interface IMessage {
     parentMessage?: IMessage | string | null;
     createdAt: string;
     updatedAt: string;
+}
+
+export enum PaymentMethod {
+    BKASH = "BKASH",
+    NAGAD = "NAGAD",
+    ROCKET = "ROCKET",
+    CREDIT_CARD = "CREDIT_CARD",
+    BANK_TRANSFER = "BANK_TRANSFER",
+}
+
+export enum DonationStatus {
+    PENDING = "PENDING",
+    VERIFIED = "VERIFIED",
+    REJECTED = "REJECTED",
+}
+
+export enum DonationPurpose {
+    GENERAL = "GENERAL",
+    BLOOD_DONATION = "BLOOD_DONATION",
+    EDUCATION = "EDUCATION",
+    RELIEF = "RELIEF",
+    OTHER = "OTHER",
+}
+
+export interface IFund {
+    id: string;
+    donorName: string;
+    phone: string;
+    email?: string | null;
+    amount: number;
+    paymentMethod: PaymentMethod;
+    transactionId: string;
+    purpose: DonationPurpose;
+    message?: string | null;
+    status: DonationStatus;
+    memberId?: string | null;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface Member {
+    id: string;
+    name: string;
+    roleBn: string;
+    avatar: string;
+    bloodGroup: string;
+    badgeType: "gold" | "silver" | "bronze";
+    isActive: boolean;
 }

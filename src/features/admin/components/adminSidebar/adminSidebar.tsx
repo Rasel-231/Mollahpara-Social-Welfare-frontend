@@ -9,6 +9,7 @@ import {
   Users,
   Image as MediaIcon,
   Bell,
+  MessageSquareWarning,
   Settings,
 } from "lucide-react";
 import { useLogoutMutation, useProfileQuery } from "@/Redux/api/authApi";
@@ -18,6 +19,7 @@ const menuItems = [
   { name: "প্রকল্পসমূহ", icon: LayoutDashboard, href: "/dashboard" },
   { name: "আর্থিক ব্যবস্থাপনা", icon: Wallet, href: "/dashboard/finance" },
   { name: "সদস্য ডাটাবেজ", icon: Users, href: "/dashboard/members" },
+  { name: "অভিযোগ", icon: MessageSquareWarning, href: "/dashboard/complain" },
   { name: "মিডিয়া সেন্টার", icon: MediaIcon, href: "/dashboard/media" },
   { name: "নোটিফিকেশন", icon: Bell, href: "/dashboard/notifications" },
   { name: "সেটিংস", icon: Settings, href: "/dashboard/#" },
@@ -31,15 +33,17 @@ export default function AdminSidebar({
   setIsOpen: (v: boolean) => void;
 }) {
   const router = useRouter();
-  const { data: profileResponse, isLoading } = useProfileQuery({});
+  const { data: profileData, isLoading } = useProfileQuery();
   const [logout] = useLogoutMutation();
   const [active, setActive] = useState("প্রকল্পসমূহ");
 
-  // ডাটা আছে কি না চেক করা
-  const isExist = !!profileResponse?.data;
+  const isExist = !!profileData;
+
   const handleLogout = async () => {
     try {
-      await logout({}).unwrap();
+      const refreshToken = localStorage.getItem("refreshToken") || "";
+      await logout({ refreshToken }).unwrap();
+      localStorage.removeItem("refreshToken");
       toast.success("Logout Successful");
       router.push("/login");
       router.refresh();

@@ -1,9 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { HandCoins, CheckCircle2, XCircle, Receipt } from "lucide-react"; // Info বাদ দিয়ে এখানে আইকনগুলো সাজানো
+import { HandCoins, CheckCircle2, XCircle, Receipt } from "lucide-react";
+import { toast } from "react-toastify";
+import { useUpdateFundStatusMutation } from "@/Redux/api/fundsApi";
 
 interface Donation {
+  id: string;
   senderName: string;
   amount: string | number;
   method: string;
@@ -13,10 +16,25 @@ interface Donation {
 
 export default function DonationRequest({ donation }: { donation: Donation }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [updateFundStatus, { isLoading }] = useUpdateFundStatusMutation();
 
-  const handleAction = (action: string) => {
-    console.log(`Donation of ${donation.amount} ${action}ed`);
-    setIsModalOpen(false);
+  const handleAction = async (action: "VERIFIED" | "REJECTED") => {
+    try {
+      await updateFundStatus({ id: donation.id, status: action }).unwrap();
+      toast.success(
+        action === "VERIFIED"
+          ? "অনুদান যাচাইকৃত হয়েছে।"
+          : "অনুদান প্রত্যাখ্যাত হয়েছে।",
+        { position: "top-right", autoClose: 3000, theme: "colored" }
+      );
+      setIsModalOpen(false);
+    } catch {
+      toast.error("স্ট্যাটাস আপডেট করতে সমস্যা হয়েছে।", {
+        position: "top-right",
+        autoClose: 3000,
+        theme: "colored",
+      });
+    }
   };
 
   return (
@@ -29,12 +47,11 @@ export default function DonationRequest({ donation }: { donation: Donation }) {
           </div>
           <div>
             <h4 className="text-white font-bold">{donation.senderName}</h4>
-            <p className="text-emerald-400 font-semibold text-sm">{donation.amount} টাকা পাঠিয়েছেন</p>
+            <p className="text-emerald-400 font-semibold text-sm">{donation.amount} টাকা পাঠিয়েছেন</p>
           </div>
         </div>
         
         <div className="flex gap-2">
-          {/* এখানে নির্দিষ্ট বাটন হিসেবে CheckCircle2 ব্যবহার করা হয়েছে */}
           <button 
             onClick={() => setIsModalOpen(true)} 
             className="bg-emerald-600 hover:bg-emerald-700 p-2 rounded-lg text-white transition-all"
@@ -54,7 +71,6 @@ export default function DonationRequest({ donation }: { donation: Donation }) {
                 <Receipt className="text-emerald-500" size={24} />
                 <h3 className="text-xl font-bold">লেনদেনের তথ্য</h3>
               </div>
-              {/* ক্লোজ করার জন্য XCircle আইকন */}
               <button onClick={() => setIsModalOpen(false)} className="text-gray-400 hover:text-white">
                 <XCircle size={24} />
               </button>
@@ -70,15 +86,20 @@ export default function DonationRequest({ donation }: { donation: Donation }) {
             
             <div className="flex gap-3">
               <button 
-                onClick={() => handleAction("accept")} 
-                className="flex-1 bg-emerald-600 py-2 rounded-lg font-bold hover:bg-emerald-700 transition-all flex items-center justify-center gap-2"
+                onClick={() => handleAction("VERIFIED")} 
+                disabled={isLoading}
+                className="flex-1 bg-emerald-600 py-2 rounded-lg font-bold hover:bg-emerald-700 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
               >
-                <CheckCircle2 size={18} /> Confirm
+                {isLoading ? (
+                  <div className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+                ) : (
+                  <CheckCircle2 size={18} />
+                )} Confirm
               </button>
-              {/* এখানেও XCircle ব্যবহার করা হয়েছে */}
               <button 
-                onClick={() => setIsModalOpen(false)} 
-                className="flex-1 bg-gray-700 py-2 rounded-lg font-bold hover:bg-gray-600 transition-all flex items-center justify-center gap-2"
+                onClick={() => handleAction("REJECTED")} 
+                disabled={isLoading}
+                className="flex-1 bg-gray-700 py-2 rounded-lg font-bold hover:bg-gray-600 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 <XCircle size={18} /> Cancel
               </button>

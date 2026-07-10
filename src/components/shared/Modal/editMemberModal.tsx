@@ -18,6 +18,7 @@ interface EditMemberFormData {
   bloodGroup: string;
   role: string;
   memberType: string;
+  isActive: boolean;
   password?: string;
   image?: FileList;
 }
@@ -45,9 +46,11 @@ export default function EditMemberModal({
         village: member.village ?? "",
         bloodGroup: member.bloodGroup ?? "",
         role: member.role ?? "MEMBER",
+        isActive: member.isActive ?? true,
         memberType: member.memberType ?? "GENERAL",
         password: "",
       });
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setFilePreview(null);
     }
   }, [member, reset, isOpen]);
@@ -221,6 +224,16 @@ export default function EditMemberModal({
                 <option value="GENERAL">সাধারণ সদস্য</option>
                 <option value="ADVISOR">উপদেষ্টা</option>
                 <option value="VOLUNTEER">স্বেচ্ছাসেবক</option>
+              </select>
+
+              <select
+                {...register("isActive", {
+                  setValueAs: (v) => v === "true",
+                })}
+                className="w-full p-3 bg-[#121417] rounded-xl border border-gray-700 text-white"
+              >
+                <option value="true">সক্রিয় (Active)</option>
+                <option value="false">নিষ্ক্রিয় (Inactive)</option>
               </select>
 
               <button

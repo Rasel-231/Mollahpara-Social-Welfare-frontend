@@ -5,55 +5,51 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
 import { Member } from "../types/types";
-
-
-const mockMembers: Member[] = [
-  {
-    id: "1",
-    nameBn: "এনবি. সভাপতি সংস্থা",
-    nameEn: "Organization President",
-    role: "President",
-    roleBn: "সভাপতি সংস্থা",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80",
-    bloodGroup: "B+",
-    joinedAt: "2020-01-01",
-    badgeType: "gold",
-    memberType: "president",
-    isActive: true,
-  },
-  {
-    id: "2",
-    nameBn: "মোহন. সরপতি বেন্তিনী",
-    nameEn: "Vice President",
-    role: "Secretary",
-    roleBn: "সরপতি বেন্তিনী",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80",
-    bloodGroup: "A+",
-    joinedAt: "2020-02-01",
-    badgeType: "gold",
-    memberType: "secretary",
-    isActive: true,
-  },
-  {
-    id: "3",
-    nameBn: "নাম. মন্ত্রণদি বেন্তিনী",
-    nameEn: "Treasurer",
-    role: "Treasurer",
-    roleBn: "মন্ত্রণদি বেন্তিনী",
-    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80",
-    bloodGroup: "O+",
-    joinedAt: "2020-03-01",
-    badgeType: "silver",
-    memberType: "treasurer",
-    isActive: true,
-  },
-];
+import { useGetAllUsersQuery } from "@/Redux/api/userApi";
+import { IUser, Role, BloodGroup } from "@/Redux/types/types";
 
 const badgeColors: Record<string, string> = {
   gold: "from-yellow-400 to-amber-500",
   silver: "from-slate-300 to-slate-400",
   bronze: "from-amber-600 to-amber-700",
 };
+
+const roleBnMap: Record<Role, string> = {
+  [Role.ADMIN]: "এডমিন",
+  [Role.MODERATOR]: "মডারেটর",
+  [Role.MEMBER]: "সদস্য",
+  [Role.USER]: "ব্যবহারকারী",
+};
+
+const badgeTypeMap: Record<Role, "gold" | "silver" | "bronze"> = {
+  [Role.ADMIN]: "gold",
+  [Role.MODERATOR]: "gold",
+  [Role.MEMBER]: "silver",
+  [Role.USER]: "bronze",
+};
+
+const bloodGroupMap: Record<BloodGroup, string> = {
+  [BloodGroup.A_POSITIVE]: "A+",
+  [BloodGroup.A_NEGATIVE]: "A-",
+  [BloodGroup.B_POSITIVE]: "B+",
+  [BloodGroup.B_NEGATIVE]: "B-",
+  [BloodGroup.AB_POSITIVE]: "AB+",
+  [BloodGroup.AB_NEGATIVE]: "AB-",
+  [BloodGroup.O_POSITIVE]: "O+",
+  [BloodGroup.O_NEGATIVE]: "O-",
+};
+
+function mapUserToMember(user: IUser): Member {
+  return {
+    id: user.id,
+    name: user.name,
+    roleBn: roleBnMap[user.role] ?? "সদস্য",
+    avatar: user.image || "/default-avatar.png",
+    bloodGroup: user.bloodGroup ? bloodGroupMap[user.bloodGroup] : "N/A",
+    badgeType: badgeTypeMap[user.role] ?? "bronze",
+    isActive: user.isActive,
+  } as Member;
+}
 
 function MemberCard({ member, delay }: { member: Member; delay: number }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -68,7 +64,8 @@ function MemberCard({ member, delay }: { member: Member; delay: number }) {
       whileHover={{ y: -5 }}
       className="relative rounded-2xl overflow-hidden shadow-md group cursor-pointer"
       style={{
-        background: "linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,253,244,0.9) 100%)",
+        background:
+          "linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,253,244,0.9) 100%)",
         border: "1px solid rgba(22, 101, 52, 0.15)",
       }}
     >
@@ -100,7 +97,7 @@ function MemberCard({ member, delay }: { member: Member; delay: number }) {
 
         {/* Name */}
         <h3 className="font-bold text-welfare-green-800 text-sm font-bengali leading-5 mb-1">
-          {member.nameBn}
+          {member.name}
         </h3>
 
         {/* Role badge */}
@@ -116,7 +113,9 @@ function MemberCard({ member, delay }: { member: Member; delay: number }) {
         {/* Blood group */}
         <div className="mt-2 flex items-center gap-1 text-xs">
           <span className="text-red-500">🩸</span>
-          <span className="text-welfare-green-600 font-medium">{member.bloodGroup}</span>
+          <span className="text-welfare-green-600 font-medium">
+            {member.bloodGroup}
+          </span>
         </div>
       </div>
     </motion.div>
@@ -126,6 +125,10 @@ function MemberCard({ member, delay }: { member: Member; delay: number }) {
 export default function MembersSection() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
+
+  const { data: response } = useGetAllUsersQuery();
+  const users: IUser[] = response?.data || [];
+  const mockMembers: Member[] = users.map(mapUserToMember);
 
   return (
     <section ref={ref} className="py-12 lg:py-16">

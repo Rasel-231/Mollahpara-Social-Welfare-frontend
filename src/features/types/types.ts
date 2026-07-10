@@ -136,7 +136,7 @@ export const BloodRequestSchema = z.object({
 });
 
 export const DonorRegistrationSchema = z.object({
-    nameBn: z.string().min(2, "নাম কমপক্ষে ২ অক্ষর হতে হবে"),
+    name: z.string().min(2, "নাম কমপক্ষে ২ অক্ষর হতে হবে"),
     phone: z.string().regex(/^01[3-9]\d{8}$/, "বৈধ বাংলাদেশী ফোন নম্বর দিন"),
     bloodGroup: z.enum(["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]),
     lastDonationDate: z.string().optional(),
@@ -169,9 +169,9 @@ export const DonationFormSchema = z.object({
     amount: z
         .number()
         .min(10, "সর্বনিম্ন ১০ টাকা"),
-    paymentMethod: z.enum(["bkash", "nagad", "rocket", "creditCard"]),
+    paymentMethod: z.enum(["BKASH", "NAGAD", "ROCKET", "CREDIT_CARD", "BANK_TRANSFER"]),
     transactionId: z.string().min(5, "লেনদেন আইডি কমপক্ষে ৫ অক্ষর হতে হবে"),
-    purpose: z.enum(["general", "bloodDonation", "education", "relief", "other"]),
+    purpose: z.enum(["GENERAL", "BLOOD_DONATION", "EDUCATION", "RELIEF", "OTHER"]),
     message: z.string().optional(),
 });
 

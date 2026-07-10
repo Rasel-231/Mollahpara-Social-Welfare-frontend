@@ -11,15 +11,30 @@ const data = {
   ],
   monthly: [
     { name: "আব্দুর রহিম", month: "জুন ২০২৬", amount: "৫০০", status: "Paid" },
-    { name: "ফাতেমা বেগম", month: "জুন ২০২৬", amount: "৫০০", status: "Pending" },
+    {
+      name: "ফাতেমা বেগম",
+      month: "জুন ২০২৬",
+      amount: "৫০০",
+      status: "Pending",
+    },
   ],
   costing: [
     { purpose: "অফিস ভাড়া", amount: "৪,০০০", date: "০১/০৬/২০২৬" },
     { purpose: "ইন্টারনেট বিল", amount: "১,৫০০", date: "০২/০৬/২০২৬" },
   ],
   donation: [
-    { project: "রক্তদান কর্মসূচি", amount: "২,০০০", date: "০৩/০৬/২০২৬", note: "খাবার খরচ" },
-    { project: "ত্রাণ সহায়তা", amount: "৮,০০০", date: "০৪/০৬/২০২৬", note: "বন্যা ত্রান" },
+    {
+      project: "রক্তদান কর্মসূচি",
+      amount: "২,০০০",
+      date: "০৩/০৬/২০২৬",
+      note: "খাবার খরচ",
+    },
+    {
+      project: "ত্রাণ সহায়তা",
+      amount: "৮,০০০",
+      date: "০৪/০৬/২০২৬",
+      note: "বন্যা ত্রান",
+    },
   ],
 };
 
@@ -31,8 +46,8 @@ export default function FinanceManager() {
       {/* সামারি সেকশন (হালকা এন্ট্রি অ্যানিমেশন) */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[HandCoins, Wallet, TrendingDown, Gift].map((Icon, i) => (
-          <motion.div 
-            key={i} 
+          <motion.div
+            key={i}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
@@ -82,20 +97,51 @@ export default function FinanceManager() {
             >
               <thead className="text-gray-500 border-b border-gray-800">
                 <tr>
-                  {activeTab === "fund" && <><th>নাম</th><th>ট্রানজেকশন আইডি</th><th>পদ্ধতি</th><th>পরিমাণ</th></>}
-                  {activeTab === "monthly" && <><th>নাম</th><th>মাস</th><th>পরিমাণ</th><th>স্ট্যাটাস</th></>}
-                  {activeTab === "costing" && <><th>খাত</th><th>পরিমাণ</th><th>তারিখ</th></>}
-                  {activeTab === "donation" && <><th>প্রকল্প</th><th>পরিমাণ</th><th>তারিখ</th><th>নোট</th></>}
+                  {activeTab === "fund" && (
+                    <>
+                      <th>নাম</th>
+                      <th>ট্রানজেকশন আইডি</th>
+                      <th>পদ্ধতি</th>
+                      <th>পরিমাণ</th>
+                    </>
+                  )}
+                  {activeTab === "monthly" && (
+                    <>
+                      <th>নাম</th>
+                      <th>মাস</th>
+                      <th>পরিমাণ</th>
+                      <th>স্ট্যাটাস</th>
+                    </>
+                  )}
+                  {activeTab === "costing" && (
+                    <>
+                      <th>খাত</th>
+                      <th>পরিমাণ</th>
+                      <th>তারিখ</th>
+                    </>
+                  )}
+                  {activeTab === "donation" && (
+                    <>
+                      <th>প্রকল্প</th>
+                      <th>পরিমাণ</th>
+                      <th>তারিখ</th>
+                      <th>নোট</th>
+                    </>
+                  )}
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-800">
-                {data[activeTab as keyof typeof data].map((item: Record<string, string>, i) => (
-                  <tr key={i} className="hover:bg-gray-800/30">
-                    {Object.values(item).map((val, j) => (
-                      <td key={j} className="py-4 font-medium text-white">{val}</td>
-                    ))}
-                  </tr>
-                ))}
+                {data[activeTab as keyof typeof data].map(
+                  (item: Record<string, string>, i) => (
+                    <tr key={i} className="hover:bg-gray-800/30">
+                      {Object.values(item).map((val, j) => (
+                        <td key={j} className="py-4 font-medium text-white">
+                          {val}
+                        </td>
+                      ))}
+                    </tr>
+                  ),
+                )}
               </tbody>
             </motion.table>
           </AnimatePresence>

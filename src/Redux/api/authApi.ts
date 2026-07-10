@@ -1,5 +1,5 @@
 import { baseApi } from "../store/baseApi";
-import { IUser, tagtypes } from "../types/types";
+import { IResponse, IUser, tagtypes } from "../types/types";
 
 
 const AUTH_URL = "auth";
@@ -16,7 +16,7 @@ const apiService = baseApi
                 }),
                 invalidatesTags: [tagtypes.user],
             }),
-            profile: build.query<IUser, void>({
+            profile: build.query<IResponse<IUser>, void>({
                 query: () => ({
                     url: `${AUTH_URL}/profile`,
                     method: "GET",
@@ -24,9 +24,10 @@ const apiService = baseApi
                 providesTags: [tagtypes.user],
             }),
             logout: build.mutation<void, { refreshToken: string }>({
-                query: () => ({
+                query: (body) => ({
                     url: `${AUTH_URL}/logout`,
-                    method: "POST"
+                    method: "POST",
+                    data: body,
                 }),
                 invalidatesTags: [tagtypes.user],
             }),
