@@ -10,6 +10,7 @@ export enum tagtypes {
     bloodRequest = "bloodRequest",
     scholarship = "scholarship",
     video = "video",
+    costing = "costing",
 }
 
 export interface IDonor {
@@ -53,6 +54,7 @@ export const tagtypeList = [
     tagtypes.bloodRequest,
     tagtypes.scholarship,
     tagtypes.video,
+    tagtypes.costing,
 ];
 
 export interface IResponse<T = unknown> {
@@ -186,6 +188,7 @@ export enum DonationPurpose {
 }
 
 export interface IFund {
+    type: string;
     id: string;
     donorName: string;
     phone: string;

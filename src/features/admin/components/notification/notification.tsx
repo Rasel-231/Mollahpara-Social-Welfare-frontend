@@ -1,6 +1,12 @@
 "use client";
 
-import { Bell, Users, HeartHandshake, Droplets, GraduationCap } from "lucide-react";
+import {
+  Bell,
+  Users,
+  HeartHandshake,
+  Droplets,
+  GraduationCap,
+} from "lucide-react";
 import MembershipRequest from "../membarTable/membarshipRequest";
 import DonationRequest from "../transection/transection";
 import BloodRequestCard from "./BloodRequestCard";
@@ -137,7 +143,6 @@ export default function NotificationsPage() {
           )}
         </div>
 
-        {/* সেকশন ৩: ব্লাড রিকোয়েস্ট (নতুন যোগ করা হলো) */}
         <div>
           <div className="flex items-center gap-2 mb-4">
             <Droplets className="text-red-500" size={20} />
