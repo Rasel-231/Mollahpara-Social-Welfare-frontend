@@ -6,6 +6,9 @@ export interface DataRow {
   id: string;
   title: string;
   imageUrl?: string;
+  categoryId?: string | null;
+  categoryName?: string | null;
+  categoryIcon?: string | null;
 }
 
 interface MediaTableProps {

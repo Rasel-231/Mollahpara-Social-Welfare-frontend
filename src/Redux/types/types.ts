@@ -4,6 +4,7 @@ export enum tagtypes {
     complain = "complain",
     news = "news",
     gallery = "gallery",
+    galleryCategory = "galleryCategory",
     event = "event",
     contact = "contact",
     donor = "donor",
@@ -11,6 +12,8 @@ export enum tagtypes {
     scholarship = "scholarship",
     video = "video",
     costing = "costing",
+    monthlyChanda = "monthlyChanda",
+    projectFund = "projectFund",
 }
 
 export interface IDonor {
@@ -48,6 +51,7 @@ export const tagtypeList = [
     tagtypes.complain,
     tagtypes.news,
     tagtypes.gallery,
+    tagtypes.galleryCategory,
     tagtypes.event,
     tagtypes.contact,
     tagtypes.donor,
@@ -55,6 +59,8 @@ export const tagtypeList = [
     tagtypes.scholarship,
     tagtypes.video,
     tagtypes.costing,
+    tagtypes.monthlyChanda,
+    tagtypes.projectFund,
 ];
 
 export interface IResponse<T = unknown> {

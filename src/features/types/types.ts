@@ -182,9 +182,8 @@ export type DonationFormInput = z.infer<typeof DonationFormSchema>;
 export const GalleryItemSchema = z.object({
     id: z.string(),
     title: z.string(),
-    titleBn: z.string(),
     image: z.string().url(),
-    category: z.enum(["bloodDonation", "relief", "education", "event", "other"]),
+    category: z.string().optional().default("other"),
     date: z.string(),
     description: z.string().optional(),
 });

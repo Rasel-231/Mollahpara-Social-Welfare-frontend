@@ -7,6 +7,7 @@ import { SectionCard } from "./sectionCard";
 import { useCreateVideoMutation } from "@/Redux/api/videoApi";
 import { useCreateNewsMutation } from "@/Redux/api/newsApi";
 import { useCreateGalleryMutation } from "@/Redux/api/galleryApi";
+import { useGetAllGalleryCategoriesQuery } from "@/Redux/api/galleryCategoryApi";
 import { useCreateEventMutation } from "@/Redux/api/upcomingEventApi";
 import { useProfileQuery } from "@/Redux/api/authApi";
 import { toast } from "react-toastify";
@@ -35,10 +36,13 @@ export default function MediaUploadPage() {
 
   // ─── Gallery ────────────────────────────────────
   const [galleryCaption, setGalleryCaption] = useState("");
+  const [galleryCategoryId, setGalleryCategoryId] = useState("");
   const [galleryFile, setGalleryFile] = useState<File | null>(null);
   const galleryFileRef = useRef<HTMLInputElement>(null);
   const [createGallery, { isLoading: creatingGallery }] =
     useCreateGalleryMutation();
+  const { data: categoriesData } = useGetAllGalleryCategoriesQuery();
+  const galleryCategories = categoriesData?.data ?? [];
 
   // ─── Handlers ──────────────────────────────────
 
@@ -115,6 +119,7 @@ export default function MediaUploadPage() {
     try {
       const fd = new FormData();
       fd.append("title", galleryCaption);
+      if (galleryCategoryId) fd.append("categoryId", galleryCategoryId);
       fd.append("file", galleryFile);
       await createGallery(fd).unwrap();
       toast.success("ছবি আপলোড করা হয়েছে।");
@@ -227,6 +232,18 @@ export default function MediaUploadPage() {
             value={galleryCaption}
             onChange={(e) => setGalleryCaption(e.target.value)}
           />
+          <select
+            value={galleryCategoryId}
+            onChange={(e) => setGalleryCategoryId(e.target.value)}
+            className="w-full bg-[#0b0e14] border border-gray-800 rounded-xl p-3 mb-3 text-white text-sm md:text-base"
+          >
+            <option value="">ক্যাটাগরি নির্বাচন করুন</option>
+            {galleryCategories.map((cat) => (
+              <option key={cat.id} value={cat.id}>
+                {cat.icon} {cat.label}
+              </option>
+            ))}
+          </select>
           <div className="w-full mb-3">
             <input
               ref={galleryFileRef}

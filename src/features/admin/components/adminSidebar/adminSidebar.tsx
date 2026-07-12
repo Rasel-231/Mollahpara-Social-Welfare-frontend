@@ -11,6 +11,7 @@ import {
   Bell,
   MessageSquareWarning,
   Settings,
+  Tag,
 } from "lucide-react";
 import { useLogoutMutation, useProfileQuery } from "@/Redux/api/authApi";
 import { toast } from "react-toastify";
@@ -21,6 +22,7 @@ const menuItems = [
   { name: "সদস্য ডাটাবেজ", icon: Users, href: "/dashboard/members" },
   { name: "অভিযোগ", icon: MessageSquareWarning, href: "/dashboard/complain" },
   { name: "মিডিয়া সেন্টার", icon: MediaIcon, href: "/dashboard/media" },
+  { name: "ক্যাটাগরি", icon: Tag, href: "/dashboard/gallery-categories" },
   { name: "নোটিফিকেশন", icon: Bell, href: "/dashboard/notifications" },
   { name: "সেটিংস", icon: Settings, href: "/dashboard/#" },
 ];

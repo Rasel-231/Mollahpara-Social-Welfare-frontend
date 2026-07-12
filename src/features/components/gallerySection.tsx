@@ -4,47 +4,9 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import Link from "next/link";
-import { X, ZoomIn } from "lucide-react";
+import { X, ZoomIn, Loader2 } from "lucide-react";
 import Image from "next/image";
-
-const galleryImages = [
-  {
-    id: "1",
-    src: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&q=80",
-    alt: "রক্তদান কার্যক্রম",
-    category: "bloodDonation",
-  },
-  {
-    id: "2",
-    src: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80",
-    alt: "ত্রাণ বিতরণ",
-    category: "relief",
-  },
-  {
-    id: "3",
-    src: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=400&q=80",
-    alt: "সেবা কার্যক্রম",
-    category: "event",
-  },
-  {
-    id: "4",
-    src: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&q=80",
-    alt: "চিকিৎসা সেবা",
-    category: "relief",
-  },
-  {
-    id: "5",
-    src: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=400&q=80",
-    alt: "সম্প্রদায় উন্নয়ন",
-    category: "event",
-  },
-  {
-    id: "6",
-    src: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400&q=80",
-    alt: "শিক্ষা কার্যক্রম",
-    category: "education",
-  },
-];
+import { useGetAllGalleriesQuery } from "@/Redux/api/galleryApi";
 
 interface GalleryImageItem {
   id: string;
@@ -85,6 +47,29 @@ export default function GallerySection() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [selectedImage, setSelectedImage] = useState<GalleryImageItem | null>(null);
+  const { data: galleryData, isLoading } = useGetAllGalleriesQuery();
+
+  const galleryImages: GalleryImageItem[] = (galleryData?.data ?? []).slice(0, 12).map((g) => ({
+    id: g.id,
+    src: g.image,
+    alt: g.title,
+    category: g.category?.name ?? "other",
+  }));
+
+  if (isLoading) {
+    return (
+      <section ref={ref} className="py-12 lg:py-16">
+        <div className="container mx-auto px-4 lg:px-6 flex items-center justify-center py-20">
+          <Loader2 className="text-welfare-green-500 animate-spin" size={32} />
+        </div>
+      </section>
+    );
+  }
+
+  if (galleryImages.length === 0) return null;
+
+  const row1 = galleryImages.slice(0, 6);
+  const row2 = [...galleryImages].slice(0, 6).reverse();
 
   return (
     <section ref={ref} className="py-12 lg:py-16">
@@ -108,9 +93,9 @@ export default function GallerySection() {
           </Link>
         </motion.div>
 
-        {/* Image Grid */}
+        {/* Image Grid - Row 1 */}
         <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-3">
-          {galleryImages.map((item, i) => (
+          {row1.map((item, i) => (
             <motion.div
               key={item.id}
               initial={{ opacity: 0, scale: 0.9 }}
@@ -122,22 +107,24 @@ export default function GallerySection() {
           ))}
         </div>
 
-        {/* Second row of same images for demo */}
-        <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-3 mt-2 md:mt-3">
-          {[...galleryImages].reverse().map((item, i) => (
-            <motion.div
-              key={`${item.id}-rev`}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-              transition={{ delay: 0.5 + i * 0.06, duration: 0.5 }}
-            >
-              <GalleryCard
-                item={{ ...item, id: `${item.id}-r` }}
-                onClick={() => setSelectedImage(item)}
-              />
-            </motion.div>
-          ))}
-        </div>
+        {/* Image Grid - Row 2 */}
+        {row2.length > 0 && (
+          <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-3 mt-2 md:mt-3">
+            {row2.map((item, i) => (
+              <motion.div
+                key={`${item.id}-rev`}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+                transition={{ delay: 0.5 + i * 0.06, duration: 0.5 }}
+              >
+                <GalleryCard
+                  item={{ ...item, id: `${item.id}-r` }}
+                  onClick={() => setSelectedImage(item)}
+                />
+              </motion.div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Lightbox */}
@@ -157,13 +144,10 @@ export default function GallerySection() {
             onClick={(e) => e.stopPropagation()}
           >
             <Image
-              src={selectedImage.src.replace("w=400", "w=900")}
+              src={selectedImage.src}
               alt={selectedImage.alt}
               className="w-full h-auto"
-                width={900}
-                height={675}
-                fill
-
+              fill
             />
             <button
               onClick={() => setSelectedImage(null)}

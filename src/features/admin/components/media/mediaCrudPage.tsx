@@ -34,6 +34,10 @@ import {
   IGallery,
 } from "@/Redux/api/galleryApi";
 import {
+  useGetAllGalleryCategoriesQuery,
+  IGalleryCategory,
+} from "@/Redux/api/galleryCategoryApi";
+import {
   useGetAllEventsQuery,
   useUpdateEventMutation,
   useDeleteEventMutation,
@@ -66,7 +70,11 @@ export default function MediaCrudPage({ category }: { category: string }) {
   const [viewItem, setViewItem] = useState<DataRow | null>(null);
   const [editItem, setEditItem] = useState<DataRow | null>(null);
   const [editTitle, setEditTitle] = useState("");
+  const [editCategoryId, setEditCategoryId] = useState("");
   const [deleteItem, setDeleteItem] = useState<DataRow | null>(null);
+
+  const { data: categoriesData } = useGetAllGalleryCategoriesQuery();
+  const galleryCategories: IGalleryCategory[] = categoriesData?.data ?? [];
 
   // ─── Data fetching ───────────────────────────────
   const videosQ = useGetAllVideosQuery(undefined, { skip: cat !== "videos" });
@@ -120,6 +128,9 @@ export default function MediaCrudPage({ category }: { category: string }) {
           id: g.id,
           title: g.title,
           imageUrl: g.image,
+          categoryId: g.categoryId,
+          categoryName: g.category?.label ?? null,
+          categoryIcon: g.category?.icon ?? null,
         }));
       }
       case "projects": {
@@ -151,6 +162,12 @@ export default function MediaCrudPage({ category }: { category: string }) {
           <span className="text-gray-500">শিরোনাম:</span>{" "}
           <span className="text-white">{viewItem.title}</span>
         </p>
+        {cat === "images" && viewItem.categoryName && (
+          <p>
+            <span className="text-gray-500">ক্যাটাগরি:</span>{" "}
+            <span className="text-white">{viewItem.categoryIcon} {viewItem.categoryName}</span>
+          </p>
+        )}
         <p>
           <span className="text-gray-500">ধরণ:</span>{" "}
           <span className="text-white">{config.label}</span>
@@ -163,6 +180,7 @@ export default function MediaCrudPage({ category }: { category: string }) {
   const handleEditOpen = (item: DataRow) => {
     setEditItem(item);
     setEditTitle(item.title);
+    setEditCategoryId(item.categoryId ?? "");
   };
 
   const handleEditSave = async () => {
@@ -184,6 +202,7 @@ export default function MediaCrudPage({ category }: { category: string }) {
         case "images": {
           const fd = new FormData();
           fd.append("title", editTitle);
+          if (editCategoryId) fd.append("categoryId", editCategoryId);
           await updateGallery({ id: editItem.id, data: fd }).unwrap();
           break;
         }
@@ -221,6 +240,23 @@ export default function MediaCrudPage({ category }: { category: string }) {
         onChange={(e) => setEditTitle(e.target.value)}
         className="w-full bg-[#0b0e14] border border-gray-700 rounded-xl p-3 mb-4 text-white text-sm"
       />
+      {cat === "images" && (
+        <>
+          <label className="text-sm text-gray-400 mb-1 block">ক্যাটাগরি</label>
+          <select
+            value={editCategoryId}
+            onChange={(e) => setEditCategoryId(e.target.value)}
+            className="w-full bg-[#0b0e14] border border-gray-700 rounded-xl p-3 mb-4 text-white text-sm"
+          >
+            <option value="">ক্যাটাগরি নির্বাচন করুন</option>
+            {galleryCategories.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.icon} {c.label}
+              </option>
+            ))}
+          </select>
+        </>
+      )}
       <button
         onClick={handleEditSave}
         disabled={updatingVideo || updatingNews || updatingGallery || updatingEvent}

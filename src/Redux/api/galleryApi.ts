@@ -1,11 +1,19 @@
 import { baseApi } from "../store/baseApi";
 import { IResponse, tagtypes } from "../types/types";
 
+export interface IGalleryCategoryRef {
+    id: string;
+    name: string;
+    label: string;
+    icon?: string | null;
+}
+
 export interface IGallery {
     id: string;
     title: string;
     image: string;
-    category?: string | null;
+    categoryId?: string | null;
+    category?: IGalleryCategoryRef | null;
     createdAt: Date;
     updatedAt: Date;
 }
