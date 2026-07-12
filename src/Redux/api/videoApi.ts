@@ -14,7 +14,7 @@ export interface ICreateVideo {
     videoUrl: string;
 }
 
-const VIDEO_URL = "videos";
+const videos = "videos";
 
 const apiService = baseApi
     .enhanceEndpoints({ addTagTypes: [tagtypes.video] })
@@ -22,7 +22,7 @@ const apiService = baseApi
         endpoints: (build) => ({
             createVideo: build.mutation<IResponse<IVideo>, ICreateVideo>({
                 query: (data) => ({
-                    url: VIDEO_URL,
+                    url: videos,
                     method: "POST",
                     data,
                 }),
@@ -30,21 +30,21 @@ const apiService = baseApi
             }),
             getAllVideos: build.query<IResponse<IVideo[]>, void>({
                 query: () => ({
-                    url: VIDEO_URL,
+                    url: videos,
                     method: "GET",
                 }),
                 providesTags: [tagtypes.video],
             }),
             getVideoById: build.query<IResponse<IVideo>, string>({
                 query: (id) => ({
-                    url: `${VIDEO_URL}/${id}`,
+                    url: `${videos}/${id}`,
                     method: "GET",
                 }),
                 providesTags: [tagtypes.video],
             }),
             updateVideo: build.mutation<IResponse<IVideo>, { id: string; data: Partial<IVideo> }>({
                 query: ({ id, data }) => ({
-                    url: `${VIDEO_URL}/${id}`,
+                    url: `${videos}/${id}`,
                     method: "PATCH",
                     data,
                 }),
@@ -52,7 +52,7 @@ const apiService = baseApi
             }),
             deleteVideo: build.mutation<IResponse<null>, string>({
                 query: (id) => ({
-                    url: `${VIDEO_URL}/${id}`,
+                    url: `${videos}/${id}`,
                     method: "DELETE",
                 }),
                 invalidatesTags: [tagtypes.video],

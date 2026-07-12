@@ -21,7 +21,7 @@ const apiService = baseApi
                     url: `${GALLERY_URL}/upload`,
                     method: "POST",
                     data,
-                    headers: { "Content-Type": "multipart/form-data" },
+
                 }),
                 invalidatesTags: [tagtypes.gallery],
             }),

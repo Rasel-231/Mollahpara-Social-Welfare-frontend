@@ -1,12 +1,14 @@
 "use client";
 
-import { Bell, Users, HeartHandshake, Droplets } from "lucide-react";
+import { Bell, Users, HeartHandshake, Droplets, GraduationCap } from "lucide-react";
 import MembershipRequest from "../membarTable/membarshipRequest";
 import DonationRequest from "../transection/transection";
 import BloodRequestCard from "./BloodRequestCard";
+import ScholarshipRequestCard from "./ScholarshipRequestCard";
 import { useGetAllFundsQuery } from "@/Redux/api/fundsApi";
 import { useGetAllUsersQuery } from "@/Redux/api/userApi";
 import { useGetAllBloodRequestsQuery } from "@/Redux/api/bloodRequestApi";
+import { useGetAllScholarshipsQuery } from "@/Redux/api/scholarshipApi";
 import { IBloodRequests } from "@/Redux/types/types";
 
 const paymentMethodLabel: Record<string, string> = {
@@ -24,6 +26,8 @@ export default function NotificationsPage() {
     useGetAllFundsQuery();
   const { data: bloodRequestResponse, isLoading: bloodLoading } =
     useGetAllBloodRequestsQuery();
+  const { data: scholarshipResponse, isLoading: scholarshipLoading } =
+    useGetAllScholarshipsQuery();
 
   const pendingUsers = (usersResponse?.data ?? [])
     .filter((u) => !u.isActive)
@@ -152,6 +156,29 @@ export default function NotificationsPage() {
           ) : (
             <p className="text-gray-500 text-sm bg-[#161a22]/30 p-4 rounded-xl border border-white/[0.02]">
               কোনো জরুরি রক্তের অনুরোধ নেই।
+            </p>
+          )}
+        </div>
+
+        {/* সেকশন ৪: স্কলারশিপ অনুরোধ */}
+        <div>
+          <div className="flex items-center gap-2 mb-4">
+            <GraduationCap className="text-emerald-400" size={20} />
+            <h2 className="text-lg font-bold text-gray-300">
+              স্কলারশিপ অনুরোধ ({(scholarshipResponse?.data ?? []).length})
+            </h2>
+          </div>
+          {scholarshipLoading ? (
+            <div className="text-gray-400 text-sm p-4">লোড হচ্ছে...</div>
+          ) : (scholarshipResponse?.data ?? []).length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {(scholarshipResponse?.data ?? []).map((s) => (
+                <ScholarshipRequestCard key={s.id} scholarship={s} />
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-500 text-sm bg-[#161a22]/30 p-4 rounded-xl border border-white/[0.02]">
+              কোনো স্কলারশিপ অনুরোধ নেই।
             </p>
           )}
         </div>

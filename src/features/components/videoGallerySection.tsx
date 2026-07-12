@@ -5,10 +5,10 @@ import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import Link from "next/link";
 import { Play, X, Eye, Clock } from "lucide-react";
-import { VideoItem } from "../types/types";
+import { useGetAllVideosQuery } from "@/Redux/api/videoApi";
+import { extractYoutubeId } from "@/lib/utils";
 
-
-const mockVideos: VideoItem[] = [
+const mockVideos = [
   {
     id: "v1",
     titleBn: "রক্তদান কর্মসূচি ২০২৩ — হাইলাইটস",
@@ -43,7 +43,7 @@ function toBengaliNum(n: number): string {
   return n.toString().split("").map(c => /\d/.test(c) ? d[parseInt(c)] : c).join("");
 }
 
-function VideoCard({ video, index }: { video: VideoItem; index: number }) {
+function VideoCard({ video, index }: { video: { id: string; titleBn: string; thumbnailUrl: string; youtubeId: string; duration: string; publishedAt: string; views: number }; index: number }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true });
@@ -162,6 +162,20 @@ function VideoCard({ video, index }: { video: VideoItem; index: number }) {
 export default function VideoGallerySection() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const { data: videosResponse } = useGetAllVideosQuery();
+  const apiVideos = (videosResponse?.data ?? []).map((v) => {
+    const youtubeId = extractYoutubeId(v.videoUrl) ?? "";
+    return {
+      id: v.id,
+      titleBn: v.title,
+      thumbnailUrl: `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`,
+      youtubeId,
+      duration: "",
+      publishedAt: new Date(v.createdAt).toISOString().split("T")[0],
+      views: 0,
+    };
+  });
+  const videos = apiVideos.length > 0 ? apiVideos : mockVideos;
 
   return (
     <section ref={ref} className="py-12 lg:py-16 parchment-bg">
@@ -190,12 +204,12 @@ export default function VideoGallerySection() {
           transition={{ duration: 0.7, delay: 0.1 }}
           className="mb-6"
         >
-          <VideoCard video={mockVideos[0]} index={0} />
+          <VideoCard video={videos[0]} index={0} />
         </motion.div>
 
         {/* Sub videos */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-          {mockVideos.slice(1).map((video, i) => (
+          {videos.slice(1).map((video, i) => (
             <VideoCard key={video.id} video={video} index={i + 1} />
           ))}
         </div>

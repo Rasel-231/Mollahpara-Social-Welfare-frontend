@@ -32,11 +32,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import { useCreateScholarshipMutation } from "@/Redux/api/scholarshipApi";
 import { educationAidSchema, type EducationAidFormValues } from "./schema";
-
-/* -------------------------------------------------------------------------- */
-/*  Static config                                                             */
-/* -------------------------------------------------------------------------- */
 
 const CLASS_OPTIONS = [
   "ষষ্ঠ শ্রেণি",
@@ -93,10 +90,6 @@ const SECTIONS: {
   },
 ];
 
-/* -------------------------------------------------------------------------- */
-/*  Field shell — ledger-line input row                                      */
-/* -------------------------------------------------------------------------- */
-
 function FieldRow({
   label,
   icon: Icon,
@@ -131,10 +124,6 @@ function FieldRow({
   );
 }
 
-/* -------------------------------------------------------------------------- */
-/*  File drop input styled like a clipped-in document                        */
-/* -------------------------------------------------------------------------- */
-
 function FileSlot({
   fileName,
   onPick,
@@ -162,12 +151,8 @@ function FileSlot({
   );
 }
 
-/* -------------------------------------------------------------------------- */
-/*  Main form                                                                 */
-/* -------------------------------------------------------------------------- */
-
 export default function EducationAidForm() {
-  const [submitting, setSubmitting] = useState(false);
+  const [createScholarship, { isLoading }] = useCreateScholarshipMutation();
   const [submitted, setSubmitted] = useState(false);
 
   const {
@@ -200,14 +185,17 @@ export default function EducationAidForm() {
     return map;
   }, [values]);
 
-  const onSubmit = async () => {
-    setSubmitting(true);
+  const onSubmit = async (data: EducationAidFormValues) => {
     try {
-      // TODO: replace with real API call, e.g.
-      // const fd = new FormData();
-      // Object.entries(data).forEach(([k, v]) => fd.append(k, v as any));
-      // await fetch('/api/v1/scholarship-applications', { method: 'POST', body: fd });
-      await new Promise((r) => setTimeout(r, 900));
+      const fd = new FormData();
+      Object.entries(data).forEach(([k, v]) => {
+        if (v instanceof File) {
+          fd.append(k, v);
+        } else if (v !== undefined && v !== null) {
+          fd.append(k, String(v));
+        }
+      });
+      await createScholarship(fd).unwrap();
       setSubmitted(true);
       toast.success("আবেদন জমা হয়েছে", {
         description: "আমাদের টিম শীঘ্রই আপনার আবেদনটি পর্যালোচনা করবে।",
@@ -216,8 +204,6 @@ export default function EducationAidForm() {
       toast.error("জমা দিতে সমস্যা হয়েছে", {
         description: "একটু পর আবার চেষ্টা করুন।",
       });
-    } finally {
-      setSubmitting(false);
     }
   };
 
@@ -456,10 +442,10 @@ export default function EducationAidForm() {
             <div className="lg:col-span-3">
               <Button
                 type="submit"
-                disabled={submitting}
+                disabled={isLoading}
                 className="h-11 w-full rounded-sm bg-[#1B2A4A] text-base font-semibold text-[#FAF7F0] hover:bg-[#1B2A4A]/90 sm:w-auto sm:px-10"
               >
-                {submitting ? "জমা হচ্ছে..." : "আবেদন জমা দিন"}
+                {isLoading ? "জমা হচ্ছে..." : "আবেদন জমা দিন"}
               </Button>
             </div>
           </form>

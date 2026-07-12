@@ -3,10 +3,16 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
+import { useGetAllVideosQuery } from "@/Redux/api/videoApi";
+import { extractYoutubeId } from "@/lib/utils";
 
 export default function VideoGallery() {
+  const { data: videosResponse } = useGetAllVideosQuery();
+  const videos = videosResponse?.data ?? [];
   const [isPlaying, setIsPlaying] = useState(false);
-  const videoId = "Q5bx9AEHeuE";
+  const videoId = videos[0]
+    ? extractYoutubeId(videos[0].videoUrl) ?? "Q5bx9AEHeuE"
+    : "Q5bx9AEHeuE";
 
   return (
     <section className="py-20 bg-white">

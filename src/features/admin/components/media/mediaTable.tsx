@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Edit, Trash, Eye, LucideIcon, Image as ImageIcon, ArrowLeft } from "lucide-react";
 import Image from "next/image";
 
-interface DataRow {
+export interface DataRow {
   id: string;
   title: string;
   imageUrl?: string;
@@ -13,9 +13,12 @@ interface MediaTableProps {
   icon: LucideIcon;
   data: DataRow[];
   onBack?: () => void;
+  onView?: (item: DataRow) => void;
+  onEdit?: (item: DataRow) => void;
+  onDelete?: (item: DataRow) => void;
 }
 
-export const MediaTable: FC<MediaTableProps> = ({ title, icon: Icon, data, onBack }) => (
+export const MediaTable: FC<MediaTableProps> = ({ title, icon: Icon, data, onBack, onView, onEdit, onDelete }) => (
   // মোবাইলের জন্য p-4 এবং বড় স্ক্রিনে p-6 করা হয়েছে
   <div className="bg-[#161a22]/50 border border-white/[0.05] rounded-2xl md:rounded-3xl p-4 md:p-6 backdrop-blur-xl">
     
@@ -38,9 +41,8 @@ export const MediaTable: FC<MediaTableProps> = ({ title, icon: Icon, data, onBac
       )}
     </div>
 
-    {/* টেবিল রেসপন্সিভ র্যাপার: overflow-x-auto দেওয়ার ফলে ছোট মোবাইলে টেবিলটি স্ক্রল করা যাবে */}
     <div className="w-full overflow-x-auto scrollbar-thin scrollbar-thumb-gray-800">
-      <table className="w-full text-left text-gray-400 min-w-[500px]"> {/* min-w নিশ্চিত করে মোবাইলে কলামগুলো গাদাগাদি হবে না */}
+      <table className="w-full text-left text-gray-400 min-w-[500px]">
         <thead className="text-xs uppercase border-b border-white/[0.05]">
           <tr>
             <th className="pb-3 text-gray-500 font-semibold w-[100px]">থাম্বনেইল</th>
@@ -71,9 +73,9 @@ export const MediaTable: FC<MediaTableProps> = ({ title, icon: Icon, data, onBac
               </td>
               <td className="py-4 text-right">
                 <div className="flex justify-end gap-1 md:gap-2">
-                  <button className="p-2 hover:text-emerald-400 transition-colors" title="দেখুন"><Eye size={16} /></button>
-                  <button className="p-2 hover:text-blue-400 transition-colors" title="এডিট করুন"><Edit size={16} /></button>
-                  <button className="p-2 hover:text-red-400 transition-colors" title="ডিলিট করুন"><Trash size={16} /></button>
+                  <button onClick={() => onView?.(item)} className="p-2 hover:text-emerald-400 transition-colors" title="দেখুন"><Eye size={16} /></button>
+                  <button onClick={() => onEdit?.(item)} className="p-2 hover:text-blue-400 transition-colors" title="এডিট করুন"><Edit size={16} /></button>
+                  <button onClick={() => onDelete?.(item)} className="p-2 hover:text-red-400 transition-colors" title="ডিলিট করুন"><Trash size={16} /></button>
                 </div>
               </td>
             </tr>
