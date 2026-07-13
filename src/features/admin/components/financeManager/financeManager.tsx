@@ -9,6 +9,7 @@ import {
   Plus,
   X,
   Loader2,
+  PiggyBank,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useGetAllFundsQuery, useCreateDonationMutation } from "@/Redux/api/fundsApi";
@@ -42,6 +43,11 @@ const projectStatusBn: Record<string, string> = {
   PLANNING: "পরিকল্পনা", ONGOING: "চলমান", COMPLETED: "সম্পন্ন", CANCELLED: "বাতিল",
 };
 
+type DonationMutation = ReturnType<typeof useCreateDonationMutation>[0];
+type MonthlyChandaMutation = ReturnType<typeof useCreateMonthlyChandaMutation>[0];
+type CostingMutation = ReturnType<typeof useCreateCostingMutation>[0];
+type ProjectFundMutation = ReturnType<typeof useCreateProjectFundMutation>[0];
+
 export default function FinanceManager() {
   const [activeTab, setActiveTab] = useState("fund");
   const [showModal, setShowModal] = useState(false);
@@ -66,28 +72,44 @@ export default function FinanceManager() {
   const isLoading = fundLoading || chandaLoading || costingLoading || pfLoading;
 
   // ─── Summary Calculation ────────────────────────
+  const totalVerifiedFunds = funds
+    .filter((f) => f.status === "VERIFIED")
+    .reduce((sum, f) => sum + Number(f.amount), 0);
+
+  const totalPaidChanda = chandas
+    .filter((c) => c.status === "PAID")
+    .reduce((sum, c) => sum + Number(c.amount), 0);
+
+  const totalCostings = costings.reduce((sum, c) => sum + Number(c.costing), 0);
+
+  const totalProjectRaised = projectFunds.reduce((sum, p) => sum + Number(p.raised), 0);
+
+  const totalFundIn = totalVerifiedFunds + totalPaidChanda;
+  const totalFundOut = totalCostings + totalProjectRaised;
+  const availableBalance = totalFundIn - totalFundOut;
+
   const summaryCards = [
     {
       label: "মোট ফান্ড",
-      value: funds.reduce((sum, f) => sum + Number(f.amount), 0),
+      value: totalVerifiedFunds,
       icon: HandCoins,
       color: "text-emerald-500",
     },
     {
       label: "মোট চাঁদা",
-      value: chandas.reduce((sum, c) => sum + Number(c.amount), 0),
+      value: totalPaidChanda,
       icon: Wallet,
       color: "text-blue-500",
     },
     {
       label: "মোট খরচ",
-      value: costings.reduce((sum, c) => sum + Number(c.costing), 0),
+      value: totalCostings,
       icon: TrendingDown,
       color: "text-red-500",
     },
     {
       label: "প্রকল্প তহবিল",
-      value: projectFunds.reduce((sum, p) => sum + Number(p.raised), 0),
+      value: totalProjectRaised,
       icon: Gift,
       color: "text-purple-500",
     },
@@ -104,6 +126,28 @@ export default function FinanceManager() {
 
   return (
     <div className="space-y-6">
+      {/* Available Balance Card */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="bg-[#1a1c21] border border-gray-800 p-6 rounded-2xl flex items-center justify-between"
+      >
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-2">
+            <div className={`w-2.5 h-2.5 rounded-full ${availableBalance >= 0 ? "bg-emerald-500" : "bg-red-500"}`}></div>
+            <span className="text-gray-400 text-sm font-medium">মোট তহবিল ব্যালেন্স</span>
+          </div>
+          <h3 className={`text-2xl md:text-3xl font-bold tracking-tight ${availableBalance >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+            ৳{availableBalance.toLocaleString("bn-BD")}
+          </h3>
+          <div className="flex gap-4 mt-1 text-xs text-gray-500">
+            <span className="text-emerald-400">আয়: +৳{totalFundIn.toLocaleString("bn-BD")}</span>
+            <span className="text-red-400">ব্যয়: -৳{totalFundOut.toLocaleString("bn-BD")}</span>
+          </div>
+        </div>
+        <PiggyBank size={40} className={`${availableBalance >= 0 ? "text-emerald-500" : "text-red-500"} opacity-80`} />
+      </motion.div>
+
       {/* Summary Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {summaryCards.map((card, i) => (
@@ -315,10 +359,10 @@ function AddModal({
   tab: string;
   onClose: () => void;
   mutations: {
-    createDonation: any; creatingDonation: boolean;
-    createChanda: any; creatingChanda: boolean;
-    createCosting: any; creatingCosting: boolean;
-    createProjectFund: any; creatingPF: boolean;
+    createDonation: DonationMutation; creatingDonation: boolean;
+    createChanda: MonthlyChandaMutation; creatingChanda: boolean;
+    createCosting: CostingMutation; creatingCosting: boolean;
+    createProjectFund: ProjectFundMutation; creatingPF: boolean;
   };
 }) {
   const [donorName, setDonorName] = useState("");
