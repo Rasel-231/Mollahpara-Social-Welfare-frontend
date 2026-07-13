@@ -50,7 +50,6 @@ export default function AdminSidebar({
       router.push("/login");
       router.refresh();
     } catch (error) {
-      console.error("Logout Error:", error);
       toast.error("Logout Failed");
     }
   };

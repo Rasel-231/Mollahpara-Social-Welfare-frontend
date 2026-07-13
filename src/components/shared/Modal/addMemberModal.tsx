@@ -71,7 +71,6 @@ export default function AddMemberModal({
       onClose();
     } catch (error: unknown) {
       const err = error as { data?: { message?: string } };
-      console.error("Error:", error);
       toast.error(err?.data?.message || "সদস্য যোগ করা যায়নি");
     }
   };

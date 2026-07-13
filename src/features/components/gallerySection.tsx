@@ -23,9 +23,12 @@ function GalleryCard({ item, onClick }: { item: GalleryImageItem; onClick: () =>
       style={{ aspectRatio: "4/3" }}
       onClick={onClick}
     >
-      <div
-        className="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
-        style={{ backgroundImage: `url(${item.src})` }}
+      <Image
+        src={item.src}
+        alt={item.alt}
+        fill
+        sizes="(max-width: 768px) 33vw, (max-width: 1024px) 33vw, 16vw"
+        className="object-cover transition-transform duration-500 group-hover:scale-110"
       />
       {/* Hover overlay */}
       <div className="absolute inset-0 bg-welfare-green-900/0 group-hover:bg-welfare-green-900/50 transition-all duration-300 flex items-center justify-center">

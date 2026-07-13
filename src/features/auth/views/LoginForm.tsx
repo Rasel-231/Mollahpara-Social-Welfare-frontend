@@ -17,7 +17,7 @@ export function LoginForm() {
       await login(data).unwrap();
       router.push("/dashboard");
     } catch (error) {
-      console.error("Login Failed:", error);
+      // handle login error
     }
   };
 

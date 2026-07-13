@@ -44,6 +44,7 @@ export default function VideoGallery() {
                 src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
                 alt="Video Thumbnail"
                 fill
+                sizes="(max-width: 896px) 100vw, 896px"
                 className="object-cover opacity-80"
                 priority
               />

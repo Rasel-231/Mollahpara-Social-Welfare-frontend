@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import ImpactStatsSection from "./impactState";
 
 export default function CombinedHeroSection() {
@@ -10,17 +11,14 @@ export default function CombinedHeroSection() {
       <section className="relative min-h-[60vh] md:min-h-[80vh] flex items-center justify-center overflow-hidden">
         {/* Background Image Container */}
         <div className="absolute inset-0 z-0">
-          <div
-            className="absolute inset-0 w-full h-full"
-            style={{
-              backgroundImage: `url('/assets/bg-image.png')`,
-              backgroundSize: "contain",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-              backgroundColor: "#000", // ইমেজটি ডার্ক দেখাতে কালো ব্যাকগ্রাউন্ড
-            }}
+          <Image
+            src="/assets/bg-image.png"
+            alt="মোল্লাপাড়া সমাজ কল্যাণ সংস্থা"
+            fill
+            sizes="100vw"
+            className="object-contain"
+            priority
           />
-          {/* *** মডিফিকেশন: এখানে অপাসিটি ০.৮০ (৮০%) করা হয়েছে যাতে ইমেজটি অনেক বেশি ডার্ক হয় *** */}
           <div className="absolute inset-0 bg-black/80" />
         </div>
 

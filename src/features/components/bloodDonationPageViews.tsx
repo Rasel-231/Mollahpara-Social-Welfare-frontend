@@ -92,8 +92,6 @@ export default function BloodDonationPageView() {
   const handleBloodRequestSubmit = requestForm.handleSubmit(
     async (data: BloodRequestInput) => {
       try {
-        console.log("Blood request submitted:", data);
-
         await createBloodRequest(data).unwrap();
 
         toast.success(
@@ -116,8 +114,6 @@ export default function BloodDonationPageView() {
   const handleDonorSubmit = donorForm.handleSubmit(
     async (data: ICreateDonor) => {
       try {
-        console.log("Donor registration submitted:", data);
-
         await createBloodDoner(data).unwrap();
 
         toast.success("রক্তদাতা হিসেবে নিবন্ধন সফল হয়েছে! আপনাকে ধন্যবাদ।", {

@@ -2,17 +2,21 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { toast } from "react-toastify";
 import { useCreateComplainMutation } from "@/Redux/api/complainApi";
 
-type ComplainFormValues = {
-  name: string;
-  phone: string;
-  email?: string;
-  location: string;
-  subject: string;
-  details: string;
-};
+const ComplainSchema = z.object({
+  name: z.string().min(2, "নাম কমপক্ষে ২ অক্ষর হতে হবে"),
+  phone: z.string().regex(/^01[3-9]\d{8}$/, "বৈধ ফোন নম্বর দিন"),
+  email: z.string().email("বৈধ ইমেইল দিন").optional().or(z.literal("")),
+  location: z.string().min(3, "এলাকার নাম দিন"),
+  subject: z.string().min(3, "বিষয় কমপক্ষে ৩ অক্ষর হতে হবে"),
+  details: z.string().min(10, "বিস্তারিত কমপক্ষে ১০ অক্ষর হতে হবে"),
+});
+
+type ComplainFormValues = z.infer<typeof ComplainSchema>;
 
 export default function ComplainModal({
   isOpen,
@@ -21,7 +25,9 @@ export default function ComplainModal({
   isOpen: boolean;
   onClose: () => void;
 }) {
-  const { register, handleSubmit, reset } = useForm<ComplainFormValues>();
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<ComplainFormValues>({
+    resolver: zodResolver(ComplainSchema),
+  });
   const [createComplain, { isLoading }] = useCreateComplainMutation();
 
   const onSubmit = async (data: ComplainFormValues) => {
@@ -64,42 +70,55 @@ export default function ComplainModal({
             </h2>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input
-                  {...register("name")}
-                  placeholder="আপনার নাম"
-                  className="p-3 rounded-xl border border-gray-300 w-full text-black"
-                  required
-                />
-                <input
-                  {...register("phone")}
-                  placeholder="ফোন নম্বর"
-                  className="p-3 rounded-xl border border-gray-300 w-full text-black"
-                  required
-                />
+                <div>
+                  <input
+                    {...register("name")}
+                    placeholder="আপনার নাম"
+                    className="p-3 rounded-xl border border-gray-300 w-full text-black"
+                  />
+                  {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
+                </div>
+                <div>
+                  <input
+                    {...register("phone")}
+                    placeholder="ফোন নম্বর"
+                    className="p-3 rounded-xl border border-gray-300 w-full text-black"
+                  />
+                  {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>}
+                </div>
               </div>
-              <input
-                {...register("email")}
-                placeholder="ইমেইল (ঐচ্ছিক)"
-                className="p-3 rounded-xl border border-gray-300 w-full text-black"
-              />
-              <input
-                {...register("location")}
-                placeholder="এলাকা"
-                className="p-3 rounded-xl border border-gray-300 w-full text-black"
-                required
-              />
-              <input
-                {...register("subject")}
-                placeholder="বিষয়"
-                className="p-3 rounded-xl border border-gray-300 w-full text-black"
-                required
-              />
-              <textarea
-                {...register("details")}
-                placeholder="বিস্তারিত অভিযোগ..."
-                className="p-3 rounded-xl border border-gray-300 w-full h-24 text-black"
-                required
-              />
+              <div>
+                <input
+                  {...register("email")}
+                  placeholder="ইমেইল (ঐচ্ছিক)"
+                  className="p-3 rounded-xl border border-gray-300 w-full text-black"
+                />
+                {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
+              </div>
+              <div>
+                <input
+                  {...register("location")}
+                  placeholder="এলাকা"
+                  className="p-3 rounded-xl border border-gray-300 w-full text-black"
+                />
+                {errors.location && <p className="text-red-500 text-xs mt-1">{errors.location.message}</p>}
+              </div>
+              <div>
+                <input
+                  {...register("subject")}
+                  placeholder="বিষয়"
+                  className="p-3 rounded-xl border border-gray-300 w-full text-black"
+                />
+                {errors.subject && <p className="text-red-500 text-xs mt-1">{errors.subject.message}</p>}
+              </div>
+              <div>
+                <textarea
+                  {...register("details")}
+                  placeholder="বিস্তারিত অভিযোগ..."
+                  className="p-3 rounded-xl border border-gray-300 w-full h-24 text-black"
+                />
+                {errors.details && <p className="text-red-500 text-xs mt-1">{errors.details.message}</p>}
+              </div>
 
               <button
                 type="submit"

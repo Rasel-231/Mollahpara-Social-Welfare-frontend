@@ -87,7 +87,6 @@ export default function EditMemberModal({
       onClose();
     } catch (error: unknown) {
       const err = error as { data?: { message?: string } };
-      console.error("Error:", error);
       toast.error(err?.data?.message || "তথ্য আপডেট করা যায়নি");
     }
   };

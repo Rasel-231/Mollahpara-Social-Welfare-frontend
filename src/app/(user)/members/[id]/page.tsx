@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 import { useRouter, useParams } from "next/navigation";
-import { useGetAllUsersQuery } from "@/Redux/api/userApi";
-import { IUser, Role, BloodGroup } from "@/Redux/types/types";
+import { useGetSingleUserQuery } from "@/Redux/api/userApi";
+import { Role, BloodGroup } from "@/Redux/types/types";
 
 const roleBnMap: Record<Role, string> = {
   [Role.ADMIN]: "এডমিন",
@@ -63,9 +63,8 @@ export default function MemberDetailPage() {
   const params = useParams();
   const id = params?.id as string;
 
-  const { data: response, isLoading, isError } = useGetAllUsersQuery();
-  const users: IUser[] = response?.data || [];
-  const user = users.find((u) => u.id === id);
+  const { data: response, isLoading, isError } = useGetSingleUserQuery(id);
+  const user = response?.data;
 
   if (isLoading) {
     return (

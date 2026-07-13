@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "react-toastify";
+import { useCreateContactMutation } from "@/Redux/api/contactApi";
 
 const ContactSchema = z.object({
   name: z.string().min(2, "নাম কমপক্ষে ২ অক্ষর হতে হবে"),
@@ -19,14 +20,26 @@ const ContactSchema = z.object({
 type ContactInput = z.infer<typeof ContactSchema>;
 
 export default function ContactPageView() {
-  const { register, handleSubmit, formState: { errors, isSubmitting }, reset } =
+  const [createContact, { isLoading: isSubmitting }] = useCreateContactMutation();
+  const { register, handleSubmit, formState: { errors }, reset } =
     useForm<ContactInput>({ resolver: zodResolver(ContactSchema) });
 
   const onSubmit = async (data: ContactInput) => {
-    await new Promise((r) => setTimeout(r, 1200));
-    console.log(data);
-    toast.success("আপনার বার্তা পাঠানো হয়েছে! আমরা শীঘ্রই সাড়া দেব। 📩", { theme: "colored" });
-    reset();
+    try {
+      await createContact({
+        name: data.name,
+        phone: data.phone,
+        email: data.email || undefined,
+        village: data.location,
+        designation: data.position,
+        subject: data.subject,
+        message: data.message,
+      }).unwrap();
+      toast.success("আপনার বার্তা পাঠানো হয়েছে! আমরা শীঘ্রই সাড়া দেব। 📩", { theme: "colored" });
+      reset();
+    } catch {
+      toast.error("বার্তা পাঠাতে ব্যর্থ হয়েছে। আবার চেষ্টা করুন।", { theme: "colored" });
+    }
   };
 
   return (

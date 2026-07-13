@@ -4,9 +4,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 import { DonationFormInput, DonationFormSchema } from "../types/types";
+import { useCreateDonationMutation } from "@/Redux/api/fundsApi";
 
 
 export function useDonationController() {
+  const [createDonation, { isLoading }] = useCreateDonationMutation();
 
   const form = useForm<DonationFormInput>({
     resolver: zodResolver(DonationFormSchema),
@@ -24,7 +26,17 @@ export function useDonationController() {
 
   const onSubmit = async (data: DonationFormInput): Promise<void> => {
     try {
-     
+      await createDonation({
+        donorName: data.donorName,
+        phone: data.phone,
+        email: data.email || undefined,
+        amount: data.amount,
+        paymentMethod: data.paymentMethod,
+        transactionId: data.transactionId,
+        purpose: data.purpose,
+        message: data.message || undefined,
+      }).unwrap();
+
       toast.success(
         `আপনার ${data.amount} টাকার অনুদান সফলভাবে গৃহীত হয়েছে! আপনাকে আন্তরিক ধন্যবাদ।`,
         {
@@ -45,5 +57,5 @@ export function useDonationController() {
     }
   };
 
-  return { form, onSubmit: form.handleSubmit(onSubmit) };
+  return { form, onSubmit: form.handleSubmit(onSubmit), isSubmitting: isLoading };
 }

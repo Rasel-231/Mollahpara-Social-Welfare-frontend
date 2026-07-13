@@ -54,6 +54,7 @@ export default function DonationSection() {
                     src={method.logo}
                     alt={method.name}
                     fill
+                    sizes="80px"
                     className="object-contain transition-transform group-hover:scale-110"
                   />
                 </div>
