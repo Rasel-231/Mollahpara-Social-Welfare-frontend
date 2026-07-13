@@ -32,15 +32,13 @@ export const axiosBaseQuery =
             } catch (error) {
                 const err = error as AxiosError;
 
-
                 if (err.response?.status === 401) {
                     try {
                         await axios.post(
-                            `${baseUrl}/auth/refresh-token`,
+                            `${baseUrl}auth/refresh-token`,
                             {},
                             { withCredentials: true }
                         );
-
 
                         const retry = await axios({
                             url: baseUrl + url,

@@ -14,8 +14,7 @@ export function LoginForm() {
 
   const onSubmit = async (data: ILoginRequest) => {
     try {
-      const result = await login(data).unwrap();
-      localStorage.setItem("refreshToken", result.refreshToken);
+      await login(data).unwrap();
       router.push("/dashboard");
     } catch (error) {
       console.error("Login Failed:", error);

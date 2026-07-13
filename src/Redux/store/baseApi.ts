@@ -4,7 +4,7 @@ import { axiosBaseQuery } from "./axiosBaseQuery";
 
 export const baseApi = createApi({
   reducerPath: "baseApi",
-  baseQuery: axiosBaseQuery({ baseUrl: "http://localhost:5000/api/v1/" }),
+  baseQuery: axiosBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1/" }),
   tagTypes: tagtypeList,
   endpoints: () => ({}),
 });
