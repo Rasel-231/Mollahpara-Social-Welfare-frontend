@@ -4,18 +4,20 @@ import { useLoginMutation } from "@/Redux/api/authApi";
 import { ILoginRequest } from "@/Redux/types/types";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 export function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect") || "/dashboard";
   const [login] = useLoginMutation();
   const { register, handleSubmit } = useForm<ILoginRequest>();
 
   const onSubmit = async (data: ILoginRequest) => {
     try {
       await login(data).unwrap();
-      router.push("/dashboard");
+      router.push(redirectTo);
     } catch (error) {
       // handle login error
     }

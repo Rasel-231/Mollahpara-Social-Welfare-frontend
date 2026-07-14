@@ -102,7 +102,11 @@ export default function Navbar() {
   }, []);
   const { data: userProfile, isLoading } = useProfileQuery();
   if (isLoading) {
-    return <div className="flex justify-center py-10"><OrangeSpinner /></div>;
+    return (
+      <div className="flex justify-center py-10">
+        <OrangeSpinner />
+      </div>
+    );
   }
   const profile = userProfile?.data;
 
