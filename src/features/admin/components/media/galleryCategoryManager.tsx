@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import OrangeSpinner from "@/components/shared/OrangeSpinner";
 import {
   ArrowLeft,
   Plus,
   Edit,
   Trash2,
-  Loader2,
   GripVertical,
   Tag,
 } from "lucide-react";
@@ -24,7 +24,7 @@ const defaultIcons = ["🩸", "🎁", "📚", "🎊", "📸", "🌿", "❤️", 
 
 export default function GalleryCategoryManager() {
   const router = useRouter();
-  const { data: categoriesData, isLoading } = useGetAllGalleryCategoriesQuery();
+  const { data: categoriesData, isLoading } = useGetAllGalleryCategoriesQuery("");
   const [createCategory, { isLoading: creating }] =
     useCreateGalleryCategoryMutation();
   const [updateCategory, { isLoading: updating }] =
@@ -107,7 +107,7 @@ export default function GalleryCategoryManager() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-[#0b0e14] flex items-center justify-center">
-        <Loader2 className="text-emerald-400 animate-spin" size={32} />
+        <OrangeSpinner />
       </div>
     );
   }

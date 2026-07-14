@@ -38,10 +38,11 @@ const apiService = baseApi
                 }),
                 invalidatesTags: [tagtypes.complain],
             }),
-            getAllComplains: build.query<IResponse<IComplain[]>, void>({
-                query: () => ({
+            getAllComplains: build.query<IResponse<IComplain[]>, string>({
+                query: (search) => ({
                     url: COMPLAIN_URL,
                     method: "GET",
+                    params: search ? { search } : undefined,
                 }),
                 providesTags: [tagtypes.complain],
             }),

@@ -41,7 +41,7 @@ export default function MediaUploadPage() {
   const galleryFileRef = useRef<HTMLInputElement>(null);
   const [createGallery, { isLoading: creatingGallery }] =
     useCreateGalleryMutation();
-  const { data: categoriesData } = useGetAllGalleryCategoriesQuery();
+  const { data: categoriesData } = useGetAllGalleryCategoriesQuery("");
   const galleryCategories = categoriesData?.data ?? [];
 
   // ─── Handlers ──────────────────────────────────

@@ -162,7 +162,7 @@ function VideoCard({ video, index }: { video: { id: string; titleBn: string; thu
 export default function VideoGallerySection() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
-  const { data: videosResponse } = useGetAllVideosQuery();
+  const { data: videosResponse } = useGetAllVideosQuery("");
   const apiVideos = (videosResponse?.data ?? []).map((v) => {
     const youtubeId = extractYoutubeId(v.videoUrl) ?? "";
     return {

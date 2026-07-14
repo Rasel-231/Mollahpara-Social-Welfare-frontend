@@ -34,8 +34,8 @@ const apiService = baseApi
                 query: (data) => ({ url: MONTHLY_CHANDA_URL, method: "POST", data }),
                 invalidatesTags: [tagtypes.monthlyChanda],
             }),
-            getAllMonthlyChandas: build.query<IResponse<IMonthlyChanda[]>, void>({
-                query: () => ({ url: MONTHLY_CHANDA_URL, method: "GET" }),
+            getAllMonthlyChandas: build.query<IResponse<IMonthlyChanda[]>, string>({
+                query: (search) => ({ url: MONTHLY_CHANDA_URL, method: "GET", params: search ? { search } : undefined }),
                 providesTags: [tagtypes.monthlyChanda],
             }),
             getMonthlyChandaById: build.query<IResponse<IMonthlyChanda>, string>({

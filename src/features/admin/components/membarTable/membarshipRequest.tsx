@@ -4,7 +4,7 @@ import { useState } from "react";
 import { User, XCircle, Info, ShieldCheck } from "lucide-react";
 import {
   useApproveUserMutation,
-  useRejectUserMutation,
+  useDeleteUserMutation,
 } from "@/Redux/api/userApi";
 import { toast } from "react-toastify";
 import Image from "next/image";
@@ -45,14 +45,14 @@ const bloodGroupLabel: Record<string, string> = {
 export default function MembershipRequest({ user }: MembershipRequestProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [approveUser, { isLoading: approving }] = useApproveUserMutation();
-  const [rejectUser, { isLoading: rejecting }] = useRejectUserMutation();
+  const [deleteUser, { isLoading: rejecting }] = useDeleteUserMutation();
 
   const handleAction = async (action: "accept" | "reject"): Promise<void> => {
     try {
       if (action === "accept") {
         await approveUser(user.id).unwrap();
       } else {
-        await rejectUser(user.id).unwrap();
+        await deleteUser(user.id).unwrap();
       }
       toast.success(
         action === "accept"

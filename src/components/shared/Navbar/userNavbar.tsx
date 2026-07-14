@@ -3,7 +3,9 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import OrangeSpinner from "@/components/shared/OrangeSpinner";
 import { cn } from "@/Redux/utils/helpers";
+import { useProfileQuery } from "@/Redux/api/authApi";
 
 interface NavItem {
   label: string;
@@ -98,6 +100,11 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+  const { data: userProfile, isLoading } = useProfileQuery();
+  if (isLoading) {
+    return <div className="flex justify-center py-10"><OrangeSpinner /></div>;
+  }
+  const profile = userProfile?.data;
 
   return (
     <>
@@ -148,13 +155,30 @@ export default function Navbar() {
 
             {/* CTA Buttons */}
             <div className="hidden lg:flex items-center gap-3">
-              <Link
-                href="/login"
-                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-welfare-green-700 border border-welfare-green-300 hover:bg-welfare-green-50 transition-all duration-200"
-              >
-                <HeartIcon className="w-4 h-4 text-welfare-green-600" />
-                প্যানেল
-              </Link>
+              {profile ? (
+                <>
+                  {" "}
+                  <Link
+                    href="/dashboard"
+                    className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-welfare-green-700 border border-welfare-green-300 hover:bg-welfare-green-50 transition-all duration-200"
+                  >
+                    <HeartIcon className="w-4 h-4 text-welfare-green-600" />
+                    ড্যাশবোর্ড
+                  </Link>
+                </>
+              ) : (
+                <>
+                  {" "}
+                  <Link
+                    href="/login"
+                    className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-welfare-green-700 border border-welfare-green-300 hover:bg-welfare-green-50 transition-all duration-200"
+                  >
+                    <HeartIcon className="w-4 h-4 text-welfare-green-600" />
+                    প্যানেল
+                  </Link>
+                </>
+              )}
+
               <Link href="/donate" className="btn-primary text-sm py-2 px-5">
                 <span>অনুদান দিন</span>
               </Link>

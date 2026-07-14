@@ -7,7 +7,7 @@ import { useGetAllVideosQuery } from "@/Redux/api/videoApi";
 import { extractYoutubeId } from "@/lib/utils";
 
 export default function VideoGallery() {
-  const { data: videosResponse } = useGetAllVideosQuery();
+  const { data: videosResponse } = useGetAllVideosQuery("");
   const videos = videosResponse?.data ?? [];
   const [isPlaying, setIsPlaying] = useState(false);
   const videoId = videos[0]

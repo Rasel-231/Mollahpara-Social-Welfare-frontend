@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import OrangeSpinner from "@/components/shared/OrangeSpinner";
 import {
   LayoutDashboard,
   Wallet,
@@ -65,7 +66,7 @@ export default function AdminSidebar({
   if (isLoading) {
     return (
       <aside className="fixed md:static w-64 h-screen bg-[#1a1c21] p-6 text-white flex items-center justify-center">
-        <p>Loading......</p>
+        <OrangeSpinner />
       </aside>
     );
   }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import OrangeSpinner from "@/components/shared/OrangeSpinner";
 import {
   GraduationCap,
   XCircle,
@@ -197,7 +198,7 @@ export default function ScholarshipRequestCard({
               className="w-full bg-red-600 py-2 rounded-lg font-bold hover:bg-red-700 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
             >
               {isLoading ? (
-                <div className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+                <OrangeSpinner size={16} />
               ) : (
                 <Trash2 size={18} />
               )}{" "}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import OrangeSpinner from "@/components/shared/OrangeSpinner";
 import {
   HandCoins,
   Wallet,
@@ -8,7 +9,6 @@ import {
   Gift,
   Plus,
   X,
-  Loader2,
   PiggyBank,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -53,10 +53,10 @@ export default function FinanceManager() {
   const [showModal, setShowModal] = useState(false);
 
   // ─── Data Fetching ──────────────────────────────
-  const { data: fundData, isLoading: fundLoading } = useGetAllFundsQuery();
-  const { data: chandaData, isLoading: chandaLoading } = useGetAllMonthlyChandasQuery();
-  const { data: costingData, isLoading: costingLoading } = useGetAllCostingsQuery();
-  const { data: projectFundData, isLoading: pfLoading } = useGetAllProjectFundsQuery();
+  const { data: fundData, isLoading: fundLoading } = useGetAllFundsQuery("");
+  const { data: chandaData, isLoading: chandaLoading } = useGetAllMonthlyChandasQuery("");
+  const { data: costingData, isLoading: costingLoading } = useGetAllCostingsQuery("");
+  const { data: projectFundData, isLoading: pfLoading } = useGetAllProjectFundsQuery("");
 
   // ─── Mutations ──────────────────────────────────
   const [createDonation, { isLoading: creatingDonation }] = useCreateDonationMutation();
@@ -117,9 +117,8 @@ export default function FinanceManager() {
 
   if (isLoading) {
     return (
-      <div className="text-center py-20 flex items-center justify-center gap-3">
-        <Loader2 className="text-emerald-400 animate-spin" size={24} />
-        <span className="text-gray-400">Loading...</span>
+      <div className="text-center py-20 flex items-center justify-center">
+        <OrangeSpinner />
       </div>
     );
   }

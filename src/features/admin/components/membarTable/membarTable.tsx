@@ -184,6 +184,7 @@ import { Search, Edit2, Trash2 } from "lucide-react";
 import Image from "next/image";
 import AddMemberModal from "@/components/shared/Modal/addMemberModal";
 import EditMemberModal from "@/components/shared/Modal/editMemberModal";
+import OrangeSpinner from "@/components/shared/OrangeSpinner";
 import {
   useGetAllUsersQuery,
   useDeleteUserMutation,
@@ -192,7 +193,7 @@ import { toast } from "react-toastify";
 import { IUser } from "@/Redux/types/types";
 
 export default function MemberTable() {
-  const { data: userResponse, isLoading } = useGetAllUsersQuery();
+  const { data: userResponse, isLoading } = useGetAllUsersQuery("");
   const [deleteUser] = useDeleteUserMutation();
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -214,7 +215,7 @@ export default function MemberTable() {
     setIsEditModalOpen(true);
   };
 
-  if (isLoading) return <div>Loading.......</div>;
+  if (isLoading) return <div className="flex justify-center py-10"><OrangeSpinner /></div>;
 
   return (
     <div className="bg-[#1a1c21] border border-gray-800 rounded-2xl p-6 text-white">

@@ -40,10 +40,11 @@ const apiService = baseApi
                 }),
                 invalidatesTags: [tagtypes.donor],
             }),
-            getAllDonors: build.query<IResponse<IDonor[]>, void>({
-                query: () => ({
+            getAllDonors: build.query<IResponse<IDonor[]>, string>({
+                query: (search) => ({
                     url: DONOR_URL,
                     method: "GET",
+                    params: search ? { search } : undefined,
                 }),
                 providesTags: [tagtypes.donor],
             }),

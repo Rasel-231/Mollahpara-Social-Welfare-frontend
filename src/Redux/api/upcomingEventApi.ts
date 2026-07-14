@@ -37,10 +37,11 @@ const apiService = baseApi
                 }),
                 invalidatesTags: [tagtypes.event],
             }),
-            getAllEvents: build.query<IResponse<IUpcomingEvent[]>, void>({
-                query: () => ({
+            getAllEvents: build.query<IResponse<IUpcomingEvent[]>, string>({
+                query: (search) => ({
                     url: EVENT_URL,
                     method: "GET",
+                    params: search ? { search } : undefined,
                 }),
                 providesTags: [tagtypes.event],
             }),

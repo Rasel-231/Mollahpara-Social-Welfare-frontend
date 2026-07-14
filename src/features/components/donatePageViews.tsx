@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence, useInView } from "framer-motion";
+import OrangeSpinner from "@/components/shared/OrangeSpinner";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,9 +17,12 @@ import {
   ChevronUp,
 } from "lucide-react";
 import { DonationFormInput, DonationFormSchema } from "../types/types";
-import { useCreateDonationMutation } from "@/Redux/api/fundsApi";
+import {
+  useCreateDonationMutation,
+  useGetAllFundsQuery,
+} from "@/Redux/api/fundsApi";
+import Link from "next/link";
 
-/* ─── Payment method data ─── */
 const paymentMethods = [
   {
     id: "BKASH" as const,
@@ -70,10 +74,8 @@ const paymentMethods = [
   },
 ];
 
-/* ─── Quick donation amounts ─── */
 const quickAmounts = [50, 100, 200, 500, 1000, 2000, 5000, 10000];
 
-/* ─── Impact calculator ─── */
 const impactBreakdown = [
   { amount: 100, impact: "একটি শিশুর এক সপ্তাহের পাঠ্যপুস্তক", icon: "📚" },
   { amount: 200, impact: "একটি পরিবারের এক দিনের খাবার", icon: "🍚" },
@@ -87,7 +89,6 @@ const impactBreakdown = [
   { amount: 5000, impact: "একটি পরিবারের মাসিক জীবিকা সহায়তা", icon: "🏠" },
 ];
 
-/* ─── FAQ items ─── */
 const faqs = [
   {
     q: "অনুদান কীভাবে ব্যবহার করা হয়?",
@@ -107,7 +108,6 @@ const faqs = [
   },
 ];
 
-/* ─── FAQ Accordion item ─── */
 function FaqItem({ faq, index }: { faq: (typeof faqs)[0]; index: number }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
@@ -150,7 +150,6 @@ function FaqItem({ faq, index }: { faq: (typeof faqs)[0]; index: number }) {
   );
 }
 
-/* ─── Main component ─── */
 export default function DonatePageView() {
   const [selectedMethod, setSelectedMethod] = useState<string | null>(null);
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
@@ -214,11 +213,44 @@ export default function DonatePageView() {
   };
 
   const activeMethod = paymentMethods.find((m) => m.id === selectedMethod);
+  const { data: resFunds, isLoading: isLoadingFunds } = useGetAllFundsQuery("");
+
+  if (isLoadingFunds) {
+    return <div className="flex justify-center py-20"><OrangeSpinner /></div>;
+  }
+
+  const funds = resFunds?.data ?? [];
+
+  const totalDonationAmount = funds.reduce(
+    (sum: number, f: { amount?: number | string }) =>
+      sum + Number(f.amount ?? 0),
+    0,
+  );
+
+  const totalDonorsCount = new Set(
+    funds.map((f: { phone?: string }) => f.phone).filter(Boolean),
+  ).size;
+
+  const toBengaliDigits = (num: number | string) => {
+    const bengaliDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+    return num.toString().replace(/[0-9]/g, (d) => bengaliDigits[Number(d)]);
+  };
+
+  const formatDonationAmount = (amount: number) => {
+    if (amount >= 100000) {
+      const lakh = (amount / 100000).toFixed(1).replace(/\.0$/, "");
+      return `৳${toBengaliDigits(lakh)} লক্ষ+`;
+    }
+    return `৳${toBengaliDigits(amount.toLocaleString("en-US"))}`;
+  };
+
+  const formatDonorCount = (count: number) => {
+    return `${toBengaliDigits(count.toLocaleString("en-US"))}+`;
+  };
 
   return (
     <div className="min-h-screen parchment-bg pt-20 pb-20">
       <div className="container mx-auto px-4 lg:px-6">
-        {/* ── Hero Banner ── */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -235,7 +267,6 @@ export default function DonatePageView() {
           />
           <div className="absolute inset-0 bg-gradient-to-br from-welfare-green-900/92 via-welfare-green-800/82 to-welfare-gold-900/70" />
 
-          {/* Floating hearts */}
           {[...Array(4)].map((_, i) => (
             <motion.div
               key={i}
@@ -270,11 +301,16 @@ export default function DonatePageView() {
               </p>
             </div>
 
-            {/* Floating stats */}
             <div className="flex flex-wrap gap-4">
               {[
-                { value: "৳২০L+", label: "মোট অনুদান" },
-                { value: "১০০০+", label: "অনুদানকারী" },
+                {
+                  value: formatDonationAmount(totalDonationAmount),
+                  label: "মোট অনুদান",
+                },
+                {
+                  value: formatDonorCount(totalDonorsCount),
+                  label: "অনুদানকারী",
+                },
               ].map((s) => (
                 <div
                   key={s.label}
@@ -292,9 +328,7 @@ export default function DonatePageView() {
           </div>
         </motion.div>
 
-        {/* ── Main Grid: Form + Sidebar ── */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-14">
-          {/* ── Donation Form (2/3) ── */}
           <motion.div
             ref={formRef}
             initial={{ opacity: 0, x: -25 }}
@@ -303,7 +337,6 @@ export default function DonatePageView() {
             className="lg:col-span-2"
           >
             <div className="welfare-card overflow-hidden">
-              {/* Card header stripe */}
               <div className="h-1.5 bg-gradient-to-r from-welfare-green-600 via-welfare-gold-400 to-welfare-green-600" />
 
               <div className="p-7 lg:p-9">
@@ -312,7 +345,6 @@ export default function DonatePageView() {
                   অনুদান ফর্ম
                 </h2>
 
-                {/* Step 1 — Payment method */}
                 <div className="mb-8">
                   <p className="text-welfare-green-700 font-bold font-bengali text-sm mb-4 flex items-center gap-2">
                     <span className="w-6 h-6 rounded-full bg-welfare-green-700 text-white text-xs flex items-center justify-center flex-shrink-0">
@@ -370,7 +402,6 @@ export default function DonatePageView() {
                     </p>
                   )}
 
-                  {/* Account info reveal */}
                   <AnimatePresence>
                     {activeMethod && (
                       <motion.div
@@ -427,7 +458,6 @@ export default function DonatePageView() {
                   </AnimatePresence>
                 </div>
 
-                {/* Step 2 — Amount */}
                 <div className="mb-8">
                   <p className="text-welfare-green-700 font-bold font-bengali text-sm mb-4 flex items-center gap-2">
                     <span className="w-6 h-6 rounded-full bg-welfare-green-700 text-white text-xs flex items-center justify-center flex-shrink-0">
@@ -436,7 +466,6 @@ export default function DonatePageView() {
                     অনুদানের পরিমাণ নির্বাচন করুন
                   </p>
 
-                  {/* Quick amounts */}
                   <div className="grid grid-cols-4 gap-2 mb-4">
                     {quickAmounts.map((amt) => (
                       <motion.button
@@ -463,7 +492,6 @@ export default function DonatePageView() {
                     ))}
                   </div>
 
-                  {/* Manual amount input */}
                   <div className="relative">
                     <span className="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-welfare-green-600 text-base">
                       ৳
@@ -485,7 +513,6 @@ export default function DonatePageView() {
                     </p>
                   )}
 
-                  {/* Impact preview */}
                   <AnimatePresence>
                     {impactMsg && (
                       <motion.div
@@ -504,7 +531,6 @@ export default function DonatePageView() {
                   </AnimatePresence>
                 </div>
 
-                {/* Step 3 — Donor details */}
                 <div className="mb-8">
                   <p className="text-welfare-green-700 font-bold font-bengali text-sm mb-4 flex items-center gap-2">
                     <span className="w-6 h-6 rounded-full bg-welfare-green-700 text-white text-xs flex items-center justify-center flex-shrink-0">
@@ -606,7 +632,6 @@ export default function DonatePageView() {
                   </div>
                 </div>
 
-                {/* Submit */}
                 <motion.button
                   type="button"
                   onClick={handleSubmit(onSubmit)}
@@ -630,7 +655,7 @@ export default function DonatePageView() {
                 >
                   {isSubmitting || isLoading ? (
                     <>
-                      <div className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+                      <OrangeSpinner size={20} />
                       প্রক্রিয়াকরণ হচ্ছে...
                     </>
                   ) : (
@@ -641,7 +666,6 @@ export default function DonatePageView() {
                   )}
                 </motion.button>
 
-                {/* Security note */}
                 <div className="flex items-center justify-center gap-2 mt-4 text-welfare-green-500 text-xs font-bengali">
                   <ShieldCheck size={14} />
                   আপনার তথ্য সম্পূর্ণ নিরাপদ ও সুরক্ষিত
@@ -650,14 +674,12 @@ export default function DonatePageView() {
             </div>
           </motion.div>
 
-          {/* ── Sidebar (1/3) ── */}
           <motion.div
             initial={{ opacity: 0, x: 25 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="space-y-5"
           >
-            {/* Why donate */}
             <div className="welfare-card p-6">
               <h3 className="font-bold text-welfare-green-800 font-bengali mb-4 flex items-center gap-2">
                 <span>💚</span> কেন অনুদান দেবেন?
@@ -681,7 +703,6 @@ export default function DonatePageView() {
               </ul>
             </div>
 
-            {/* Impact calculator */}
             <div className="welfare-card p-6">
               <h3 className="font-bold text-welfare-green-800 font-bengali mb-4 flex items-center gap-2">
                 <span>📊</span> আপনার অনুদানের প্রভাব
@@ -710,7 +731,6 @@ export default function DonatePageView() {
               </div>
             </div>
 
-            {/* Trust badges */}
             <div className="welfare-card p-5 text-center">
               <div className="flex justify-center gap-4 mb-3">
                 <div className="w-12 h-12 rounded-xl bg-welfare-green-50 flex items-center justify-center">
@@ -731,7 +751,6 @@ export default function DonatePageView() {
           </motion.div>
         </div>
 
-        {/* ── FAQ Section ── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -750,7 +769,6 @@ export default function DonatePageView() {
           </div>
         </motion.div>
 
-        {/* ── Bottom CTA ── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -777,9 +795,9 @@ export default function DonatePageView() {
               আমাদের সাথে থাকার জন্য।
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
-              <a href="/members" className="btn-gold font-bengali">
+              <Link href="/members" className="btn-gold font-bengali">
                 সদস্য হন
-              </a>
+              </Link>
               <a
                 href="/blood-donation"
                 className="px-6 py-3 rounded-xl font-semibold font-bengali text-white border-2 border-red-400/50 hover:bg-red-900/30 transition-all"

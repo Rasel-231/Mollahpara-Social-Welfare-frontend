@@ -2,7 +2,8 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { X, ZoomIn, Image as ImageIcon, Loader2 } from "lucide-react";
+import { X, ZoomIn, Image as ImageIcon } from "lucide-react";
+import OrangeSpinner from "@/components/shared/OrangeSpinner";
 
 import Image from "next/image";
 import { useGetAllGalleriesQuery } from "@/Redux/api/galleryApi";
@@ -23,17 +24,16 @@ export default function GalleryPageView() {
   const [selected, setSelected] = useState<GalleryImage | null>(null);
 
   const { data: galleryData, isLoading: galleryLoading } =
-    useGetAllGalleriesQuery();
+    useGetAllGalleriesQuery("");
   const { data: categoriesData, isLoading: catLoading } =
-    useGetAllGalleryCategoriesQuery();
+    useGetAllGalleryCategoriesQuery("");
 
   const categories = categoriesData?.data ?? [];
 
   if (galleryLoading || catLoading)
     return (
-      <div className="text-center py-20 text-welfare-green-400 font-bengali flex items-center justify-center gap-3">
-        <Loader2 className="animate-spin" size={24} />
-        <span>Loading...</span>
+      <div className="text-center py-20 font-bengali flex items-center justify-center">
+        <OrangeSpinner />
       </div>
     );
 

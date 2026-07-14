@@ -14,10 +14,11 @@ export const userApi = baseApi.injectEndpoints({
         }),
 
 
-        getAllUsers: build.query<IResponse<IUser[]>, void>({
-            query: () => ({
+        getAllUsers: build.query<IResponse<IUser[]>, string>({
+            query: (search) => ({
                 url: "users",
                 method: "GET",
+                params: search ? { search } : undefined,
                 withCredentials: true,
             }),
             providesTags: [tagtypes.user],

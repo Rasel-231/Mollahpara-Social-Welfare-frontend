@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useRouter, useParams } from "next/navigation";
 import { useGetSingleUserQuery } from "@/Redux/api/userApi";
+import OrangeSpinner from "@/components/shared/OrangeSpinner";
 import { Role, BloodGroup } from "@/Redux/types/types";
 
 const roleBnMap: Record<Role, string> = {
@@ -69,12 +70,7 @@ export default function MemberDetailPage() {
   if (isLoading) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-4 border-welfare-green-200 border-t-welfare-green-600 rounded-full animate-spin" />
-          <p className="text-welfare-green-600 font-bengali text-sm">
-            তথ্য লোড হচ্ছে...
-          </p>
-        </div>
+        <OrangeSpinner />
       </div>
     );
   }

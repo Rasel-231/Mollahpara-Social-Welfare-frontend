@@ -33,10 +33,11 @@ const apiService = baseApi
                 }),
                 invalidatesTags: [tagtypes.gallery],
             }),
-            getAllGalleries: build.query<IResponse<IGallery[]>, void>({
-                query: () => ({
+            getAllGalleries: build.query<IResponse<IGallery[]>, string>({
+                query: (search) => ({
                     url: GALLERY_URL,
                     method: "GET",
+                    params: search ? { search } : undefined,
                 }),
                 providesTags: [tagtypes.gallery],
             }),

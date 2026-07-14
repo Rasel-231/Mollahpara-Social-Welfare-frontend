@@ -28,10 +28,11 @@ const apiService = baseApi
                 }),
                 invalidatesTags: [tagtypes.video],
             }),
-            getAllVideos: build.query<IResponse<IVideo[]>, void>({
-                query: () => ({
+            getAllVideos: build.query<IResponse<IVideo[]>, string>({
+                query: (search) => ({
                     url: videos,
                     method: "GET",
+                    params: search ? { search } : undefined,
                 }),
                 providesTags: [tagtypes.video],
             }),

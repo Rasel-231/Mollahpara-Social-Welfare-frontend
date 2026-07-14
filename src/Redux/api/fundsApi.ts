@@ -26,10 +26,11 @@ const apiService = baseApi
                 }),
                 invalidatesTags: [tagtypes.fund],
             }),
-            getAllFunds: build.query<IResponse<IFund[]>, void>({
-                query: () => ({
+            getAllFunds: build.query<IResponse<IFund[]>, string>({
+                query: (search) => ({
                     url: `${FUND_URL}`,
                     method: "GET",
+                    params: search ? { search } : undefined,
                 }),
                 providesTags: [tagtypes.fund],
             }),

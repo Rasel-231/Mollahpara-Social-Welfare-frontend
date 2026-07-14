@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
+import OrangeSpinner from "@/components/shared/OrangeSpinner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -127,7 +128,7 @@ export default function ComplainModal({
               >
                 {isLoading ? (
                   <>
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <OrangeSpinner size={16} />
                     জমা হচ্ছে...
                   </>
                 ) : (

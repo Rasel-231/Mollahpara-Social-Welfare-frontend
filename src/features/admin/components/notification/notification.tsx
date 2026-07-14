@@ -1,5 +1,6 @@
 "use client";
 
+import OrangeSpinner from "@/components/shared/OrangeSpinner";
 import {
   Bell,
   Users,
@@ -27,13 +28,13 @@ const paymentMethodLabel: Record<string, string> = {
 
 export default function NotificationsPage() {
   const { data: usersResponse, isLoading: usersLoading } =
-    useGetAllUsersQuery();
+    useGetAllUsersQuery("");
   const { data: fundsResponse, isLoading: fundsLoading } =
-    useGetAllFundsQuery();
+    useGetAllFundsQuery("");
   const { data: bloodRequestResponse, isLoading: bloodLoading } =
-    useGetAllBloodRequestsQuery();
+    useGetAllBloodRequestsQuery("");
   const { data: scholarshipResponse, isLoading: scholarshipLoading } =
-    useGetAllScholarshipsQuery();
+    useGetAllScholarshipsQuery("");
 
   const pendingUsers = (usersResponse?.data ?? [])
     .filter((u) => !u.isActive)
@@ -106,7 +107,7 @@ export default function NotificationsPage() {
             </h2>
           </div>
           {usersLoading ? (
-            <div className="text-gray-400 text-sm p-4">লোড হচ্ছে...</div>
+            <div className="flex justify-center p-4"><OrangeSpinner size={24} /></div>
           ) : pendingUsers.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {pendingUsers.map((user) => (
@@ -129,7 +130,7 @@ export default function NotificationsPage() {
             </h2>
           </div>
           {fundsLoading ? (
-            <div className="text-gray-400 text-sm p-4">লোড হচ্ছে...</div>
+            <div className="flex justify-center p-4"><OrangeSpinner size={24} /></div>
           ) : pendingDonations.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {pendingDonations.map((donation) => (
@@ -151,7 +152,7 @@ export default function NotificationsPage() {
             </h2>
           </div>
           {bloodLoading ? (
-            <div className="text-gray-400 text-sm p-4">লোড হচ্ছে...</div>
+            <div className="flex justify-center p-4"><OrangeSpinner size={24} /></div>
           ) : bloodRequests.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {bloodRequests.map((br) => (
@@ -174,7 +175,7 @@ export default function NotificationsPage() {
             </h2>
           </div>
           {scholarshipLoading ? (
-            <div className="text-gray-400 text-sm p-4">লোড হচ্ছে...</div>
+            <div className="flex justify-center p-4"><OrangeSpinner size={24} /></div>
           ) : (scholarshipResponse?.data ?? []).length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {(scholarshipResponse?.data ?? []).map((s) => (

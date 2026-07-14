@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import OrangeSpinner from "@/components/shared/OrangeSpinner";
 import { HandCoins, CheckCircle2, XCircle, Receipt } from "lucide-react";
 import { toast } from "react-toastify";
 import { useUpdateFundStatusMutation } from "@/Redux/api/fundsApi";
@@ -91,7 +92,7 @@ export default function DonationRequest({ donation }: { donation: Donation }) {
                 className="flex-1 bg-emerald-600 py-2 rounded-lg font-bold hover:bg-emerald-700 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 {isLoading ? (
-                  <div className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+                  <OrangeSpinner size={16} />
                 ) : (
                   <CheckCircle2 size={18} />
                 )} Confirm

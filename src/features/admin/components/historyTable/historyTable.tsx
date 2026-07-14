@@ -2,7 +2,7 @@
 
 import { useGetAllCostingsQuery } from "@/Redux/api/costingApi";
 import { useGetAllProjectFundsQuery } from "@/Redux/api/projectFundApi";
-import { Loader2 } from "lucide-react";
+import OrangeSpinner from "@/components/shared/OrangeSpinner";
 
 const projectStatusBn: Record<string, string> = {
   PLANNING: "পরিকল্পনা",
@@ -19,15 +19,14 @@ const projectStatusColor: Record<string, string> = {
 };
 
 export default function RecentProjectsTable() {
-  const { data: costingResponse, isLoading: costingLoading } = useGetAllCostingsQuery();
-  const { data: projectFundResponse, isLoading: pfLoading } = useGetAllProjectFundsQuery();
+  const { data: costingResponse, isLoading: costingLoading } = useGetAllCostingsQuery("");
+  const { data: projectFundResponse, isLoading: pfLoading } = useGetAllProjectFundsQuery("");
 
   if (costingLoading || pfLoading) {
     return (
       <div className="bg-[#1a1c21] border border-gray-800 rounded-2xl p-4 md:p-6 shadow-sm mt-6">
-        <div className="text-center py-10 flex items-center justify-center gap-3">
-          <Loader2 className="text-emerald-400 animate-spin" size={20} />
-          <span className="text-gray-400 text-sm">লোড হচ্ছে...</span>
+        <div className="text-center py-10 flex items-center justify-center">
+          <OrangeSpinner />
         </div>
       </div>
     );

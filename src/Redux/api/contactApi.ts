@@ -37,10 +37,11 @@ const apiService = baseApi
                 }),
                 invalidatesTags: [tagtypes.contact],
             }),
-            getAllContacts: build.query<IResponse<IContact[]>, void>({
-                query: () => ({
+            getAllContacts: build.query<IResponse<IContact[]>, string>({
+                query: (search) => ({
                     url: CONTACT_URL,
                     method: "GET",
+                    params: search ? { search } : undefined,
                 }),
                 providesTags: [tagtypes.contact],
             }),

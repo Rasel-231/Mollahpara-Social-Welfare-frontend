@@ -16,10 +16,11 @@ const apiService = baseApi
                 }),
                 invalidatesTags: [tagtypes.bloodRequest],
             }),
-            getAllBloodRequests: build.query<IResponse<IBloodRequests[]>, void>({
-                query: () => ({
+            getAllBloodRequests: build.query<IResponse<IBloodRequests[]>, string>({
+                query: (search) => ({
                     url: BLOOD_REQUEST_URL,
                     method: "GET",
+                    params: search ? { search } : undefined,
                 }),
                 providesTags: [tagtypes.bloodRequest],
             }),

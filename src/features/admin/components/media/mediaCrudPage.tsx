@@ -2,17 +2,17 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import OrangeSpinner from "@/components/shared/OrangeSpinner";
 import {
   LayoutGrid,
   Video,
   ImageIcon,
   Newspaper,
   LucideIcon,
-  X,
   Eye,
   Edit,
   Trash2,
-  Loader2,
+  X,
 } from "lucide-react";
 import { MediaTable, DataRow } from "./mediaTable";
 import {
@@ -73,16 +73,16 @@ export default function MediaCrudPage({ category }: { category: string }) {
   const [editCategoryId, setEditCategoryId] = useState("");
   const [deleteItem, setDeleteItem] = useState<DataRow | null>(null);
 
-  const { data: categoriesData } = useGetAllGalleryCategoriesQuery();
+  const { data: categoriesData } = useGetAllGalleryCategoriesQuery("");
   const galleryCategories: IGalleryCategory[] = categoriesData?.data ?? [];
 
   // ─── Data fetching ───────────────────────────────
-  const videosQ = useGetAllVideosQuery(undefined, { skip: cat !== "videos" });
-  const newsQ = useGetAllNewsQuery(undefined, { skip: cat !== "blogs" });
-  const galleryQ = useGetAllGalleriesQuery(undefined, {
+  const videosQ = useGetAllVideosQuery("", { skip: cat !== "videos" });
+  const newsQ = useGetAllNewsQuery("", { skip: cat !== "blogs" });
+  const galleryQ = useGetAllGalleriesQuery("", {
     skip: cat !== "images",
   });
-  const projectsQ = useGetAllEventsQuery(undefined, {
+  const projectsQ = useGetAllEventsQuery("", {
     skip: cat !== "projects",
   });
 
@@ -331,7 +331,7 @@ export default function MediaCrudPage({ category }: { category: string }) {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-[#0b0e14] flex items-center justify-center">
-        <Loader2 className="text-emerald-400 animate-spin" size={32} />
+        <OrangeSpinner />
       </div>
     );
   }

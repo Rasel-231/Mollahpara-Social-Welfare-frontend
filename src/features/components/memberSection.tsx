@@ -126,7 +126,7 @@ export default function MembersSection() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
-  const { data: response } = useGetAllUsersQuery();
+  const { data: response } = useGetAllUsersQuery("");
   const users: IUser[] = response?.data || [];
   const mockMembers: Member[] = users.map(mapUserToMember);
 

@@ -48,10 +48,11 @@ const apiService = baseApi
                 }),
                 invalidatesTags: [tagtypes.scholarship],
             }),
-            getAllScholarships: build.query<IResponse<IScholarship[]>, void>({
-                query: () => ({
+            getAllScholarships: build.query<IResponse<IScholarship[]>, string>({
+                query: (search) => ({
                     url: SCHOLARSHIP_URL,
                     method: "GET",
+                    params: search ? { search } : undefined,
                 }),
                 providesTags: [tagtypes.scholarship],
             }),

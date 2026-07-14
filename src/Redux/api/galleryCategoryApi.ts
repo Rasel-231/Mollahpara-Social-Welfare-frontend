@@ -30,11 +30,12 @@ const apiService = baseApi
             }),
             getAllGalleryCategories: build.query<
                 IResponse<IGalleryCategory[]>,
-                void
+                string
             >({
-                query: () => ({
+                query: (search) => ({
                     url: GALLERY_CATEGORY_URL,
                     method: "GET",
+                    params: search ? { search } : undefined,
                 }),
                 providesTags: [tagtypes.galleryCategory],
             }),

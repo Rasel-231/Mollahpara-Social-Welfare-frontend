@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 import { motion, AnimatePresence } from "framer-motion";
+import OrangeSpinner from "@/components/shared/OrangeSpinner";
 import { useState } from "react";
 import { UserPlus, MapPin, Calendar, AlertCircle, Phone } from "lucide-react";
 import {
@@ -59,7 +60,7 @@ export default function BloodDonationPageView() {
   const [filterGroup, setFilterGroup] = useState<string>("all");
   const [createBloodRequest] = useCreateBloodRequestMutation();
   const [createBloodDoner] = useCreateDonorMutation();
-  const { data: donorsData, isLoading: donorsLoading } = useGetAllDonorsQuery();
+  const { data: donorsData, isLoading: donorsLoading } = useGetAllDonorsQuery("");
 
   const donors: IDonor[] = donorsData?.data ?? [];
 
@@ -454,7 +455,7 @@ export default function BloodDonationPageView() {
                   >
                     {requestSubmitting ? (
                       <>
-                        <div className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+                        <OrangeSpinner size={20} />
                         জমা হচ্ছে...
                       </>
                     ) : (
@@ -642,7 +643,7 @@ export default function BloodDonationPageView() {
                   >
                     {donorSubmitting ? (
                       <>
-                        <div className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />{" "}
+                        <OrangeSpinner size={20} />{" "}
                         নিবন্ধন হচ্ছে...
                       </>
                     ) : (
@@ -683,9 +684,8 @@ export default function BloodDonationPageView() {
               </div>
 
               {donorsLoading ? (
-                <div className="flex items-center justify-center py-16 text-welfare-green-500 font-bengali text-sm">
-                  <div className="w-5 h-5 border-2 border-welfare-green-300 border-t-welfare-green-600 rounded-full animate-spin mr-2" />
-                  দাতা লোড হচ্ছে...
+                <div className="flex items-center justify-center py-16">
+                  <OrangeSpinner />
                 </div>
               ) : filteredDonors.length === 0 ? (
                 <div className="text-center py-16 text-welfare-green-400 font-bengali text-sm">

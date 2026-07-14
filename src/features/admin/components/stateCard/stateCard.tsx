@@ -1,4 +1,5 @@
 "use client";
+import OrangeSpinner from "@/components/shared/OrangeSpinner";
 import { useGetAllBloodRequestsQuery } from "@/Redux/api/bloodRequestApi";
 import { useGetAllFundsQuery } from "@/Redux/api/fundsApi";
 import { useGetAllUsersQuery } from "@/Redux/api/userApi";
@@ -27,15 +28,15 @@ function toBanglaCount(value: number) {
 }
 
 export default function StateSection() {
-  const { data: fundsResponse, isLoading: fundsLoading } = useGetAllFundsQuery();
-  const { data: bloodDonorResponse, isLoading: bloodDonorLoading } = useGetAllBloodRequestsQuery();
-  const { data: usersResponse, isLoading: usersLoading } = useGetAllUsersQuery();
-  const { data: costingResponse, isLoading: costingLoading } = useGetAllCostingsQuery();
-  const { data: chandaResponse, isLoading: chandaLoading } = useGetAllMonthlyChandasQuery();
-  const { data: projectFundResponse, isLoading: pfLoading } = useGetAllProjectFundsQuery();
+  const { data: fundsResponse, isLoading: fundsLoading } = useGetAllFundsQuery("");
+  const { data: bloodDonorResponse, isLoading: bloodDonorLoading } = useGetAllBloodRequestsQuery("");
+  const { data: usersResponse, isLoading: usersLoading } = useGetAllUsersQuery("");
+  const { data: costingResponse, isLoading: costingLoading } = useGetAllCostingsQuery("");
+  const { data: chandaResponse, isLoading: chandaLoading } = useGetAllMonthlyChandasQuery("");
+  const { data: projectFundResponse, isLoading: pfLoading } = useGetAllProjectFundsQuery("");
 
   if (fundsLoading || bloodDonorLoading || usersLoading || costingLoading || chandaLoading || pfLoading) {
-    return <div>Loading...</div>;
+    return <div className="flex justify-center py-10"><OrangeSpinner /></div>;
   }
 
   const bloodDonors = bloodDonorResponse?.data ?? [];

@@ -44,8 +44,8 @@ const apiService = baseApi
                 query: (data) => ({ url: COSTING_URL, method: "POST", data }),
                 invalidatesTags: [tagtypes.costing],
             }),
-            getAllCostings: build.query<IResponse<ICosting[]>, void>({
-                query: () => ({ url: COSTING_URL, method: "GET" }),
+            getAllCostings: build.query<IResponse<ICosting[]>, string>({
+                query: (search) => ({ url: COSTING_URL, method: "GET", params: search ? { search } : undefined }),
                 providesTags: [tagtypes.costing],
             }),
             getCostingById: build.query<IResponse<ICosting>, string>({

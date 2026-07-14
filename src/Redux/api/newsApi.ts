@@ -31,10 +31,11 @@ const apiService = baseApi
                 }),
                 invalidatesTags: [tagtypes.news],
             }),
-            getAllNews: build.query<IResponse<INews[]>, void>({
-                query: () => ({
+            getAllNews: build.query<IResponse<INews[]>, string>({
+                query: (search) => ({
                     url: NEWS_URL,
                     method: "GET",
+                    params: search ? { search } : undefined,
                 }),
                 providesTags: [tagtypes.news],
             }),

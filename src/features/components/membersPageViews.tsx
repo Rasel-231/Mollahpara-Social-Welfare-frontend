@@ -66,7 +66,7 @@ export default function MembersPageView() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
-  const { data: userResponse } = useGetAllUsersQuery();
+  const { data: userResponse } = useGetAllUsersQuery("");
   const userData: IUser[] = userResponse?.data || [];
   const [createUser] = useCreateUserMutation();
 

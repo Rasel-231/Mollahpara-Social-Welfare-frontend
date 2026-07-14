@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
+import OrangeSpinner from "@/components/shared/OrangeSpinner";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
 import { Upload, X } from "lucide-react";
@@ -197,7 +198,7 @@ export default function AddMemberModal({
               >
                 {isLoading ? (
                   <span className="flex items-center justify-center gap-2">
-                    <span className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+                    <OrangeSpinner size={20} />
                     যোগ করা হচ্ছে...
                   </span>
                 ) : (

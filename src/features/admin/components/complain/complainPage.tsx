@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import OrangeSpinner from "@/components/shared/OrangeSpinner";
 import {
   Bell,
   X,
-  Loader2,
   AlertCircle,
   Trash2,
   CheckCircle,
@@ -183,9 +183,8 @@ function ComplaintDrawer({
 
           <div className="flex-1 overflow-y-auto px-5 py-5">
             {isLoading && (
-              <div className="flex flex-col items-center justify-center py-20 gap-3 text-slate-500">
-                <Loader2 size={22} className="animate-spin" />
-                <p className="text-sm">লোড হচ্ছে…</p>
+              <div className="flex items-center justify-center py-20">
+                <OrangeSpinner />
               </div>
             )}
 
@@ -272,7 +271,7 @@ function ComplaintDrawer({
                     }`}
                   >
                     {isDeleting ? (
-                      <Loader2 size={13} className="animate-spin" />
+                      <OrangeSpinner size={13} />
                     ) : confirmAction === "approve" ? (
                       <CheckCircle size={13} />
                     ) : (
@@ -292,7 +291,7 @@ function ComplaintDrawer({
 
 /* ─── Main Complain Page ─── */
 export default function ComplainPage() {
-  const { data: response, isLoading } = useGetAllComplainsQuery();
+  const { data: response, isLoading } = useGetAllComplainsQuery("");
   const complaints = response?.data ?? [];
   const [activeId, setActiveId] = useState<string | null>(null);
 
@@ -311,9 +310,8 @@ export default function ComplainPage() {
       </div>
 
       {isLoading ? (
-        <div className="flex items-center gap-3 text-gray-400 text-sm p-4">
-          <div className="w-5 h-5 border-2 border-gray-500 border-t-emerald-400 rounded-full animate-spin" />
-          লোড হচ্ছে...
+        <div className="flex items-center justify-center p-4">
+          <OrangeSpinner size={24} />
         </div>
       ) : complaints.length === 0 ? (
         <p className="text-gray-500 text-sm bg-[#161a22]/30 p-4 rounded-xl border border-white/[0.02]">

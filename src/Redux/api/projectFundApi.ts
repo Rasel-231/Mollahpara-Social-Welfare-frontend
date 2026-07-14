@@ -32,8 +32,8 @@ const apiService = baseApi
                 query: (data) => ({ url: PROJECT_FUND_URL, method: "POST", data }),
                 invalidatesTags: [tagtypes.projectFund],
             }),
-            getAllProjectFunds: build.query<IResponse<IProjectFund[]>, void>({
-                query: () => ({ url: PROJECT_FUND_URL, method: "GET" }),
+            getAllProjectFunds: build.query<IResponse<IProjectFund[]>, string>({
+                query: (search) => ({ url: PROJECT_FUND_URL, method: "GET", params: search ? { search } : undefined }),
                 providesTags: [tagtypes.projectFund],
             }),
             getProjectFundById: build.query<IResponse<IProjectFund>, string>({
