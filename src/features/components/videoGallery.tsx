@@ -39,7 +39,7 @@ export default function VideoGallery() {
             />
           ) : (
             <div className="relative w-full h-full">
-              {/* next/image ব্যবহার করা হয়েছে */}
+            
               <Image
                 src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
                 alt="Video Thumbnail"

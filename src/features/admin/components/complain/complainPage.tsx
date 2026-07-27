@@ -19,7 +19,7 @@ import {
   useDeleteComplainMutation,
 } from "@/Redux/api/complainApi";
 
-function timeAgo(iso: string) {
+function timeAgo(iso: string | Date) {
   const diff = Date.now() - new Date(iso).getTime();
   const mins = Math.floor(diff / 60000);
   if (mins < 60) return `${mins} মিনিট আগে`;
@@ -34,7 +34,7 @@ function NotificationBell({
   onSelect,
   activeId,
 }: {
-  complaints: { id: string; subject: string; name: string; createdAt: string }[];
+  complaints: { id: string; subject: string; name: string; createdAt: string | Date }[];
   onSelect: (id: string) => void;
   activeId: string | null;
 }) {
@@ -130,10 +130,11 @@ function ComplaintDrawer({
   const [deleteComplain, { isLoading: isDeleting }] =
     useDeleteComplainMutation();
   const [confirmAction, setConfirmAction] = useState<"approve" | "reject" | null>(null);
-
-  useEffect(() => {
+  const [prevId, setPrevId] = useState(id);
+  if (prevId !== id) {
+    setPrevId(id);
     setConfirmAction(null);
-  }, [id]);
+  }
 
   const handleAction = async () => {
     if (!confirmAction || !id) return;
