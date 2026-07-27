@@ -28,7 +28,7 @@ const paymentMethodLabel: Record<string, string> = {
 
 export default function NotificationsPage() {
   const { data: usersResponse, isLoading: usersLoading } =
-    useGetAllUsersQuery("");
+    useGetAllUsersQuery({});
   const { data: fundsResponse, isLoading: fundsLoading } =
     useGetAllFundsQuery("");
   const { data: bloodRequestResponse, isLoading: bloodLoading } =

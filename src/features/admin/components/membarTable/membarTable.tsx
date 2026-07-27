@@ -193,7 +193,7 @@ import { toast } from "react-toastify";
 import { IUser } from "@/Redux/types/types";
 
 export default function MemberTable() {
-  const { data: userResponse, isLoading } = useGetAllUsersQuery("");
+  const { data: userResponse, isLoading } = useGetAllUsersQuery({});
   const [deleteUser] = useDeleteUserMutation();
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);

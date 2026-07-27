@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { Member } from "../types/types";
 import { useGetAllUsersQuery } from "@/Redux/api/userApi";
@@ -126,9 +126,33 @@ export default function MembersSection() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
-  const { data: response } = useGetAllUsersQuery("");
+  const [pagination, setPagination] = useState({ page: 1, limit: 12 });
+
+  useEffect(() => {
+    const updateLimit = () => {
+      setPagination((prev) => ({
+        page: window.innerWidth < 640 && prev.limit !== 6 ? 1 : prev.page,
+        limit: window.innerWidth < 640 ? 6 : 12,
+      }));
+    };
+    updateLimit();
+    window.addEventListener("resize", updateLimit);
+    return () => window.removeEventListener("resize", updateLimit);
+  }, []);
+
+  const { data: response, isLoading } = useGetAllUsersQuery({
+    page: pagination.page,
+    limit: pagination.limit,
+  });
+
   const users: IUser[] = response?.data || [];
   const mockMembers: Member[] = users.map(mapUserToMember);
+  const meta = response?.meta;
+  const totalPages = meta ? Math.ceil(meta.total / meta.limit) : 1;
+
+  const goToPage = useCallback((page: number) => {
+    setPagination((prev) => ({ ...prev, page }));
+  }, []);
 
   return (
     <section ref={ref} className="py-12 lg:py-16">
@@ -149,14 +173,134 @@ export default function MembersSection() {
           </Link>
         </motion.div>
 
+        {/* Loading State */}
+        {isLoading && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            {Array.from({ length: pagination.limit }).map((_, i) => (
+              <div
+                key={i}
+                className="rounded-2xl overflow-hidden animate-pulse"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,253,244,0.9) 100%)",
+                  border: "1px solid rgba(22, 101, 52, 0.15)",
+                }}
+              >
+                <div className="h-1.5 bg-gray-200" />
+                <div className="p-5 flex flex-col items-center">
+                  <div className="w-20 h-20 rounded-full bg-gray-200 mb-3" />
+                  <div className="h-4 w-24 bg-gray-200 rounded mb-2" />
+                  <div className="h-6 w-16 bg-gray-200 rounded-full" />
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
         {/* Members Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-          {mockMembers.map((member, i) => (
-            <Link key={member.id} href={`/members/${member.id}`}>
-              <MemberCard member={member} delay={i * 0.12} />
-            </Link>
-          ))}
-        </div>
+        {!isLoading && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            {mockMembers.map((member, i) => (
+              <Link key={member.id} href={`/members/${member.id}`}>
+                <MemberCard member={member} delay={i * 0.12} />
+              </Link>
+            ))}
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!isLoading && mockMembers.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-welfare-green-600 font-bengali text-lg">
+              কোনো সদস্য পাওয়া যায়নি
+            </p>
+          </div>
+        )}
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex items-center justify-center gap-2 mt-10">
+            <button
+              onClick={() => goToPage(pagination.page - 1)}
+              disabled={pagination.page === 1}
+              className="px-4 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              style={{
+                background:
+                  pagination.page === 1
+                    ? "#e5e7eb"
+                    : "linear-gradient(135deg, #166534, #15803d)",
+                color: pagination.page === 1 ? "#9ca3af" : "#fff",
+              }}
+            >
+              ← পূর্ববর্তী
+            </button>
+
+            <div className="flex items-center gap-1 mx-2">
+              {Array.from({ length: totalPages }, (_, i) => i + 1)
+                .filter((page) => {
+                  if (totalPages <= 5) return true;
+                  if (page === 1 || page === totalPages) return true;
+                  if (Math.abs(page - pagination.page) <= 1) return true;
+                  return false;
+                })
+                .reduce<(number | "ellipsis")[]>((acc, page, idx, arr) => {
+                  if (idx > 0 && page - (arr[idx - 1] as number) > 1) {
+                    acc.push("ellipsis");
+                  }
+                  acc.push(page);
+                  return acc;
+                }, [])
+                .map((item, idx) =>
+                  item === "ellipsis" ? (
+                    <span
+                      key={`ellipsis-${idx}`}
+                      className="px-2 text-welfare-green-600"
+                    >
+                      ...
+                    </span>
+                  ) : (
+                    <button
+                      key={item}
+                      onClick={() => goToPage(item)}
+                      className="w-9 h-9 rounded-lg text-sm font-medium transition-all"
+                      style={{
+                        background:
+                          pagination.page === item
+                            ? "linear-gradient(135deg, #166534, #15803d)"
+                            : "transparent",
+                        color:
+                          pagination.page === item
+                            ? "#fff"
+                            : "rgb(22, 101, 52)",
+                        border:
+                          pagination.page === item
+                            ? "none"
+                            : "1px solid rgba(22, 101, 52, 0.2)",
+                      }}
+                    >
+                      {item}
+                    </button>
+                  )
+                )}
+            </div>
+
+            <button
+              onClick={() => goToPage(pagination.page + 1)}
+              disabled={pagination.page === totalPages}
+              className="px-4 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              style={{
+                background:
+                  pagination.page === totalPages
+                    ? "#e5e7eb"
+                    : "linear-gradient(135deg, #166534, #15803d)",
+                color:
+                  pagination.page === totalPages ? "#9ca3af" : "#fff",
+              }}
+            >
+              পরবর্তী →
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

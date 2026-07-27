@@ -60,7 +60,7 @@ const programs = [
     descBn:
       "দরিদ্র ও মেধাবী শিক্ষার্থীদের জন্য আমাদের শিক্ষা বৃত্তি ও সহায়তা কার্যক্রম তাদের স্বপ্ন পূরণে সহায়তা করে। বই, খাতা, ইউনিফর্ম এবং মাসিক বৃত্তি প্রদান করা হয়।",
     image:
-      "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=700&q=80",
+      "https://cdn.ittefaqbd.com/contents/cache/images/640x358x1/uploads/media/2023/09/20/df5277499970ff405f1b09118505fd67-650a8f6ce0033.jpg?jadewits_media_id=129112",
     href: "/education",
     ctaBn: "আবেদন করুন",
     accentFrom: "#1e40af",
@@ -87,7 +87,7 @@ const programs = [
     descBn:
       "দরিদ্র পরিবারগুলোকে আর্থিকভাবে স্বাবলম্বী করে তুলতে আমাদের ক্ষুদ্রঋণ ও পুনর্বাসন কার্যক্রম। বন্যা ও প্রাকৃতিক দুর্যোগে ক্ষতিগ্রস্তদের পুনর্বাসনেও সহায়তা করা হয়।",
     image:
-      "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=700&q=80",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD175Jg2edWFLUjdH0sodnDj9KEE16X674BqfAsL222ht9ARtsA3Kly7wd&s=10",
     href: "#loans",
     ctaBn: "ঋণের আবেদন করুন",
     accentFrom: "#92400e",

@@ -30,7 +30,7 @@ function toBanglaCount(value: number) {
 export default function StateSection() {
   const { data: fundsResponse, isLoading: fundsLoading } = useGetAllFundsQuery("");
   const { data: bloodDonorResponse, isLoading: bloodDonorLoading } = useGetAllBloodRequestsQuery("");
-  const { data: usersResponse, isLoading: usersLoading } = useGetAllUsersQuery("");
+  const { data: usersResponse, isLoading: usersLoading } = useGetAllUsersQuery({});
   const { data: costingResponse, isLoading: costingLoading } = useGetAllCostingsQuery("");
   const { data: chandaResponse, isLoading: chandaLoading } = useGetAllMonthlyChandasQuery("");
   const { data: projectFundResponse, isLoading: pfLoading } = useGetAllProjectFundsQuery("");
