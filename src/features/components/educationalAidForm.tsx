@@ -197,13 +197,9 @@ export default function EducationAidForm() {
       });
       await createScholarship(fd).unwrap();
       setSubmitted(true);
-      toast.success("আবেদন জমা হয়েছে", {
-        description: "আমাদের টিম শীঘ্রই আপনার আবেদনটি পর্যালোচনা করবে।",
-      });
+      toast.success("আবেদন জমা হয়েছে। আমাদের টিম শীঘ্রই আপনার আবেদনটি পর্যালোচনা করবে।");
     } catch {
-      toast.error("জমা দিতে সমস্যা হয়েছে", {
-        description: "একটু পর আবার চেষ্টা করুন।",
-      });
+      toast.error("জমা দিতে সমস্যা হয়েছে। একটু পর আবার চেষ্টা করুন।");
     }
   };
 
