@@ -3,10 +3,10 @@ import { baseApi } from "@/Redux/store/baseApi";
 const productApiSlice = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getProducts: builder.query({
-      query: () => "products",
+      query: () => ({ url: "products", method: "GET" }),
     }),
     getProduct: builder.query({
-      query: (id: string) => `products/${id}`,
+      query: (id: string) => ({ url: `products/${id}`, method: "GET" }),
     }),
   }),
   overrideExisting: false,
