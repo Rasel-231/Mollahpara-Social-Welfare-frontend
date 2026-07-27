@@ -19,7 +19,7 @@ export function useDonationController() {
       amount: undefined,
       paymentMethod: undefined,
       transactionId: "",
-      purpose: "general",
+      purpose: "GENERAL",
       message: "",
     },
   });
