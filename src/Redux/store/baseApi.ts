@@ -4,7 +4,7 @@ import { axiosBaseQuery } from "./axiosBaseQuery";
 
 export const baseApi = createApi({
   reducerPath: "baseApi",
-  baseQuery: axiosBaseQuery({ baseUrl: (process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1/").replace(/\/?$/, "/") }),
+  baseQuery: axiosBaseQuery({ baseUrl: (process.env.NEXT_PUBLIC_API_URL || "https://mollahpara-social-welfare-backend.onrender.com/api/v1/").replace(/\/?$/, "/") }),
   tagTypes: tagtypeList,
   endpoints: () => ({}),
 });
