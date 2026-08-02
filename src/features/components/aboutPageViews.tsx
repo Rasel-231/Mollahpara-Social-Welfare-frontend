@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Target, Eye, Heart, Users, Award, BookOpen } from "lucide-react";
+import Link from "next/link";
 
 const milestones = [
   {
@@ -151,7 +152,7 @@ export default function AboutPageView() {
           <div className="relative z-10 p-10 lg:p-16">
             <div className="flex items-center gap-3 mb-4">
               <span className="text-4xl animate-float">🌿</span>
-              <h1 className="text-3xl lg:text-5xl font-bold text-white font-bengali">
+              <h1 className="text-xl sm:text-3xl lg:text-5xl font-bold text-white font-bengali">
                 আমাদের সম্পর্কে
               </h1>
             </div>
@@ -277,9 +278,9 @@ export default function AboutPageView() {
             যোগ দিন।
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <a href="/members" className="btn-gold font-bengali">
+            <Link href="/members" className="btn-gold font-bengali">
               সদস্য হন
-            </a>
+            </Link>
             <a
               href="/donate"
               className="px-6 py-3 rounded-xl font-semibold font-bengali text-white border-2 border-white/40 hover:bg-white/15 transition-all"

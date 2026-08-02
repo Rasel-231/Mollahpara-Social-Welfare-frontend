@@ -82,7 +82,9 @@ export default function ProgramsSection() {
 
             <div className="relative z-10 p-6 h-full flex flex-col justify-end">
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-lg animate-float">{programs[0].icon}</span>
+                <span className="text-lg animate-float">
+                  {programs[0].icon}
+                </span>
                 <span className="text-welfare-gold-300 text-sm">🌿</span>
                 <h3 className="text-xl font-bold text-white font-bengali">
                   {programs[0].titleBn}
@@ -102,8 +104,18 @@ export default function ProgramsSection() {
                 >
                   {programs[0].ctaBn}
                   {/* Inline SVG ArrowRight */}
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  <svg
+                    className="w-3.5 h-3.5"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                    />
                   </svg>
                 </motion.button>
               </Link>
@@ -169,7 +181,7 @@ export default function ProgramsSection() {
               <span className="text-sm">📊</span>
             </div>
             <h3 className="font-bold text-welfare-green-800 font-bengali text-base">
-              আজব বিস্তারিতভাবে
+              আমাদের কার্যক্রম
             </h3>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">

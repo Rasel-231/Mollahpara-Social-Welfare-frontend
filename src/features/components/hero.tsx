@@ -8,7 +8,7 @@ import ImpactStatsSection from "./impactState";
 export default function CombinedHeroSection() {
   return (
     <div className="mt-20">
-      <section className="relative min-h-[60vh] md:min-h-[80vh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[60vh] sm:min-h-[70vh] md:min-h-[80vh] flex items-center justify-center overflow-hidden">
         {/* Background Image Container */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -27,7 +27,7 @@ export default function CombinedHeroSection() {
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-3xl sm:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight font-bengali"
+            className="text-3xl sm:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight font-bengali break-words"
           >
             মানবতার সেবায় উৎসর্গীকৃত
           </motion.h1>
@@ -48,12 +48,12 @@ export default function CombinedHeroSection() {
             className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center w-full sm:w-auto"
           >
             <Link href="/members" className="w-full sm:w-auto">
-              <button className="w-full sm:w-auto px-8 py-3 rounded-md font-semibold font-bengali bg-emerald-700 hover:bg-emerald-800 text-white transition-all">
+              <button className="w-full sm:w-auto sm:min-w-36 md:min-w-32 px-6 sm:px-8 py-3 rounded-md font-semibold font-bengali bg-emerald-700 hover:bg-emerald-800 text-white transition-all whitespace-nowrap">
                 যোগ দিন
               </button>
             </Link>
             <Link href="/donate" className="w-full sm:w-auto">
-              <button className="w-full sm:w-auto px-8 py-3 rounded-md font-semibold font-bengali bg-amber-600 hover:bg-amber-700 text-white transition-all">
+              <button className="w-full sm:w-auto sm:min-w-36 md:min-w-32 px-6 sm:px-8 py-3 rounded-md font-semibold font-bengali bg-amber-600 hover:bg-amber-700 text-white transition-all whitespace-nowrap">
                 অনুদান দিন
               </button>
             </Link>

@@ -51,10 +51,10 @@ export default function Footer() {
                 <span className="text-3xl">🌿</span>
               </div>
               <div>
-                <h3 className="font-bold text-2xl font-bengali text-white">
+                <h3 className="font-bold text-xl sm:text-2xl font-bengali text-white">
                   মোল্লাপাড়া সমাজ কল্যাণ সংস্থা
                 </h3>
-                <p className="text-blue-200 text-sm tracking-widest uppercase font-semibold">
+                <p className="text-blue-200 text-sm sm:text-xl tracking-widest uppercase font-semibold">
                   Mollapara Social Welfare Association
                 </p>
               </div>

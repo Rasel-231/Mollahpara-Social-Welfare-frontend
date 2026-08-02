@@ -124,17 +124,17 @@ export default function Navbar() {
         )}
       >
         <div className="container mx-auto px-4 lg:px-6">
-          <div className="flex items-center justify-between h-16 lg:h-20">
+          <div className="flex items-center justify-between h-12 lg:h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 group">
               <motion.div
                 whileHover={{ rotate: 10, scale: 1.1 }}
                 transition={{ type: "spring", stiffness: 400 }}
-                className="w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-welfare-green-700 flex items-center justify-center shadow-lg group-hover:shadow-welfare-green-300/50 transition-shadow duration-300"
+                className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-welfare-green-700 flex items-center justify-center shadow-lg group-hover:shadow-welfare-green-300/50 transition-shadow duration-300"
               >
                 <LeafIcon className="w-6 h-6 lg:w-7 lg:h-7 text-white fill-white/20" />
               </motion.div>
-              <div className="hidden sm:block">
+              <div className="sm:block">
                 <p className="text-welfare-green-800 font-bold text-sm lg:text-base leading-tight font-bengali">
                   মোল্লাপাড়া সমাজ কল্যাণ সংস্থা
                 </p>

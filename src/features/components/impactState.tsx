@@ -82,14 +82,14 @@ function StatCard({ icon, numericValue, suffix, labelBn, delay, accentColor }: S
       <motion.div
         animate={{ y: [-3, 3, -3] }}
         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay }}
-        className="text-4xl mb-3 select-none"
+        className="text-3xl sm:text-4xl mb-3 select-none"
       >
         {icon}
       </motion.div>
 
       {/* Counter */}
       <div
-        className="text-3xl lg:text-4xl font-bold mb-1 font-bengali"
+        className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-1 font-bengali"
         style={{ color: accentColor }}
       >
         {isInView ? (
@@ -173,11 +173,11 @@ export default function ImpactStatsSection() {
   const isInView = useInView(ref, { once: true });
 
   return (
-<section className="py-16 lg:py-20 relative overflow-hidden bg-white">
+    <section className="py-12 sm:py-16 lg:py-20 relative overflow-hidden bg-white">
       {/* Subtle background pattern */}
       <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-welfare-green-50/30 to-welfare-gold-50/20" />
 
-      <div className="container mx-auto px-4 lg:px-6 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
         {/* Section Header */}
         <motion.div
           ref={ref}
@@ -199,7 +199,7 @@ export default function ImpactStatsSection() {
         </motion.div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-5">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 lg:gap-5">
           {stats.map((stat) => (
             <StatCard key={stat.labelBn} {...stat} />
           ))}

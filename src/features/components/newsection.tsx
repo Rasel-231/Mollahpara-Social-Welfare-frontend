@@ -77,7 +77,7 @@ export default function NewsSection() {
         >
           <div className="section-divider mb-4">
             <span className="text-base animate-float">🍃</span>
-            <h2 className="section-title-center text-welfare-green-800">
+            <h2 className="section-title-center text-welfare-green-800 text-xl sm:text-2xl lg:text-3xl font-bold font-bengali">
               আমাদের খবর ও ব্লগ
             </h2>
             <span className="text-base animate-float">🍃</span>
