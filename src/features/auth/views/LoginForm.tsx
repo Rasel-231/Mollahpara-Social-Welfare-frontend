@@ -6,20 +6,32 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 export function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectTo = searchParams.get("redirect") || "/dashboard";
-  const [login] = useLoginMutation();
-  const { register, handleSubmit } = useForm<ILoginRequest>();
+
+  const [login, { isLoading }] = useLoginMutation();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ILoginRequest>();
 
   const onSubmit = async (data: ILoginRequest) => {
     try {
       await login(data).unwrap();
+      toast.success("Login Successful");
       router.push(redirectTo);
-    } catch {
-      // handle login error
+    } catch (err: unknown) {
+      const error = err as { data?: { message?: string } };
+      const message =
+        error?.data?.message ??
+        (err instanceof Error ? err.message : "Login Failed");
+      toast.error(message);
     }
   };
 
@@ -46,23 +58,35 @@ export function LoginForm() {
         </div>
 
         <input
-          {...register("email", { required: true })}
-          type="text"
+          {...register("email", { required: "Email is required" })}
+          type="email"
           placeholder="E-mail"
           className="w-full rounded-lg border border-white/20 bg-transparent px-4 py-3 text-white placeholder:text-white/50 focus:outline-none"
         />
+        {errors.email && (
+          <p className="text-red-300 text-xs mt-[-1rem]">
+            {errors.email.message}
+          </p>
+        )}
+
         <input
-          {...register("password", { required: true })}
+          {...register("password", { required: "Password is required" })}
           type="password"
           placeholder="Password"
           className="w-full rounded-lg border border-white/20 bg-transparent px-4 py-3 text-white placeholder:text-white/50 focus:outline-none"
         />
+        {errors.password && (
+          <p className="text-red-300 text-xs mt-[-1rem]">
+            {errors.password.message}
+          </p>
+        )}
 
         <button
           type="submit"
-          className="w-full rounded-lg bg-white px-4 py-3 font-semibold text-zinc-900 transition-all hover:bg-zinc-200"
+          disabled={isLoading}
+          className="w-full rounded-lg bg-white px-4 py-3 font-semibold text-zinc-900 transition-all hover:bg-zinc-200 disabled:opacity-50"
         >
-          Sign In
+          {isLoading ? "Signing in..." : "Sign In"}
         </button>
 
         <button
