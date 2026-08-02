@@ -30,13 +30,13 @@ export default function BloodDonationSection() {
           </div>
 
           {/* ডান দিকের টেক্সট সেকশন */}
-          <div className="md:flex-[0.55] p-8 flex flex-col justify-between">
+          <div className="md:flex-[0.55] p-6 sm:p-8 flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-3 mb-5">
-                <div className="w-10 h-10 rounded-full bg-emerald-950/60 flex items-center justify-center border border-emerald-500/30">
+                <div className="w-10 h-10 rounded-full bg-emerald-950/60 flex items-center justify-center border border-emerald-500/30 flex-shrink-0">
                   <span className="text-xl">🌿</span>
                 </div>
-                <h3 className="text-2xl font-bold font-bengali">
+                <h3 className="text-xl sm:text-2xl font-bold font-bengali">
                   রক্তদান কর্মসূচি
                 </h3>
               </div>
@@ -46,18 +46,18 @@ export default function BloodDonationSection() {
               </p>
             </div>
 
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-3 flex-wrap">
               <Link href="/blood-donation">
                 <motion.button 
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-6 py-3 rounded-lg font-bold font-bengali bg-emerald-800 hover:bg-emerald-700 text-white transition-all shadow-lg border border-emerald-600"
+                  className="px-5 sm:px-6 py-3 rounded-lg font-bold font-bengali bg-emerald-800 hover:bg-emerald-700 text-white transition-all shadow-lg border border-emerald-600 text-sm sm:text-base"
                 >
                   রক্তের আহ্বান
                 </motion.button>
               </Link>
               
-              <div className="text-6xl -mb-4 -mr-2">🩸</div>
+              <div className="text-5xl sm:text-6xl -mb-4 -mr-2 flex-shrink-0">🩸</div>
             </div>
           </div>
         </motion.div>

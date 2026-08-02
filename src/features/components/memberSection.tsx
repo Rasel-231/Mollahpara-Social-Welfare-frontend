@@ -219,11 +219,11 @@ export default function MembersSection() {
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="flex items-center justify-center gap-2 mt-10">
+          <div className="flex flex-wrap items-center justify-center gap-2 mt-10">
             <button
               onClick={() => goToPage(pagination.page - 1)}
               disabled={pagination.page === 1}
-              className="px-4 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              className="px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap"
               style={{
                 background:
                   pagination.page === 1
@@ -235,7 +235,7 @@ export default function MembersSection() {
               ← পূর্ববর্তী
             </button>
 
-            <div className="flex items-center gap-1 mx-2">
+            <div className="flex items-center gap-1 mx-1 sm:mx-2">
               {Array.from({ length: totalPages }, (_, i) => i + 1)
                 .filter((page) => {
                   if (totalPages <= 5) return true;
@@ -254,7 +254,7 @@ export default function MembersSection() {
                   item === "ellipsis" ? (
                     <span
                       key={`ellipsis-${idx}`}
-                      className="px-2 text-welfare-green-600"
+                      className="px-1 sm:px-2 text-welfare-green-600"
                     >
                       ...
                     </span>
@@ -262,7 +262,7 @@ export default function MembersSection() {
                     <button
                       key={item}
                       onClick={() => goToPage(item)}
-                      className="w-9 h-9 rounded-lg text-sm font-medium transition-all"
+                      className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg text-sm font-medium transition-all"
                       style={{
                         background:
                           pagination.page === item
@@ -287,7 +287,7 @@ export default function MembersSection() {
             <button
               onClick={() => goToPage(pagination.page + 1)}
               disabled={pagination.page === totalPages}
-              className="px-4 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              className="px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap"
               style={{
                 background:
                   pagination.page === totalPages

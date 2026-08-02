@@ -93,14 +93,14 @@ function TimelineItem({
       initial={{ opacity: 0, x: isLeft ? -40 : 40 }}
       animate={isInView ? { opacity: 1, x: 0 } : {}}
       transition={{ delay: index * 0.12, duration: 0.6 }}
-      className={`flex ${isLeft ? "flex-row" : "flex-row-reverse"} items-center gap-6 mb-8`}
+      className={`flex flex-col ${isLeft ? "md:flex-row" : "md:flex-row-reverse"} items-start md:items-center gap-4 md:gap-6 mb-8`}
     >
-      <div className={`flex-1 ${isLeft ? "text-right" : "text-left"}`}>
+      <div className={`w-full md:flex-1 ${isLeft ? "md:text-right" : "md:text-left"}`}>
         <div
-          className={`welfare-card p-5 ${isLeft ? "ml-auto" : "mr-auto"} max-w-sm`}
+          className={`welfare-card p-5 ${isLeft ? "md:ml-auto" : "md:mr-auto"} max-w-sm text-left border-l-4 border-l-welfare-green-500 md:border-l-0`}
         >
           <div
-            className={`flex items-center gap-2 mb-2 ${isLeft ? "justify-end" : "justify-start"}`}
+            className={`flex items-center gap-2 mb-2 ${isLeft ? "md:justify-end" : "justify-start"}`}
           >
             <span className="text-2xl">{item.icon}</span>
             <span
@@ -121,8 +121,8 @@ function TimelineItem({
         </div>
       </div>
       {/* Center dot */}
-      <div className="flex-shrink-0 w-5 h-5 rounded-full border-4 border-welfare-green-500 bg-white shadow-md z-10" />
-      <div className="flex-1" />
+      <div className="hidden md:flex flex-shrink-0 w-5 h-5 rounded-full border-4 border-welfare-green-500 bg-white shadow-md z-10" />
+      <div className="hidden md:block flex-1" />
     </motion.div>
   );
 }

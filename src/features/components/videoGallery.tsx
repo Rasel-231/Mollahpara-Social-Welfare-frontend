@@ -18,7 +18,7 @@ export default function VideoGallery() {
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4 max-w-4xl">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#1C5A86] inline-flex items-center gap-3">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#1C5A86] inline-flex items-center justify-center flex-wrap gap-2 sm:gap-3 leading-snug">
             <span>🌿</span> ভিডিও গ্যালারি <span>🌿</span>
           </h2>
         </div>

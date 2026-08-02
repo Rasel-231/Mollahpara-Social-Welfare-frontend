@@ -466,7 +466,7 @@ export default function DonatePageView() {
                     অনুদানের পরিমাণ নির্বাচন করুন
                   </p>
 
-                  <div className="grid grid-cols-4 gap-2 mb-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
                     {quickAmounts.map((amt) => (
                       <motion.button
                         key={amt}
@@ -474,7 +474,7 @@ export default function DonatePageView() {
                         onClick={() => handleAmountSelect(amt)}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.97 }}
-                        className="py-2.5 rounded-xl text-sm font-bold border-2 transition-all duration-200 font-bengali"
+                        className="py-2.5 px-2 rounded-xl text-sm font-bold border-2 transition-all duration-200 font-bengali whitespace-nowrap"
                         style={{
                           background:
                             selectedAmount === amt

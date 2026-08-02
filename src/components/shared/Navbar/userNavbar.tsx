@@ -222,7 +222,7 @@ export default function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="fixed top-16 left-0 right-0 z-40 bg-white/98 backdrop-blur-lg border-b border-welfare-green-200/60 shadow-xl overflow-hidden"
+            className="fixed top-12 lg:top-16 left-0 right-0 z-40 bg-white/98 backdrop-blur-lg border-b border-welfare-green-200/60 shadow-xl overflow-y-auto max-h-[calc(100dvh-3rem)]"
           >
             <div className="container mx-auto px-4 py-4">
               <nav className="flex flex-col gap-1 mb-4">

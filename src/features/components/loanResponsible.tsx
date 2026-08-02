@@ -31,14 +31,14 @@ export default function LoanRehabSection() {
           </div>
 
           {/* Content Part */}
-          <div className="w-full md:w-[55%] p-8 flex flex-col justify-between">
+          <div className="w-full md:w-[55%] p-6 sm:p-8 flex flex-col justify-between">
             <div>
               {/* Title with Icon */}
               <div className="flex items-center gap-3 mb-5">
-                <div className="w-10 h-10 rounded-full bg-emerald-950/60 flex items-center justify-center border border-emerald-500/30">
+                <div className="w-10 h-10 rounded-full bg-emerald-950/60 flex items-center justify-center border border-emerald-500/30 flex-shrink-0">
                   <span className="text-xl">💰</span>
                 </div>
-                <h3 className="text-2xl font-bold  font-bengali">
+                <h3 className="text-xl sm:text-2xl font-bold  font-bengali">
                   ত্রাণ ও পুনর্বাসন
                 </h3>
               </div>
@@ -52,15 +52,15 @@ export default function LoanRehabSection() {
             </div>
 
             {/* Button and bottom icon */}
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-3 flex-wrap">
               <Link href="/donate">
-                <button className="px-6 py-3 rounded-lg font-bold font-bengali bg-emerald-800 hover:bg-emerald-700 text-white transition-all shadow-lg border border-emerald-600">
+                <button className="px-5 sm:px-6 py-3 rounded-lg font-bold font-bengali bg-emerald-800 hover:bg-emerald-700 text-white transition-all shadow-lg border border-emerald-600 text-sm sm:text-base">
                   সাহায্য করুন
                 </button>
               </Link>
 
               {/* ডান কোণায় নিচের আইকন */}
-              <div className="text-6xl -mb-4 -mr-2">💰</div>
+              <div className="text-5xl sm:text-6xl -mb-4 -mr-2 flex-shrink-0">💰</div>
             </div>
           </div>
         </motion.div>

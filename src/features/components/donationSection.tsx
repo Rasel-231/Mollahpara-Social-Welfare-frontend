@@ -44,8 +44,8 @@ export default function DonationSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="w-full py-24 ">
-      <div className="w-full  mx-auto px-6">
+    <section ref={ref} className="w-full py-14 sm:py-20 lg:py-24">
+      <div className="w-full mx-auto px-4 sm:px-6">
         {/* মেইন কার্ডটি এখন আরও চওড়া */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -53,26 +53,26 @@ export default function DonationSection() {
             isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }
           }
           transition={{ duration: 0.8 }}
-          className="bg-white/70 backdrop-blur-xl p-10 md:p-16 rounded-[2rem] shadow-2xl border border-white/50"
+          className="bg-white/70 backdrop-blur-xl p-6 sm:p-10 md:p-16 rounded-[2rem] shadow-2xl border border-white/50"
         >
-          <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-lg md:text-5xl font-extrabold text-slate-900 mb-4">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 mb-4 leading-snug">
               আপনার সহায়তা, আমাদের শক্তি
             </h2>
-            <p className="text-slate-600 text-lg">
+            <p className="text-slate-600 text-sm sm:text-lg">
               সহজ ও নিরাপদ পেমেন্ট মেথড ব্যবহার করে আপনার অনুদান জমা দিন
             </p>
           </div>
 
           {/* কার্ড গ্রিড */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 md:grid-cols-4 gap-8 mb-16">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 mb-10 sm:mb-16">
             {paymentMethods.map((method) => (
               <motion.button
                 key={method.id}
                 whileHover={{ y: -10 }}
-                className={`group bg-white p-8 rounded-3xl border border-slate-100 shadow-lg transition-all duration-300 hover:shadow-2xl ${method.color}`}
+                className={`group bg-white p-5 sm:p-8 rounded-3xl border border-slate-100 shadow-lg transition-all duration-300 hover:shadow-2xl ${method.color}`}
               >
-                <div className="w-20 h-20 mx-auto mb-6 relative">
+                <div className="w-14 h-14 sm:w-20 sm:h-20 mx-auto mb-3 sm:mb-6 relative">
                   <Image
                     src={method.logo}
                     alt={method.name}
@@ -81,10 +81,10 @@ export default function DonationSection() {
                     className="object-contain transition-transform group-hover:scale-110"
                   />
                 </div>
-                <h3 className="text-xl font-bold text-slate-800">
+                <h3 className="text-base sm:text-xl font-bold text-slate-800">
                   {method.name}
                 </h3>
-                <div className="w-12 h-1 bg-emerald-500 mx-auto mt-4 rounded-full" />
+                <div className="w-10 sm:w-12 h-1 bg-emerald-500 mx-auto mt-3 sm:mt-4 rounded-full" />
               </motion.button>
             ))}
           </div>
@@ -95,7 +95,7 @@ export default function DonationSection() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-12 py-5 rounded-2xl font-bold text-lg shadow-lg shadow-emerald-200 hover:shadow-emerald-300 transition-all"
+                className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-6 sm:px-12 py-4 sm:py-5 rounded-2xl font-bold text-base sm:text-lg shadow-lg shadow-emerald-200 hover:shadow-emerald-300 transition-all w-full sm:w-auto whitespace-nowrap"
               >
                 এখনই অনুদান দিন
               </motion.button>

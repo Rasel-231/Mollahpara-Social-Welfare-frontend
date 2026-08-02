@@ -18,7 +18,7 @@ export function LoginForm() {
     try {
       await login(data).unwrap();
       router.push(redirectTo);
-    } catch (error) {
+    } catch {
       // handle login error
     }
   };

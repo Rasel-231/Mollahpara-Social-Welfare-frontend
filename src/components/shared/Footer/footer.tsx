@@ -54,7 +54,7 @@ export default function Footer() {
                 <h3 className="font-bold text-xl sm:text-2xl font-bengali text-white">
                   মোল্লাপাড়া সমাজ কল্যাণ সংস্থা
                 </h3>
-                <p className="text-blue-200 text-sm sm:text-xl tracking-widest uppercase font-semibold">
+                <p className="text-blue-200 text-xs sm:text-sm tracking-wide uppercase font-semibold break-words">
                   Mollapara Social Welfare Association
                 </p>
               </div>

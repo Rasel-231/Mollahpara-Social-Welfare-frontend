@@ -19,7 +19,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
 
       <div className="flex-1 flex flex-col overflow-hidden">
         <AdminNavbar toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
-        <main className="flex-1 overflow-y-auto p-6 scrollbar-hide">
+        <main className="flex-1 overflow-y-auto p-3 sm:p-6 scrollbar-hide">
           {children}
         </main>
       </div>
