@@ -136,10 +136,10 @@ export default function Navbar() {
               </motion.div>
               <div className="sm:block">
                 <p className="text-welfare-green-800 font-bold text-sm lg:text-base leading-tight font-bengali">
-                  মোল্লাপাড়া সমাজ কল্যাণ সংস্থা
+                  কমিউনিটি সোশ্যাল ক্লাব
                 </p>
                 <p className="text-welfare-green-500 text-xs font-medium tracking-wide">
-                  Mollapara Social Welfare Association
+                  Community Social Club
                 </p>
               </div>
             </Link>

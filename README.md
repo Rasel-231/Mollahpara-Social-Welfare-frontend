@@ -1,6 +1,6 @@
 # Mollahpara Social Welfare Association — Frontend
 
-> মোল্লাপাড়া সমাজ কল্যাণ সংস্থা — Official Web Platform (Frontend)
+> কমিউনিটি সোশ্যাল ক্লাব — Official Web Platform (Frontend)
 
 A full-featured Next.js application for a community welfare organization — public-facing pages (news, gallery, blood donation, education aid, donations) plus a role-protected admin dashboard for managing members, finances, and content.
 

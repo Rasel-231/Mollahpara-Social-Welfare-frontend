@@ -146,7 +146,9 @@ export default function MembersSection() {
   });
 
   const users: IUser[] = response?.data || [];
-  const mockMembers: Member[] = users.map(mapUserToMember);
+  const mockMembers: Member[] = users
+    .filter((u) => u.isActive)
+    .map(mapUserToMember);
   const meta = response?.meta;
   const totalPages = meta ? Math.ceil(meta.total / meta.limit) : 1;
 
@@ -280,7 +282,7 @@ export default function MembersSection() {
                     >
                       {item}
                     </button>
-                  )
+                  ),
                 )}
             </div>
 
@@ -293,8 +295,7 @@ export default function MembersSection() {
                   pagination.page === totalPages
                     ? "#e5e7eb"
                     : "linear-gradient(135deg, #166534, #15803d)",
-                color:
-                  pagination.page === totalPages ? "#9ca3af" : "#fff",
+                color: pagination.page === totalPages ? "#9ca3af" : "#fff",
               }}
             >
               পরবর্তী →

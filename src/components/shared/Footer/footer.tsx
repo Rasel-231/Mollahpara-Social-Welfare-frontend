@@ -52,10 +52,10 @@ export default function Footer() {
               </div>
               <div>
                 <h3 className="font-bold text-xl sm:text-2xl font-bengali text-white">
-                  মোল্লাপাড়া সমাজ কল্যাণ সংস্থা
+                  কমিউনিটি সোশ্যাল ক্লাব
                 </h3>
                 <p className="text-blue-200 text-xs sm:text-sm tracking-wide uppercase font-semibold break-words">
-                  Mollapara Social Welfare Association
+                  Community Social Club
                 </p>
               </div>
             </div>
@@ -68,7 +68,7 @@ export default function Footer() {
             <div className="space-y-4 text-sm font-medium">
               <p className="flex items-center gap-3 text-blue-100">
                 <span className="text-sky-300 text-lg">📍</span>{" "}
-                <span>শেখপাড়া,শ্রীপুর,গাজীপুর</span>
+                <span>ফরিদপুর, শ্রীপুর, গাজীপুর</span>
               </p>
               <p className="flex items-center gap-3 text-blue-100">
                 <span className="text-sky-300 text-lg">📞</span> +৮৮০
@@ -76,7 +76,7 @@ export default function Footer() {
               </p>
               <p className="flex items-center gap-3 text-blue-100">
                 <span className="text-sky-300 text-lg">✉️</span>{" "}
-                info@mollaporawelfare.org
+                info@communitysocialclub.org
               </p>
             </div>
           </div>
@@ -147,8 +147,8 @@ export default function Footer() {
         <div className="mt-16 pt-8 border-t border-blue-900 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-blue-300/80">
           <p>
             {" "}
-            © {new Date().getFullYear()} মোল্লাপাড়া সমাজ কল্যাণ সংস্থা।
-            সর্বস্বত্ব সংরক্ষিত।
+            © {new Date().getFullYear()} কমিউনিটি সোশ্যাল ক্লাব। সর্বস্বত্ব
+            সংরক্ষিত।মানবতার সেবায় আমরা অঙ্গীকারবদ্ধ।
           </p>
           <div className="flex gap-6">
             <Link

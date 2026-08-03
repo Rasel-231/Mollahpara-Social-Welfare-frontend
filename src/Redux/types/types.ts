@@ -148,6 +148,15 @@ export interface IBloodRequests {
     requester?: { id: string; name: string; email: string };
 }
 
+
+
+export interface IApiError {
+    success: boolean;
+    statusCode: number;
+    message: string;
+    stack?: string;
+}
+
 export interface ICreateBloodRequest {
     patientName: string;
     bloodGroup: string;

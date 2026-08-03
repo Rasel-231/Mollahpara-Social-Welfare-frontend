@@ -28,7 +28,7 @@ export default function AdminNavbar({
               <span className="text-white font-bold text-sm">🌿</span>
             </div>
             <span className="hidden sm:block font-bold text-lg text-white cursor-pointer">
-              <Link href="/">মোল্লাপাড়া সমাজ কল্যাণ সংস্থা</Link>
+              <Link href="/">কমিউনিটি সোশ্যাল ক্লাব</Link>
             </span>
           </div>
 

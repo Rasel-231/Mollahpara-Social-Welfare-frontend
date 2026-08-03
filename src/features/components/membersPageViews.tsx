@@ -84,7 +84,7 @@ export default function MembersPageView() {
       search === "" || m.name.toLowerCase().includes(search.toLowerCase());
     const matchBlood = bloodFilter === "all" || m.bloodGroup === bloodFilter;
     const matchType = typeFilter === "all" || m.memberType === typeFilter;
-    return matchSearch && matchBlood && matchType;
+    return m.isActive && matchSearch && matchBlood && matchType;
   });
 
   const onSubmit = async (data: MemberRegistrationInput) => {

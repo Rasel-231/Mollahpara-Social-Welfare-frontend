@@ -160,6 +160,9 @@ export const DonationMethodSchema = z.object({
     isActive: z.boolean(),
 });
 
+
+
+
 export const DonationFormSchema = z.object({
     donorName: z.string().min(2, "নাম কমপক্ষে ২ অক্ষর হতে হবে"),
     phone: z

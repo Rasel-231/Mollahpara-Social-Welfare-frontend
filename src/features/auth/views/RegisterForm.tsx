@@ -58,7 +58,7 @@ export function RegisterForm() {
       >
         <div className="text-center">
           <h1 className="text-3xl font-bold text-white">Create Account</h1>
-          <p className="text-white/60 text-sm mt-1">মোল্লাপাড়া সমাজ কল্যাণ সংস্থায় যোগ দিন</p>
+          <p className="text-white/60 text-sm mt-1">কমিউনিটি সোশ্যাল ক্লাবে যোগ দিন</p>
         </div>
 
         <input

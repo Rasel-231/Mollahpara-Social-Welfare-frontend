@@ -83,7 +83,7 @@ export default function AdminSidebar({
             <div className="w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center">
               <span className="text-xl">🌿</span>
             </div>
-            <h1 className="text-white font-bold text-lg">মোল্লাপাড়া সংস্থা</h1>
+            <h1 className="text-white font-bold text-lg">কমিউনিটি সোশ্যাল ক্লাব</h1>
           </div>
 
           <nav className="space-y-2">

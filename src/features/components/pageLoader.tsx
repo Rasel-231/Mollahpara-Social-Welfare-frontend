@@ -24,7 +24,7 @@ export default function PageLoader() {
         transition={{ delay: 0.3 }}
         className="text-welfare-green-800 font-bold text-lg font-bengali mb-8"
       >
-        মোল্লাপাড়া সমাজ কল্যাণ সংস্থা
+        কমিউনিটি সোশ্যাল ক্লাব
       </motion.p>
 
       {/* Animated dots */}

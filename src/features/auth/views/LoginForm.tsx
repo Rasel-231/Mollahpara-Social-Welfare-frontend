@@ -1,7 +1,8 @@
 "use client";
 
 import { useLoginMutation } from "@/Redux/api/authApi";
-import { ILoginRequest } from "@/Redux/types/types";
+import { IApiError, ILoginRequest } from "@/Redux/types/types";
+import { AxiosError } from "axios";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -26,12 +27,9 @@ export function LoginForm() {
       await login(data).unwrap();
       toast.success("Login Successful");
       router.push(redirectTo);
-    } catch (err: unknown) {
-      const error = err as { data?: { message?: string } };
-      const message =
-        error?.data?.message ??
-        (err instanceof Error ? err.message : "Login Failed");
-      toast.error(message);
+    } catch (error) {
+      const err = error as AxiosError<IApiError>;
+      toast.error(err.response?.data.message || "Login Failed");
     }
   };
 

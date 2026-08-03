@@ -13,7 +13,7 @@ export default function CombinedHeroSection() {
         <div className="absolute inset-0 z-0">
           <Image
             src="/assets/bg-image.png"
-            alt="মোল্লাপাড়া সমাজ কল্যাণ সংস্থা"
+            alt="কমিউনিটি সোশ্যাল ক্লাব"
             fill
             sizes="100vw"
             className="object-contain"
@@ -38,7 +38,7 @@ export default function CombinedHeroSection() {
             transition={{ delay: 0.2 }}
             className="text-base sm:text-lg lg:text-xl text-white/90 mb-8 sm:mb-10 font-bengali max-w-2xl"
           >
-            মোল্লাপাড়া সমাজ কল্যাণ সংস্থা — এলাকার উন্নয়নে আমাদের অবদান
+            কমিউনিটি সোশ্যাল ক্লাব — এলাকার উন্নয়নে আমাদের অঙ্গীকার
           </motion.p>
 
           <motion.div

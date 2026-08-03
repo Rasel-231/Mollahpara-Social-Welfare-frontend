@@ -8,9 +8,9 @@ import Providers from "./lib/Provider";
 
 export const metadata: Metadata = {
   title:
-    "মোল্লাপাড়া সমাজ কল্যাণ সংস্থা | Mollapara Social Welfare Association",
+    "কমিউনিটি সোশ্যাল ক্লাব | Mollapara Social Welfare Association",
   description:
-    "মোল্লাপাড়া সমাজ কল্যাণ সংস্থা — এলাকার উন্নয়ন আমাদের প্রতিশ্রুতি। রক্তদান, ঋণ ও পুনর্বাসন, শিক্ষা সহায়তা এবং সামাজিক কল্যাণমূলক কার্যক্রম।",
+    "কমিউনিটি সোশ্যাল ক্লাব — এলাকার উন্নয়ন আমাদের প্রতিশ্রুতি। রক্তদান, ঋণ ও পুনর্বাসন, শিক্ষা সহায়তা এবং সামাজিক কল্যাণমূলক কার্যক্রম।",
   keywords: [
     "মোল্লাপাড়া",
     "সমাজ কল্যাণ",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Mollapara Social Welfare Association" }],
   openGraph: {
-    title: "মোল্লাপাড়া সমাজ কল্যাণ সংস্থা",
+    title: "কমিউনিটি সোশ্যাল ক্লাব",
     description: "মানবতার সেবায় উৎসর্গীকৃত",
     type: "website",
     locale: "bn_BD",
