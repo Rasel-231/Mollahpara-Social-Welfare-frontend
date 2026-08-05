@@ -13,6 +13,7 @@ import MembershipRequest from "../membarTable/membarshipRequest";
 import DonationRequest from "../transection/transection";
 import BloodRequestCard from "./BloodRequestCard";
 import ScholarshipRequestCard from "./ScholarshipRequestCard";
+import ContactRequestCard from "./ContactRequestCard";
 import { useGetAllFundsQuery } from "@/Redux/api/fundsApi";
 import { useGetAllUsersQuery } from "@/Redux/api/userApi";
 import { useGetAllBloodRequestsQuery } from "@/Redux/api/bloodRequestApi";
@@ -98,7 +99,7 @@ export default function NotificationsPage() {
   const contactRequests = (contactResponse?.data ?? []).map((c: IContact) => ({
     id: c.id,
     name: c.name,
-    email: c.email,
+    email: c.email ?? "",
     phone: c.phone ?? "",
     subject: c.subject ?? "",
     message: c.message ?? "",
@@ -227,33 +228,7 @@ export default function NotificationsPage() {
           ) : contactRequests.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {contactRequests.map((contact) => (
-                <div
-                  key={contact.id}
-                  className="bg-[#161a22] p-4 rounded-xl border border-white/[0.05] space-y-2"
-                >
-                  <div className="flex items-center justify-between">
-                    <p className="text-sm font-bold text-white">
-                      {contact.name}
-                    </p>
-                    <span className="text-xs text-gray-500">
-                      {contact.date}
-                    </span>
-                  </div>
-                  <p className="text-xs text-gray-400">{contact.email}</p>
-                  {contact.phone && (
-                    <p className="text-xs text-gray-400">{contact.phone}</p>
-                  )}
-                  {contact.subject && (
-                    <p className="text-sm text-gray-300 font-medium">
-                      {contact.subject}
-                    </p>
-                  )}
-                  {contact.message && (
-                    <p className="text-xs text-gray-500 line-clamp-3">
-                      {contact.message}
-                    </p>
-                  )}
-                </div>
+                <ContactRequestCard key={contact.id} contact={contact} />
               ))}
             </div>
           ) : (
