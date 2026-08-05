@@ -16,7 +16,7 @@ export default function CombinedHeroSection() {
             alt="কমিউনিটি সোশ্যাল ক্লাব"
             fill
             sizes="100vw"
-            className="object-cover"
+            className="object-contain sm:object-cover"
             priority
           />
           <div className="absolute inset-0 bg-black/80" />
