@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Calendar, ArrowRight, Search } from "lucide-react";
+import Image from "next/image";
 import { useGetAllNewsQuery } from "@/Redux/api/newsApi";
 import type { INews } from "@/Redux/api/newsApi";
 import OrangeSpinner from "@/components/shared/OrangeSpinner";
@@ -164,10 +165,13 @@ export default function NewsPageView() {
             >
               <div className="flex flex-col md:flex-row">
                 {filtered[0].image && (
-                  <div className="md:w-2/5 h-60 md:h-auto relative overflow-hidden">
-                    <div
-                      className="w-full h-full min-h-60 bg-contain bg-center bg-no-repeat transition-transform duration-500 group-hover:scale-105"
-                      style={{ backgroundImage: `url(${filtered[0].image})` }}
+                  <div className="md:w-2/5 relative aspect-video overflow-hidden">
+                    <Image
+                      src={filtered[0].image}
+                      alt={filtered[0].title}
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, 40vw"
                     />
                   </div>
                 )}
@@ -227,10 +231,13 @@ export default function NewsPageView() {
                 whileHover={{ y: -5 }}
               >
                 {article.image && (
-                  <div className="h-44 overflow-hidden rounded-t-2xl relative">
-                    <div
-                      className="w-full h-full bg-contain bg-center bg-no-repeat transition-transform duration-500 group-hover:scale-110"
-                      style={{ backgroundImage: `url(${article.image})` }}
+                  <div className="relative aspect-video overflow-hidden rounded-t-2xl">
+                    <Image
+                      src={article.image}
+                      alt={article.title}
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, 33vw"
                     />
                     <div className="absolute top-3 left-3">
                       <span

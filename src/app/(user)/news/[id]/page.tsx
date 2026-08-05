@@ -81,7 +81,7 @@ export default function NewsDetailPage() {
         >
           {/* Image */}
           {news.image && (
-            <div className="relative w-full h-64 md:h-96 overflow-hidden bg-gray-100">
+            <div className="relative w-full aspect-video overflow-hidden bg-gray-100">
               <Image
                 src={news.image}
                 alt={news.title}

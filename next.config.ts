@@ -33,6 +33,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "img.youtube.com",
       },
+      {
+        protocol: "https",
+        hostname: "mollahpara-social-welfare-backend.onrender.com",
+      },
     ],
   },
 

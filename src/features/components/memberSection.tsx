@@ -62,7 +62,7 @@ function MemberCard({ member, delay }: { member: Member; delay: number }) {
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{ delay, duration: 0.6 }}
       whileHover={{ y: -5 }}
-      className="relative rounded-2xl overflow-hidden shadow-md group cursor-pointer"
+      className="relative rounded-2xl overflow-hidden shadow-md group cursor-pointer h-full flex flex-col"
       style={{
         background:
           "linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,253,244,0.9) 100%)",
@@ -74,7 +74,7 @@ function MemberCard({ member, delay }: { member: Member; delay: number }) {
         className={`h-1.5 bg-gradient-to-r ${badgeColors[member.badgeType]}`}
       />
 
-      <div className="p-5 flex flex-col items-center text-center">
+      <div className="p-5 flex flex-col items-center text-center flex-1">
         {/* Avatar with badge */}
         <div className="relative mb-3">
           <div className="w-20 h-20 rounded-full overflow-hidden ring-4 ring-welfare-gold-200 shadow-lg">
@@ -111,7 +111,7 @@ function MemberCard({ member, delay }: { member: Member; delay: number }) {
         </span>
 
         {/* Blood group */}
-        <div className="mt-2 flex items-center gap-1 text-xs">
+        <div className="mt-auto pt-2 flex items-center gap-1 text-xs">
           <span className="text-red-500">🩸</span>
           <span className="text-welfare-green-600 font-medium">
             {member.bloodGroup}
@@ -191,7 +191,11 @@ export default function MembersSection() {
         {!isLoading && (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
             {mockMembers.map((member, i) => (
-              <Link key={member.id} href={`/members/${member.id}`}>
+              <Link
+                key={member.id}
+                href={`/members/${member.id}`}
+                className="block h-full"
+              >
                 <MemberCard member={member} delay={i * 0.12} />
               </Link>
             ))}

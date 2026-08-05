@@ -16,7 +16,7 @@ export default function CombinedHeroSection() {
             alt="কমিউনিটি সোশ্যাল ক্লাব"
             fill
             sizes="100vw"
-            className="object-contain"
+            className="object-cover"
             priority
           />
           <div className="absolute inset-0 bg-black/80" />
@@ -45,15 +45,15 @@ export default function CombinedHeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center w-full sm:w-auto"
+            className="flex flex-row gap-3 sm:gap-4 justify-center items-center"
           >
-            <Link href="/members" className="w-full sm:w-auto">
-              <button className="w-full sm:w-auto sm:min-w-36 md:min-w-32 px-6 sm:px-8 py-3 rounded-md font-semibold font-bengali bg-emerald-700 hover:bg-emerald-800 text-white transition-all whitespace-nowrap">
+            <Link href="/members">
+              <button className="px-4 sm:px-8 py-2 sm:py-3 text-sm sm:text-base rounded-md font-semibold font-bengali bg-emerald-700 hover:bg-emerald-800 text-white transition-all whitespace-nowrap">
                 যোগ দিন
               </button>
             </Link>
-            <Link href="/donate" className="w-full sm:w-auto">
-              <button className="w-full sm:w-auto sm:min-w-36 md:min-w-32 px-6 sm:px-8 py-3 rounded-md font-semibold font-bengali bg-amber-600 hover:bg-amber-700 text-white transition-all whitespace-nowrap">
+            <Link href="/donate">
+              <button className="px-4 sm:px-8 py-2 sm:py-3 text-sm sm:text-base rounded-md font-semibold font-bengali bg-amber-600 hover:bg-amber-700 text-white transition-all whitespace-nowrap">
                 অনুদান দিন
               </button>
             </Link>

@@ -3,6 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Calendar } from "lucide-react";
 import { useGetAllNewsQuery } from "@/Redux/api/newsApi";
 import type { INews } from "@/Redux/api/newsApi";
@@ -36,10 +37,13 @@ function NewsCard({ article, delay }: { article: INews; delay: number }) {
       className="welfare-card group cursor-pointer"
     >
       {article.image && (
-        <div className="relative h-44 overflow-hidden rounded-t-2xl">
-          <div
-            className="w-full h-full bg-contain bg-center bg-no-repeat transition-transform duration-500 group-hover:scale-110"
-            style={{ backgroundImage: `url(${article.image})` }}
+        <div className="relative aspect-video overflow-hidden rounded-t-2xl">
+          <Image
+            src={article.image}
+            alt={article.title}
+            fill
+            className="object-contain"
+            sizes="(max-width: 768px) 100vw, 33vw"
           />
         </div>
       )}
