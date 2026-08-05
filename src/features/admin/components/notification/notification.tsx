@@ -7,6 +7,7 @@ import {
   HeartHandshake,
   Droplets,
   GraduationCap,
+  Mail,
 } from "lucide-react";
 import MembershipRequest from "../membarTable/membarshipRequest";
 import DonationRequest from "../transection/transection";
@@ -16,7 +17,9 @@ import { useGetAllFundsQuery } from "@/Redux/api/fundsApi";
 import { useGetAllUsersQuery } from "@/Redux/api/userApi";
 import { useGetAllBloodRequestsQuery } from "@/Redux/api/bloodRequestApi";
 import { useGetAllScholarshipsQuery } from "@/Redux/api/scholarshipApi";
+
 import { IBloodRequests } from "@/Redux/types/types";
+import { IContact, useGetAllContactsQuery } from "@/Redux/api/contactApi";
 
 const paymentMethodLabel: Record<string, string> = {
   BKASH: "bKash",
@@ -36,6 +39,8 @@ export default function NotificationsPage() {
     useGetAllBloodRequestsQuery("");
   const { data: scholarshipResponse, isLoading: scholarshipLoading } =
     useGetAllScholarshipsQuery("");
+  const { data: contactResponse, isLoading: contactLoading } =
+    useGetAllContactsQuery("");
 
   const pendingUsers = (usersResponse?.data ?? [])
     .filter((u) => !u.isActive)
@@ -89,6 +94,20 @@ export default function NotificationsPage() {
       status: item.status,
     }),
   );
+
+  const contactRequests = (contactResponse?.data ?? []).map((c: IContact) => ({
+    id: c.id,
+    name: c.name,
+    email: c.email,
+    phone: c.phone ?? "",
+    subject: c.subject ?? "",
+    message: c.message ?? "",
+    date: new Date(c.createdAt).toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    }),
+  }));
 
   return (
     <div className="min-h-screen bg-[#0b0e14] p-4 md:p-8 text-white">
@@ -190,6 +209,56 @@ export default function NotificationsPage() {
           ) : (
             <p className="text-gray-500 text-sm bg-[#161a22]/30 p-4 rounded-xl border border-white/[0.02]">
               কোনো স্কলারশিপ অনুরোধ নেই।
+            </p>
+          )}
+        </div>
+
+        <div>
+          <div className="flex items-center gap-2 mb-4">
+            <Mail className="text-blue-400" size={20} />
+            <h2 className="text-lg font-bold text-gray-300">
+              যোগাযোগ অনুরোধ ({contactRequests.length})
+            </h2>
+          </div>
+          {contactLoading ? (
+            <div className="flex justify-center p-4">
+              <OrangeSpinner size={24} />
+            </div>
+          ) : contactRequests.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {contactRequests.map((contact) => (
+                <div
+                  key={contact.id}
+                  className="bg-[#161a22] p-4 rounded-xl border border-white/[0.05] space-y-2"
+                >
+                  <div className="flex items-center justify-between">
+                    <p className="text-sm font-bold text-white">
+                      {contact.name}
+                    </p>
+                    <span className="text-xs text-gray-500">
+                      {contact.date}
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-400">{contact.email}</p>
+                  {contact.phone && (
+                    <p className="text-xs text-gray-400">{contact.phone}</p>
+                  )}
+                  {contact.subject && (
+                    <p className="text-sm text-gray-300 font-medium">
+                      {contact.subject}
+                    </p>
+                  )}
+                  {contact.message && (
+                    <p className="text-xs text-gray-500 line-clamp-3">
+                      {contact.message}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-500 text-sm bg-[#161a22]/30 p-4 rounded-xl border border-white/[0.02]">
+              কোনো যোগাযোগ অনুরোধ নেই।
             </p>
           )}
         </div>
