@@ -42,7 +42,7 @@ function NewsCard({ article, delay }: { article: INews; delay: number }) {
             src={article.image}
             alt={article.title}
             fill
-            className="object-contain"
+            className="object-cover"
             sizes="(max-width: 768px) 100vw, 33vw"
           />
         </div>

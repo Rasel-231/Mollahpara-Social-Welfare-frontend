@@ -170,7 +170,7 @@ export default function NewsPageView() {
                       src={filtered[0].image}
                       alt={filtered[0].title}
                       fill
-                      className="object-contain"
+                      className="object-cover"
                       sizes="(max-width: 768px) 100vw, 40vw"
                     />
                   </div>
@@ -198,14 +198,15 @@ export default function NewsPageView() {
                       <Calendar size={11} />
                       <span>
                         {filtered[0].createdAt
-                          ? new Date(
-                              filtered[0].createdAt,
-                            ).toLocaleDateString("en-US", {
-                              weekday: "long",
-                              day: "numeric",
-                              month: "short",
-                              year: "numeric",
-                            })
+                          ? new Date(filtered[0].createdAt).toLocaleDateString(
+                              "en-US",
+                              {
+                                weekday: "long",
+                                day: "numeric",
+                                month: "short",
+                                year: "numeric",
+                              },
+                            )
                           : ""}
                       </span>
                     </div>
