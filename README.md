@@ -4,8 +4,8 @@
 
 A full-featured Next.js application for a community welfare organization — public-facing pages (news, gallery, blood donation, education aid, donations) plus a role-protected admin dashboard for managing members, finances, and content.
 
-**Live:** Coming Soon
-**Backend repo:** [Mollahpara-Social-Welfare-backend](https://github.com/Rasel-231/Mollahpara-Social-Welfare-backend)
+**Live:** 
+mollahparaclub-two.vercel.app
 
 ---
 
