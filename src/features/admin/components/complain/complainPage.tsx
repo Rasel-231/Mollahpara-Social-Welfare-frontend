@@ -65,7 +65,7 @@ function NotificationBell({
       </button>
 
       <div
-        className={`absolute left-0 top-full mt-2 w-[340px] origin-top-left transition-all duration-200 ease-out ${
+        className={`absolute right-0 top-full mt-2 w-[340px] max-w-[calc(100vw-2rem)] origin-top-right transition-all duration-200 ease-out ${
           open
             ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
             : "opacity-0 -translate-y-2 scale-95 pointer-events-none"
@@ -198,7 +198,7 @@ function ComplaintDrawer({
 
             {data && !isLoading && (
               <div>
-                <h3 className="text-lg font-semibold text-slate-50 leading-snug">
+                <h3 className="text-lg font-semibold text-slate-50 leading-snug break-words">
                   {data.subject}
                 </h3>
 
@@ -220,7 +220,7 @@ function ComplaintDrawer({
                 </div>
 
                 <div className="mt-5 rounded-xl bg-slate-800/50 border border-slate-800 p-4">
-                  <p className="text-sm text-slate-300 leading-relaxed whitespace-pre-line">
+                  <p className="text-sm text-slate-300 leading-relaxed whitespace-pre-line break-words">
                     {data.message}
                   </p>
                 </div>
@@ -297,10 +297,10 @@ export default function ComplainPage() {
   const [activeId, setActiveId] = useState<string | null>(null);
 
   return (
-    <div className="min-h-screen bg-[#0b0e14] p-4 md:p-8 text-white">
-      <div className="flex items-center justify-between mb-8 border-b border-white/[0.05] pb-4">
-        <div className="flex items-center gap-3">
-          <Bell className="text-emerald-400" size={28} />
+    <div className="min-h-full bg-[#0b0e14] p-4 md:p-8 text-white">
+      <div className="flex items-center justify-between gap-3 flex-wrap mb-8 border-b border-white/[0.05] pb-4">
+        <div className="flex items-center gap-3 min-w-0">
+          <Bell className="text-emerald-400 shrink-0" size={28} />
           <h1 className="text-2xl md:text-3xl font-bold">অভিযোগ ব্যবস্থাপনা</h1>
         </div>
         <NotificationBell
