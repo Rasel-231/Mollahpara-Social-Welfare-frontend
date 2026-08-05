@@ -15,8 +15,9 @@ export default function CombinedHeroSection() {
             src="/assets/bg-image.png"
             alt="কমিউনিটি সোশ্যাল ক্লাব"
             fill
-            sizes="100vw"
-            className="object-contain sm:object-cover"
+            height={100}
+            width={100}
+            className="object-cover"
             priority
           />
           <div className="absolute inset-0 bg-black/80" />
