@@ -49,12 +49,12 @@ export default function CombinedHeroSection() {
             className="flex flex-row gap-3 sm:gap-4 justify-center items-center"
           >
             <Link href="/members">
-              <button className="px-4 w-20 sm:px-8 py-2 sm:py-3 text-sm sm:text-base rounded-md font-semibold font-bengali bg-emerald-700 hover:bg-emerald-800 text-white transition-all whitespace-nowrap">
+              <button className="px-4 w-24 sm:w-28 sm:px-8 py-2 sm:py-3 text-sm sm:text-base rounded-md font-semibold font-bengali bg-emerald-700 hover:bg-emerald-800 text-white transition-all whitespace-nowrap">
                 যোগ দিন
               </button>
             </Link>
             <Link href="/donate">
-              <button className="px-4 w-20 sm:px-8 py-2 sm:py-3 text-sm sm:text-base rounded-md font-semibold font-bengali bg-amber-600 hover:bg-amber-700 text-white transition-all whitespace-nowrap">
+              <button className="px-4 w-24 sm:w-28 sm:px-8 py-2 sm:py-3 text-sm sm:text-base rounded-md font-semibold font-bengali bg-amber-600 hover:bg-amber-700 text-white transition-all whitespace-nowrap">
                 অনুদান দিন
               </button>
             </Link>
