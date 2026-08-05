@@ -24,10 +24,10 @@ export default function AdminNavbar({
           </button>
 
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-emerald-600 rounded-full flex items-center justify-center">
+            <div className="w-9 h-9  rounded-full flex items-center justify-center">
               <span className="text-white font-bold text-sm">🌿</span>
             </div>
-            <span className="hidden sm:block font-bold text-lg text-white cursor-pointer">
+            <span className="sm:block font-bold text-md text-white cursor-pointer">
               <Link href="/">কমিউনিটি সোশ্যাল ক্লাব</Link>
             </span>
           </div>

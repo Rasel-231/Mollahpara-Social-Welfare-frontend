@@ -50,7 +50,7 @@ export default function AdminSidebar({
       toast.success("Logout Successful");
       router.push("/login");
       router.refresh();
-    } catch (error) {
+    } catch {
       toast.error("Logout Failed");
     }
   };
@@ -80,10 +80,12 @@ export default function AdminSidebar({
       >
         <div>
           <div className="flex items-center gap-3 mb-10 mt-10 md:mt-0">
-            <div className="w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-full  flex items-center justify-center">
               <span className="text-xl">🌿</span>
             </div>
-            <h1 className="text-white font-bold text-lg">কমিউনিটি সোশ্যাল ক্লাব</h1>
+            <h1 className="text-white font-bold text-md">
+              কমিউনিটি সোশ্যাল ক্লাব
+            </h1>
           </div>
 
           <nav className="space-y-2">
