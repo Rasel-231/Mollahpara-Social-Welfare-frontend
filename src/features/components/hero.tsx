@@ -8,7 +8,7 @@ import ImpactStatsSection from "./impactState";
 export default function CombinedHeroSection() {
   return (
     <div className="mt-12 lg:mt-20">
-      <section className="relative min-h-[60vh] sm:min-h-[70vh] md:min-h-[80vh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[40vh] sm:min-h-[70vh] md:min-h-[80vh] flex items-center justify-center overflow-hidden">
         {/* Background Image Container */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -48,12 +48,12 @@ export default function CombinedHeroSection() {
             className="flex flex-row gap-3 sm:gap-4 justify-center items-center"
           >
             <Link href="/members">
-              <button className="px-4 sm:px-8 py-2 sm:py-3 text-sm sm:text-base rounded-md font-semibold font-bengali bg-emerald-700 hover:bg-emerald-800 text-white transition-all whitespace-nowrap">
+              <button className="px-4 w-20 sm:px-8 py-2 sm:py-3 text-sm sm:text-base rounded-md font-semibold font-bengali bg-emerald-700 hover:bg-emerald-800 text-white transition-all whitespace-nowrap">
                 যোগ দিন
               </button>
             </Link>
             <Link href="/donate">
-              <button className="px-4 sm:px-8 py-2 sm:py-3 text-sm sm:text-base rounded-md font-semibold font-bengali bg-amber-600 hover:bg-amber-700 text-white transition-all whitespace-nowrap">
+              <button className="px-4 w-20 sm:px-8 py-2 sm:py-3 text-sm sm:text-base rounded-md font-semibold font-bengali bg-amber-600 hover:bg-amber-700 text-white transition-all whitespace-nowrap">
                 অনুদান দিন
               </button>
             </Link>
