@@ -27,8 +27,9 @@ const paymentMethodLabel: Record<string, string> = {
 };
 
 export default function NotificationsPage() {
-  const { data: usersResponse, isLoading: usersLoading } =
-    useGetAllUsersQuery({});
+  const { data: usersResponse, isLoading: usersLoading } = useGetAllUsersQuery(
+    {},
+  );
   const { data: fundsResponse, isLoading: fundsLoading } =
     useGetAllFundsQuery("");
   const { data: bloodRequestResponse, isLoading: bloodLoading } =
@@ -71,7 +72,6 @@ export default function NotificationsPage() {
       }),
     }));
 
-  // এখানে bloodRequestResponse ব্যবহার করা হয়েছে
   const bloodRequests = (bloodRequestResponse?.data ?? []).map(
     (item: IBloodRequests) => ({
       id: item.id,
@@ -98,7 +98,6 @@ export default function NotificationsPage() {
       </div>
 
       <div className="space-y-10">
-        {/* সেকশন ১: মেম্বারশিপ অনুরোধ */}
         <div>
           <div className="flex items-center gap-2 mb-4">
             <Users className="text-blue-400" size={20} />
@@ -107,7 +106,9 @@ export default function NotificationsPage() {
             </h2>
           </div>
           {usersLoading ? (
-            <div className="flex justify-center p-4"><OrangeSpinner size={24} /></div>
+            <div className="flex justify-center p-4">
+              <OrangeSpinner size={24} />
+            </div>
           ) : pendingUsers.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {pendingUsers.map((user) => (
@@ -121,7 +122,6 @@ export default function NotificationsPage() {
           )}
         </div>
 
-        {/* সেকশন ২: অনুদান অনুরোধ */}
         <div>
           <div className="flex items-center gap-2 mb-4">
             <HeartHandshake className="text-emerald-400" size={20} />
@@ -130,7 +130,9 @@ export default function NotificationsPage() {
             </h2>
           </div>
           {fundsLoading ? (
-            <div className="flex justify-center p-4"><OrangeSpinner size={24} /></div>
+            <div className="flex justify-center p-4">
+              <OrangeSpinner size={24} />
+            </div>
           ) : pendingDonations.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {pendingDonations.map((donation) => (
@@ -152,7 +154,9 @@ export default function NotificationsPage() {
             </h2>
           </div>
           {bloodLoading ? (
-            <div className="flex justify-center p-4"><OrangeSpinner size={24} /></div>
+            <div className="flex justify-center p-4">
+              <OrangeSpinner size={24} />
+            </div>
           ) : bloodRequests.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {bloodRequests.map((br) => (
@@ -166,7 +170,6 @@ export default function NotificationsPage() {
           )}
         </div>
 
-        {/* সেকশন ৪: স্কলারশিপ অনুরোধ */}
         <div>
           <div className="flex items-center gap-2 mb-4">
             <GraduationCap className="text-emerald-400" size={20} />
@@ -175,7 +178,9 @@ export default function NotificationsPage() {
             </h2>
           </div>
           {scholarshipLoading ? (
-            <div className="flex justify-center p-4"><OrangeSpinner size={24} /></div>
+            <div className="flex justify-center p-4">
+              <OrangeSpinner size={24} />
+            </div>
           ) : (scholarshipResponse?.data ?? []).length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {(scholarshipResponse?.data ?? []).map((s) => (
