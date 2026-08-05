@@ -38,7 +38,7 @@ function NewsCard({ article, delay }: { article: INews; delay: number }) {
       {article.image && (
         <div className="relative h-44 overflow-hidden rounded-t-2xl">
           <div
-            className="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+            className="w-full h-full bg-contain bg-center bg-no-repeat transition-transform duration-500 group-hover:scale-110"
             style={{ backgroundImage: `url(${article.image})` }}
           />
         </div>
@@ -52,7 +52,7 @@ function NewsCard({ article, delay }: { article: INews; delay: number }) {
         </p>
         <div className="flex items-center gap-1.5 text-welfare-green-500 text-xs">
           <Calendar size={11} />
-          <span>{formatDate(article.publishedAt)}</span>
+          <span>{formatDate(article.createdAt)}</span>
         </div>
       </div>
     </motion.article>

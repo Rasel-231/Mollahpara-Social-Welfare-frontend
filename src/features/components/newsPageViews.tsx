@@ -166,7 +166,7 @@ export default function NewsPageView() {
                 {filtered[0].image && (
                   <div className="md:w-2/5 h-60 md:h-auto relative overflow-hidden">
                     <div
-                      className="w-full h-full min-h-60 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                      className="w-full h-full min-h-60 bg-contain bg-center bg-no-repeat transition-transform duration-500 group-hover:scale-105"
                       style={{ backgroundImage: `url(${filtered[0].image})` }}
                     />
                   </div>
@@ -193,9 +193,9 @@ export default function NewsPageView() {
                     <div className="flex items-center gap-1.5 text-welfare-green-400 text-xs">
                       <Calendar size={11} />
                       <span>
-                        {filtered[0].publishedAt
+                        {filtered[0].createdAt
                           ? new Date(
-                              filtered[0].publishedAt,
+                              filtered[0].createdAt,
                             ).toLocaleDateString("en-US", {
                               weekday: "long",
                               day: "numeric",
@@ -229,7 +229,7 @@ export default function NewsPageView() {
                 {article.image && (
                   <div className="h-44 overflow-hidden rounded-t-2xl relative">
                     <div
-                      className="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                      className="w-full h-full bg-contain bg-center bg-no-repeat transition-transform duration-500 group-hover:scale-110"
                       style={{ backgroundImage: `url(${article.image})` }}
                     />
                     <div className="absolute top-3 left-3">
@@ -252,8 +252,8 @@ export default function NewsPageView() {
                   <div className="flex items-center gap-1 text-welfare-green-400 text-xs">
                     <Calendar size={11} />
                     <span>
-                      {article.publishedAt
-                        ? new Date(article.publishedAt).toLocaleDateString(
+                      {article.createdAt
+                        ? new Date(article.createdAt).toLocaleDateString(
                             "en-US",
                             { day: "numeric", month: "short", year: "numeric" },
                           )

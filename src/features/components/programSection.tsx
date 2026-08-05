@@ -22,7 +22,7 @@ const programs = [
     id: "education",
     titleBn: "শিক্ষন সহায়তা",
     image:
-      "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=500&q=80",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm-H3_xdZHygqx34TmVAOOGFP34K2HOjvWClgDlzq4GmjwUN3GL4qiF-k&s=10",
     descriptionBn: "",
     href: "/programs#education",
     ctaBn: "দেখুন",
@@ -33,7 +33,7 @@ const programs = [
     id: "loans",
     titleBn: "ঋণ ও পুনর্বাসন",
     image:
-      "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=500&q=80",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTO8YmI3ncvQn9JcVzqb76MngXGOUI1K1IAwh-xUczN41Xm23Hkq5PlnGxf&s=10",
     descriptionBn: "",
     href: "/programs#loans",
     ctaBn: "দেখুন",

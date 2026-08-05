@@ -81,12 +81,12 @@ export default function NewsDetailPage() {
         >
           {/* Image */}
           {news.image && (
-            <div className="relative w-full h-64 md:h-96 overflow-hidden">
+            <div className="relative w-full h-64 md:h-96 overflow-hidden bg-gray-100">
               <Image
                 src={news.image}
                 alt={news.title}
                 fill
-                className="object-cover"
+                className="object-contain"
                 sizes="(max-width: 896px) 100vw, 896px"
               />
             </div>
@@ -96,10 +96,10 @@ export default function NewsDetailPage() {
           <div className="p-6 lg:p-10">
             {/* Meta */}
             <div className="flex flex-wrap items-center gap-3 mb-4">
-              {news.publishedAt && (
+              {news.createdAt && (
                 <span className="flex items-center gap-1.5 text-welfare-green-500 text-xs font-bengali">
                   <Calendar size={12} />
-                  {formatDate(news.publishedAt)}
+                  {formatDate(news.createdAt)}
                 </span>
               )}
               {news.author && (

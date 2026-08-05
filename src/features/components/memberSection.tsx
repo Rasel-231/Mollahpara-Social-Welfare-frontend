@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef, useState, useEffect, useCallback } from "react";
+import { useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import { Member } from "../types/types";
 import { useGetAllUsersQuery } from "@/Redux/api/userApi";
@@ -128,18 +128,6 @@ export default function MembersSection() {
 
   const [pagination, setPagination] = useState({ page: 1, limit: 12 });
 
-  useEffect(() => {
-    const updateLimit = () => {
-      setPagination((prev) => ({
-        page: window.innerWidth < 640 && prev.limit !== 6 ? 1 : prev.page,
-        limit: window.innerWidth < 640 ? 6 : 12,
-      }));
-    };
-    updateLimit();
-    window.addEventListener("resize", updateLimit);
-    return () => window.removeEventListener("resize", updateLimit);
-  }, []);
-
   const { data: response, isLoading } = useGetAllUsersQuery({
     page: pagination.page,
     limit: pagination.limit,
@@ -177,7 +165,7 @@ export default function MembersSection() {
 
         {/* Loading State */}
         {isLoading && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
             {Array.from({ length: pagination.limit }).map((_, i) => (
               <div
                 key={i}
@@ -201,7 +189,7 @@ export default function MembersSection() {
 
         {/* Members Grid */}
         {!isLoading && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
             {mockMembers.map((member, i) => (
               <Link key={member.id} href={`/members/${member.id}`}>
                 <MemberCard member={member} delay={i * 0.12} />
