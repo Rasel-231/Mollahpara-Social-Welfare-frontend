@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import ComplainModal from "../Modal/complanModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const quickLinks = [
   { label: "হোম", href: "/" },
@@ -32,6 +32,55 @@ const socialLinks = [
   },
   { label: "Call", href: "tel:+8801988446825", color: "hover:bg-sky-500" },
 ];
+
+const devPhrases = ["Developed by Rasel"];
+
+function Typewriter({ words }: { words: string[] }) {
+  const [wordIndex, setWordIndex] = useState(0);
+  const [text, setText] = useState("");
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    const current = words[wordIndex % words.length];
+    let timeout: ReturnType<typeof setTimeout>;
+
+    if (!deleting) {
+      if (text.length < current.length) {
+        timeout = setTimeout(
+          () => setText(current.slice(0, text.length + 1)),
+          90,
+        );
+      } else {
+        timeout = setTimeout(() => setDeleting(true), 1800);
+      }
+    } else {
+      if (text.length > 0) {
+        timeout = setTimeout(
+          () => setText(current.slice(0, text.length - 1)),
+          40,
+        );
+      } else {
+        timeout = setTimeout(() => {
+          setDeleting(false);
+          setWordIndex((i) => i + 1);
+        }, 200);
+      }
+    }
+
+    return () => clearTimeout(timeout);
+  }, [text, deleting, wordIndex, words]);
+
+  return (
+    <span className="inline-flex items-center gap-1">
+      {text}
+      <motion.span
+        animate={{ opacity: [1, 0, 1] }}
+        transition={{ duration: 1, repeat: Infinity }}
+        className="inline-block w-0.5 h-5 bg-sky-300"
+      />
+    </span>
+  );
+}
 
 export default function Footer() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -163,6 +212,16 @@ export default function Footer() {
           </div>
         </div>
       </div>
+
+      {/* Developer Credit */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        className="relative z-10 py-4 bg-blue-900/60 border-t border-blue-800 text-center text-sm font-semibold text-sky-200"
+      >
+        <Typewriter words={devPhrases} />
+      </motion.div>
     </footer>
   );
 }
